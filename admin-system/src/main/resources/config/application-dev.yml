@@ -1,0 +1,112 @@
+#配置数据源
+spring:
+  datasource:
+    dynamic:
+      # 设置默认的数据源或者数据源组,默认值即为master
+      primary: master
+      # 设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: false
+      datasource:
+        master:
+          url: jdbc:p6spy:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:admin-master}?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false
+          username: ${DB_USER:root}
+          password: ${DB_PWD:root}
+          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+          type: com.zaxxer.hikari.HikariDataSource
+          # 配置则生效,自动初始化表结构
+          # schema: db/admin.sql
+          hikari:
+            # 最小空闲连接数
+            minimum-idle: 10
+            # 最大连接数
+            maximum-pool-size: 20
+            # 从池返回的连接的默认自动提交行为,默认：true
+            auto-commit: true
+            # 连接池名称
+            pool-name: HikariCP
+            # 连接在池中闲置的最长时间
+            idle-timeout: 30000
+            # 连接池中连接的最大生存期，值0表示无限生命周期，默认1800000即30分钟
+            max-lifetime: 1800000
+            # 连接超时时间,默认30秒
+            connection-timeout: 30000
+        slave:
+          url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:admin-slave}?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false
+          username: ${DB_USER:root}
+          password: ${DB_PWD:root}
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          type: com.zaxxer.hikari.HikariDataSource
+          # 配置则生效,自动初始化表结构
+          # schema: db/schema.sql
+          # 配置则生效,自动初始化数据
+          # data: db/data.sql
+          # 默认true,初始化失败是否继续
+          # continue-on-error: false
+
+# 登录相关配置
+login:
+  # 登录缓存
+  cache-enable: true
+  # 是否限制单用户登录
+  single-login: false
+  # 验证码
+  login-code:
+    # 验证码类型配置 查看 LoginProperties 类
+    code-type: arithmetic
+    # 登录图形验证码有效时间/分钟
+    expiration: 2
+    # 验证码高度
+    width: 111
+    # 验证码宽度
+    heigth: 36
+    # 内容长度
+    length: 2
+    # 字体名称，为空则使用默认字体
+    font-name:
+    # 字体大小
+    font-size: 25
+
+# Jwt
+jwt:
+  header: Authorization
+  # 令牌前缀
+  token-start-with: Bearer
+  # 必须使用最少88位的Base64对该令牌进行编码
+  base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+  # 令牌过期时间 此处单位/毫秒 ，默认4小时，可在此网站生成 https://www.convertworld.com/zh-hans/time/milliseconds.html
+  token-validity-in-seconds: 14400000
+  # 在线用户key
+  online-key: online-token-
+  # 验证码
+  code-key: code-key-
+  # token 续期检查时间范围（默认30分钟，单位毫秒），在token即将过期的一段时间内用户操作了，则给用户的token续期
+  detect: 1800000
+  # 续期时间范围，默认1小时，单位毫秒
+  renew: 3600000
+
+# IP 本地解析
+ip:
+  local-parsing: true
+
+# 是否允许生成代码，生产环境设置为false
+generator:
+  enabled: true
+
+# 是否开启 swagger-ui
+swagger:
+  enabled: true
+
+# 文件存储路径
+file:
+  mac:
+    path: ~/file/
+    avatar: ~/avatar/
+  linux:
+    path: /home/admin/file/
+    avatar: /home/admin/avatar/
+  windows:
+    path: C:\admin\file\
+    avatar: C:\admin\avatar\
+  # 文件大小 /M
+  maxSize: 100
+  avatarMaxSize: 5

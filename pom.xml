@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.7.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>org.utility</groupId>
+    <artifactId>admin</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+
+    <name>admin</name>
+    <description>一个简单且易上手的 Spring boot 后台管理框架</description>
+
+    <modules>
+        <module>admin-common</module>
+        <module>admin-generator</module>
+        <module>admin-logging</module>
+        <module>admin-system</module>
+        <module>admin-tools</module>
+    </modules>
+</project>
