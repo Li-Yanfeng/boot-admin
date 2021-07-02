@@ -1,4 +1,4 @@
-package ${package}.${moduleName}.service.dto;
+package ${package}.service.dto;
 
 <#if (queryColumns?size > 0)>
 import org.utility.annotation.Query;

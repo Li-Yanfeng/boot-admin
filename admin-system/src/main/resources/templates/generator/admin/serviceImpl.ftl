@@ -1,4 +1,4 @@
-package ${package}.${moduleName}.service.impl;
+package ${package}.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
@@ -6,11 +6,11 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.utility.base.impl.ServiceImpl;
-import ${package}.${moduleName}.mapper.${className}Mapper;
-import ${package}.${moduleName}.model.${className};
-import ${package}.${moduleName}.service.${className}Service;
-import ${package}.${moduleName}.service.dto.${className}DTO;
-import ${package}.${moduleName}.service.dto.${className}Query;
+import ${package}.mapper.${className}Mapper;
+import ${package}.model.${className};
+import ${package}.service.${className}Service;
+import ${package}.service.dto.${className}DTO;
+import ${package}.service.dto.${className}Query;
 import org.utility.constant.CacheConsts;
 import org.utility.util.FileUtils;
 import org.utility.util.RedisUtils;

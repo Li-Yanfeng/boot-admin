@@ -1,4 +1,4 @@
-package ${package}.${moduleName}.model;
+package ${package}.model;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;

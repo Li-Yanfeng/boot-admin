@@ -1,4 +1,4 @@
-package ${package}.${moduleName}.rest;
+package ${package}.rest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -7,9 +7,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
 import org.utility.api.Result;
-import ${package}.${moduleName}.model.${className};
-import ${package}.${moduleName}.service.${className}Service;
-import ${package}.${moduleName}.service.dto.${className}Query;
+import ${package}.model.${className};
+import ${package}.service.${className}Service;
+import ${package}.service.dto.${className}Query;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.util.Set;
  */
 @Api(tags = "${apiAlias!}管理")
 @RestController
-@RequestMapping(value = "/api<#if moduleName?? && moduleName != "">/${moduleName}</#if>/${changeClassName}")
+@RequestMapping(value = "/api/${changeClassName}")
 public class ${className}Controller {
 
     private final ${className}Service ${changeClassName}Service;

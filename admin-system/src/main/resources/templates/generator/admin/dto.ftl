@@ -1,4 +1,4 @@
-package ${package}.${moduleName}.service.dto;
+package ${package}.service.dto;
 
 <#if !auto && pkColumnType == 'Long'>
 import com.alibaba.fastjson.annotation.JSONField;

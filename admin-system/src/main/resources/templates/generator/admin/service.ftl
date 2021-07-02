@@ -1,9 +1,9 @@
-package ${package}.${moduleName}.service;
+package ${package}.service;
 
 import org.utility.base.Service;
-import ${package}.${moduleName}.model.${className};
-import ${package}.${moduleName}.service.dto.${className}DTO;
-import ${package}.${moduleName}.service.dto.${className}Query;
+import ${package}.model.${className};
+import ${package}.service.dto.${className}DTO;
+import ${package}.service.dto.${className}Query;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

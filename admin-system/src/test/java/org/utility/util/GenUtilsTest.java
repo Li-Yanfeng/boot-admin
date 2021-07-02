@@ -54,8 +54,7 @@ public class GenUtilsTest {
 //        tableInfo.put("mnt_deploy", "部署管理");
 //        tableInfo.put("mnt_deploy_history", "部署历史管理");
 //        tableInfo.put("mnt_deploy_server", "应用与服务器关联");
-//        tableInfo.put("mnt_server", "服务器管理");
-
+        tableInfo.put("mnt_server", "服务器管理");
 
         for (Map.Entry<String, String> entry : tableInfo.entrySet()) {
             GenConfig genConfig = new GenConfig();
@@ -63,18 +62,18 @@ public class GenUtilsTest {
             genConfig.setTableName(entry.getKey());
             // 接口名称
             genConfig.setApiAlias(entry.getValue());
-            // 包路径
-            genConfig.setPack("org.utility.modules");
             // 模块名
-            genConfig.setModuleName("mnt");
+            genConfig.setModuleName("admin-test");
+            // 包路径
+            genConfig.setPack("org.utility");
             // 前端代码生成的路径
-            genConfig.setPath("D:\\admin\\");
+            genConfig.setPath("D:\\front\\");
             // 前端Api文件路径
-            genConfig.setApiPath("D:\\front\\");
+            genConfig.setApiPath("D:\\front\\api\\");
             // 作者
             genConfig.setAuthor("Li Yanfeng");
             // 表前缀
-            genConfig.setPrefix("mnt_");
+            genConfig.setPrefix(entry.getKey().substring(0, (entry.getKey().indexOf("_") + 1)));
             // 是否覆盖
             genConfig.setCover(true);
 

@@ -29,13 +29,13 @@ public class GenConfig implements Serializable {
     @ApiModelProperty(value = "接口名称")
     private String apiAlias;
 
-    @ApiModelProperty(value = "包路径")
-    @NotBlank
-    private String pack;
-
     @ApiModelProperty(value = "模块名")
     @NotBlank
     private String moduleName;
+
+    @ApiModelProperty(value = "包路径")
+    @NotBlank
+    private String pack;
 
     @ApiModelProperty(value = "前端代码生成的路径")
     @NotBlank
@@ -78,20 +78,20 @@ public class GenConfig implements Serializable {
         this.apiAlias = apiAlias;
     }
 
-    public String getPack() {
-        return pack;
-    }
-
-    public void setPack(String pack) {
-        this.pack = pack;
-    }
-
     public String getModuleName() {
         return moduleName;
     }
 
     public void setModuleName(String moduleName) {
         this.moduleName = moduleName;
+    }
+
+    public String getPack() {
+        return pack;
+    }
+
+    public void setPack(String pack) {
+        this.pack = pack;
     }
 
     public String getPath() {

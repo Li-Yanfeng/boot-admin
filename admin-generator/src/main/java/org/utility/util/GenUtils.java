@@ -129,8 +129,7 @@ public class GenUtils {
         List<String> templates = getAdminTemplateNames();
         for (String templateName : templates) {
             Template template = engine.getTemplate(ADMIN_TEMPLATE_PATH + templateName + TEMPLATE_SUFFIX);
-            String filePath = getAdminFilePath(templateName, genConfig, genMap.get("className").toString(),
-                    tempPath + "admin" + File.separator);
+            String filePath = getAdminFilePath(templateName, genConfig, genMap.get("className").toString(), tempPath + "admin" + File.separator);
 
             assert filePath != null;
             File file = new File(filePath);
@@ -391,9 +390,11 @@ public class GenUtils {
      * 定义后端文件路径以及名称
      */
     private static String getAdminFilePath(String templateName, GenConfig genConfig, String className, String rootPath) {
-        String packagePath = genConfig.getPath() + File.separator;
+        String projectPath = new File(rootPath).getParent()+ File.separator + genConfig.getModuleName();
+        String packagePath = projectPath + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
+        String resourcePath = projectPath + File.separator + "src" +File.separator+ "main" + File.separator + "resources" + File.separator;
         if (!ObjectUtils.isEmpty(genConfig.getPack())) {
-            packagePath += (genConfig.getPack() + File.separator + genConfig.getModuleName()).replace(".", File.separator) + File.separator;
+            packagePath += genConfig.getPack().replace(".", File.separator) + File.separator;
         }
 
         switch (templateName) {
@@ -410,7 +411,7 @@ public class GenUtils {
                 return packagePath + "mapper" + File.separator + className + "Mapper.java";
 
             case "mapper.xml":
-                return packagePath + "xml" + File.separator + className + "Mapper.xml";
+                return resourcePath + "mapper" + File.separator + className + "Mapper.xml";
 
             case "service":
                 return packagePath + "service" + File.separator + className + "Service.java";

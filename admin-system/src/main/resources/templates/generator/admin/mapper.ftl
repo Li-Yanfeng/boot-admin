@@ -1,8 +1,8 @@
-package ${package}.${moduleName}.mapper;
+package ${package}.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
-import ${package}.${moduleName}.model.${className};
+import ${package}.model.${className};
 
 /**
  * ${apiAlias!} Mapper 接口
