@@ -21,6 +21,8 @@ import org.utility.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
+import static org.utility.exception.enums.UserErrorCode.THE_NUMBER_OF_REQUESTS_EXCEEDS_THE_LIMIT;
+
 /**
  * 限流处理
  *
@@ -42,6 +44,12 @@ public class LimitAspect {
     public void pointcut() {
     }
 
+    /**
+     * 【环绕通知】 用于拦截指定方法，判断用户当前操作是否需要限流处理
+     *
+     * @param joinPoint 切入点对象
+     * @return Object
+     */
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
@@ -50,25 +58,24 @@ public class LimitAspect {
         Limit limit = signatureMethod.getAnnotation(Limit.class);
         LimitType limitType = limit.limitType();
         String key = limit.key();
+        // 获取 限流 类型
         if (StringUtils.isEmpty(key)) {
-            if (limitType == LimitType.IP) {
-                key = IpUtils.getIp(request);
-            } else {
-                key = signatureMethod.getName();
-            }
+            key = limitType == LimitType.IP ? IpUtils.getIp(request) : signatureMethod.getName();
         }
 
-        ImmutableList<Object> keys = ImmutableList.of(StringUtils.join(limit.prefix(), "_", key, "_",
-                request.getRequestURI().replaceAll("/", "_")));
+        // 自定义key
+        ImmutableList<Object> keys = ImmutableList.of("interface_limit:" + key + ":" + request.getRequestURI());
 
+        // 构建脚本
         String luaScript = buildLuaScript();
         RedisScript<Number> redisScript = new DefaultRedisScript<>(luaScript, Number.class);
         Number count = redisTemplate.execute(redisScript, keys, limit.count(), limit.period());
+        // 如果访问次数大于设置的次数 则 访问次数受限制
         if (null != count && count.intValue() <= limit.count()) {
             logger.info("第{}次访问key为 {}，描述为 [{}] 的接口", count, keys, limit.name());
             return joinPoint.proceed();
         } else {
-            throw new BadRequestException("访问次数受限制");
+            throw new BadRequestException(THE_NUMBER_OF_REQUESTS_EXCEEDS_THE_LIMIT);
         }
     }
 

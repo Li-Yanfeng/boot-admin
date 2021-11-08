@@ -21,11 +21,11 @@ public class LimitController {
     private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger();
 
     /**
-     * 测试限流注解，下面配置说明该接口 60秒内最多只能访问 10次，保存到redis的键名为 limit_test，
+     * 测试限流注解，下面配置说明该接口 60秒内最多只能访问 10次，保存到redis为 interface_limit:test:/api/limit
      */
     @ApiOperation(value = "测试")
     @AnonymousGetMapping
-    @Limit(key = "test", period = 60, count = 10, name = "testLimit", prefix = "limit")
+    @Limit(name = "测试限流", key = "test", period = 60, count = 10)
     public int test() {
         return ATOMIC_INTEGER.incrementAndGet();
     }

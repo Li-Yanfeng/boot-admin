@@ -8,6 +8,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 限制访问请求次数
+ *
  * @author Li Yanfeng
  */
 @Target(ElementType.METHOD)
@@ -23,11 +25,6 @@ public @interface Limit {
      * 资源 key
      */
     String key() default "";
-
-    /**
-     * key prefix
-     */
-    String prefix() default "";
 
     /**
      * 时间单位:秒

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.model.vo.EmailVO;
 import org.utility.modules.system.service.VerifyService;
 import org.utility.service.EmailService;
@@ -31,6 +32,7 @@ public class VerifyController {
     }
 
     @ApiOperation(value = "重置邮箱，发送验证码")
+    @NoRepeatSubmit
     @PostMapping(value = "/resetEmail")
     public ResponseEntity<Object> resetEmail(@RequestParam String email) {
         EmailVO emailVo = verificationCodeService.sendEmail(email, CodeEnum.EMAIL_RESET_EMAIL_CODE.getKey());
@@ -39,6 +41,7 @@ public class VerifyController {
     }
 
     @ApiOperation(value = "重置密码，发送验证码")
+    @NoRepeatSubmit
     @PostMapping(value = "/email/resetPass")
     public ResponseEntity<Object> resetPass(@RequestParam String email) {
         EmailVO emailVo = verificationCodeService.sendEmail(email, CodeEnum.EMAIL_RESET_PWD_CODE.getKey());

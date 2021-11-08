@@ -1,11 +1,11 @@
 package org.utility.modules.mnt.util;
 
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.utility.util.CloseUtils;
 
 import javax.sql.DataSource;
 import java.io.BufferedReader;
@@ -95,7 +95,7 @@ public class SqlUtils {
             logger.error("create connection error, jdbcUrl: {}", jdbcUrl);
             throw new RuntimeException("create connection error, jdbcUrl: " + jdbcUrl);
         } finally {
-            CloseUtils.close(connection);
+            IoUtil.close(connection);
         }
         return connection;
     }
@@ -180,7 +180,7 @@ public class SqlUtils {
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         } finally {
-            CloseUtils.close(st);
+            IoUtil.close(st);
         }
     }
 

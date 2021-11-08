@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.modules.system.model.Job;
 import org.utility.modules.system.service.JobService;
@@ -33,6 +34,7 @@ public class JobController {
     @ApiOperation(value = "新增岗位")
     @Log(value = "新增岗位")
     @PreAuthorize(value = "@authorize.check('job:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result save(@Validated @RequestBody Job resource) {
         jobService.save(resource);
@@ -53,6 +55,7 @@ public class JobController {
     @ApiOperation(value = "修改岗位")
     @Log(value = "修改岗位")
     @PreAuthorize(value = "@authorize.check('job:edit')")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody Job resource) {
         jobService.updateById(resource);

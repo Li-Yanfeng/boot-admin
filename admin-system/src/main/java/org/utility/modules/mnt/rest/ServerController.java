@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.modules.mnt.model.Server;
 import org.utility.modules.mnt.service.ServerService;
@@ -33,6 +34,7 @@ public class ServerController {
     @ApiOperation(value = "新增服务器")
     @Log(value = "新增服务器")
     @PreAuthorize(value = "@authorize.check('serverDeploy:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result save(@Validated @RequestBody Server resource) {
         serverService.save(resource);
@@ -51,6 +53,7 @@ public class ServerController {
     @ApiOperation(value = "修改服务器")
     @Log(value = "修改服务器")
     @PreAuthorize(value = "@authorize.check('serverDeploy:edit')")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody Server resource) {
         serverService.updateById(resource);
@@ -67,6 +70,7 @@ public class ServerController {
     @ApiOperation(value = "测试连接服务器")
     @Log(value = "测试连接服务器")
     @PreAuthorize(value = "@authorize.check('serverDeploy:add')")
+    @NoRepeatSubmit
     @PostMapping("/testConnect")
     public Result testConnect(@Validated @RequestBody Server resources) {
         return Result.success(serverService.testConnect(resources));

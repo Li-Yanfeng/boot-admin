@@ -1,11 +1,13 @@
 package org.utility.base;
 
+import java.io.Serializable;
+
 /**
  * 基础数据查询对象,包含通用实体字段
  *
  * @author Li Yanfeng
  */
-public class BaseQuery {
+public abstract class BaseQuery implements Serializable {
 
     /**
      * 当前页

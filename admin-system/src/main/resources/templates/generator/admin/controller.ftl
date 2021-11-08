@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import ${package}.model.${className};
 import ${package}.service.${className}Service;
@@ -33,6 +34,7 @@ public class ${className}Controller {
     @ApiOperation(value = "新增${apiAlias!}")
     @Log(value = "新增${apiAlias!}")
     @PreAuthorize(value = "@authorize.check('${changeClassName}:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result save(@Validated @RequestBody ${className} resource) {
         ${changeClassName}Service.save(resource);
@@ -51,6 +53,7 @@ public class ${className}Controller {
     @ApiOperation(value = "修改${apiAlias!}")
     @Log(value = "修改${apiAlias!}")
     @PreAuthorize(value = "@authorize.check('${changeClassName}:edit')")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody ${className} resource) {
         ${changeClassName}Service.updateById(resource);

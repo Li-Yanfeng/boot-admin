@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.AnonymousAccess;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.annotation.rest.AnonymousGetMapping;
 import org.utility.api.Result;
 import org.utility.exception.enums.UserErrorCode;
@@ -46,6 +47,7 @@ public class AlipayController {
 
     @ApiOperation(value = "配置支付宝")
     @Log(value = "配置支付宝")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody AlipayConfig alipayConfig) {
         alipayService.config(alipayConfig);
@@ -54,6 +56,7 @@ public class AlipayController {
 
     @ApiOperation(value = "PC网页支付")
     @Log(value = "支付宝PC网页支付")
+    @NoRepeatSubmit
     @PostMapping(value = "/toPayAsPC")
     public Result toPayAsPc(@Validated @RequestBody TradeVO trade) throws Exception {
         AlipayConfig aliPay = alipayService.getConfig();
@@ -64,6 +67,7 @@ public class AlipayController {
 
     @ApiOperation(value = "手机网页支付")
     @Log(value = "支付宝手机网页支付")
+    @NoRepeatSubmit
     @PostMapping(value = "/toPayAsWeb")
     public Result toPayAsWeb(@Validated @RequestBody TradeVO trade) throws Exception {
         AlipayConfig alipay = alipayService.getConfig();

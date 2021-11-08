@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.model.QiniuConfig;
 import org.utility.model.QiniuContent;
@@ -40,6 +41,7 @@ public class QiniuController {
 
     @ApiOperation(value = "配置七牛云存储")
     @Log(value = "配置七牛云存储")
+    @NoRepeatSubmit
     @PutMapping(value = "/config")
     public Result update(@Validated @RequestBody QiniuConfig qiniuConfig) {
         qiniuService.config(qiniuConfig);
@@ -49,6 +51,7 @@ public class QiniuController {
 
     @ApiOperation(value = "上传文件")
     @Log(value = "上传文件")
+    @NoRepeatSubmit
     @PostMapping
     public Result upload(@RequestParam MultipartFile file) {
         QiniuContent qiniuContent = qiniuService.upload(file, qiniuService.getConfig());
@@ -69,6 +72,7 @@ public class QiniuController {
 
     @ApiOperation(value = "同步七牛云数据")
     @Log(value = "同步七牛云数据")
+    @NoRepeatSubmit
     @PostMapping(value = "/synchronize")
     public Result synchronize() {
         qiniuService.synchronize(qiniuService.getConfig());

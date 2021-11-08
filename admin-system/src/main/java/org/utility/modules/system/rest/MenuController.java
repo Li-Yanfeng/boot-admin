@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.modules.system.model.Menu;
 import org.utility.modules.system.service.MenuService;
@@ -40,6 +41,7 @@ public class MenuController {
     @ApiOperation(value = "新增菜单")
     @Log(value = "新增菜单")
     @PreAuthorize(value = "@authorize.check('menu:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result save(@Validated @RequestBody Menu resource) {
         menuService.save(resource);
@@ -64,6 +66,7 @@ public class MenuController {
     @ApiOperation(value = "修改菜单")
     @Log(value = "修改菜单")
     @PreAuthorize(value = "@authorize.check('menu:edit')")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody Menu resource) {
         menuService.updateById(resource);
@@ -106,6 +109,7 @@ public class MenuController {
 
     @ApiOperation(value = "查询菜单:根据ID获取同级与上级数据")
     @PreAuthorize(value = "@authorize.check('menu:list')")
+    @NoRepeatSubmit
     @PostMapping("/superior")
     public Result getSuperior(@RequestBody List<Long> ids) {
         Set<MenuDTO> menuDtos = CollUtil.newLinkedHashSet();

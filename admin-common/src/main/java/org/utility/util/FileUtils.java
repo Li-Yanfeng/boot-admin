@@ -142,7 +142,7 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
     /**
      * inputStream 转 File
      */
-    static File inputStreamToFile(InputStream ins, String name) throws Exception {
+    public static File inputStreamToFile(InputStream ins, String name) throws Exception {
         File file = new File(SYS_TEM_DIR + name);
         if (file.exists()) {
             return file;
@@ -186,61 +186,6 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
             logger.error(e.getMessage(), e);
         }
         return null;
-    }
-
-    /**
-     * 导出excel
-     */
-    public static void downloadExcel(List<Map<String, Object>> list, HttpServletResponse response) throws IOException {
-        String tempPath = SYS_TEM_DIR + IdUtil.fastSimpleUUID() + ".xlsx";
-        File file = new File(tempPath);
-        BigExcelWriter writer = ExcelUtil.getBigWriter(file);
-        // 一次性写出内容，使用默认样式，强制输出标题
-        writer.write(list, true);
-        SXSSFSheet sheet = (SXSSFSheet) writer.getSheet();
-        //上面需要强转SXSSFSheet  不然没有trackAllColumnsForAutoSizing方法
-        sheet.trackAllColumnsForAutoSizing();
-        //列宽自适应
-        writer.autoSizeColumnAll();
-        //列宽自适应支持中文单元格
-        sizeChineseColumn(sheet, writer);
-        //response为HttpServletResponse对象
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-        //test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
-        response.setHeader("Content-Disposition", "attachment;filename=file.xlsx");
-        ServletOutputStream out = response.getOutputStream();
-        // 终止后删除临时文件
-        file.deleteOnExit();
-        writer.flush(out, true);
-        //此处记得关闭输出Servlet流
-        IoUtil.close(out);
-    }
-
-    /**
-     * 自适应宽度(中文支持)
-     */
-    private static void sizeChineseColumn(SXSSFSheet sheet, BigExcelWriter writer) {
-        for (int columnNum = 0; columnNum < writer.getColumnCount(); columnNum++) {
-            int columnWidth = sheet.getColumnWidth(columnNum) / 256;
-            for (int rowNum = 0; rowNum < sheet.getLastRowNum(); rowNum++) {
-                SXSSFRow currentRow;
-                if (sheet.getRow(rowNum) == null) {
-                    currentRow = sheet.createRow(rowNum);
-                } else {
-                    currentRow = sheet.getRow(rowNum);
-                }
-                if (currentRow.getCell(columnNum) != null) {
-                    SXSSFCell currentCell = currentRow.getCell(columnNum);
-                    if (currentCell.getCellTypeEnum() == CellType.STRING) {
-                        int length = currentCell.getStringCellValue().getBytes().length;
-                        if (columnWidth < length) {
-                            columnWidth = length;
-                        }
-                    }
-                }
-            }
-            sheet.setColumnWidth(columnNum, columnWidth * 256);
-        }
     }
 
     public static String getFileType(String type) {
@@ -358,6 +303,73 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
                     logger.error(e.getMessage(), e);
                 }
             }
+        }
+    }
+
+    /**
+     * 导出excel
+     */
+    public static void downloadExcel(List<Map<String, Object>> list, HttpServletResponse response) throws IOException {
+        downloadExcel(list, response, null);
+    }
+
+    /**
+     * 导出excel（输出表名）
+     */
+    public static void downloadExcel(List<Map<String, Object>> list, HttpServletResponse response, String tableName) throws IOException {
+        String tempPath = SYS_TEM_DIR + IdUtil.fastSimpleUUID() + ".xlsx";
+        File file = new File(tempPath);
+        BigExcelWriter writer = ExcelUtil.getBigWriter(file);
+        // 合并单元格后的表头，使用默认标题样式
+        if (StringUtils.isNotBlank(tableName)) {
+            writer.merge(list.get(0).size() - 1, tableName);
+        }
+        // 一次性写出内容，使用默认样式，强制输出标题
+        writer.write(list, true);
+        SXSSFSheet sheet = (SXSSFSheet) writer.getSheet();
+        // 上面需要强转SXSSFSheet  不然没有trackAllColumnsForAutoSizing方法
+        sheet.trackAllColumnsForAutoSizing();
+        // 列宽自适应
+        writer.autoSizeColumnAll();
+        // 列宽自适应支持中文单元格
+        sizeChineseColumn(sheet, writer);
+        // response为HttpServletResponse对象
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
+        // test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
+        response.setHeader("Content-Disposition", "attachment;filename=file.xlsx");
+        ServletOutputStream out = response.getOutputStream();
+        // 终止后删除临时文件
+        file.deleteOnExit();
+        // 关闭writer，释放内存
+        writer.close();
+        // 此处记得关闭输出Servlet流
+        IoUtil.close(out);
+    }
+
+    /**
+     * 自适应宽度(中文支持)
+     */
+    private static void sizeChineseColumn(SXSSFSheet sheet, BigExcelWriter writer) {
+        for (int columnNum = 0; columnNum < writer.getColumnCount(); columnNum++) {
+            int columnWidth = sheet.getColumnWidth(columnNum) / 256;
+            for (int rowNum = 0; rowNum < sheet.getLastRowNum(); rowNum++) {
+                SXSSFRow currentRow;
+                if (sheet.getRow(rowNum) == null) {
+                    currentRow = sheet.createRow(rowNum);
+                } else {
+                    currentRow = sheet.getRow(rowNum);
+                }
+                if (currentRow.getCell(columnNum) != null) {
+                    SXSSFCell currentCell = currentRow.getCell(columnNum);
+                    if (currentCell.getCellTypeEnum() == CellType.STRING) {
+                        int length = currentCell.getStringCellValue().getBytes().length;
+                        if (columnWidth < length) {
+                            columnWidth = length;
+                        }
+                    }
+                }
+            }
+            sheet.setColumnWidth(columnNum, columnWidth * 256);
         }
     }
 }

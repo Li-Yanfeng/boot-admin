@@ -7,11 +7,11 @@ package org.utility.util.enums;
  */
 public enum DataScopeEnum {
 
-    ALL("ALL", "全部的数据权限"),
+    ALL("全部", "全部的数据权限"),
 
-    THIS_LEVEL("THIS_LEVEL", "自己部门的数据权限"),
+    THIS_LEVEL("本级", "自己部门的数据权限"),
 
-    CUSTOMIZE("CUSTOMIZE", "自定义的数据权限");
+    CUSTOMIZE("自定义", "自定义的数据权限");
 
     /**
      * Value

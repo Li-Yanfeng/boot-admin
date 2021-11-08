@@ -15,7 +15,7 @@ import java.sql.Timestamp;
  *
  * @author Li Yanfeng
  */
-public class BaseDTO implements Serializable {
+public abstract class BaseDTO implements Serializable {
 
     /**
      * 创建人

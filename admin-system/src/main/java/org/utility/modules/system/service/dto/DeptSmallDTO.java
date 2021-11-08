@@ -44,6 +44,15 @@ public class DeptSmallDTO extends BaseDTO implements Serializable {
         this.name = name;
     }
 
+    public DeptSmallDTO() {
+    }
+
+    public DeptSmallDTO(Long deptId, String name) {
+        this.deptId = deptId;
+        this.name = name;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

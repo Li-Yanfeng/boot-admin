@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.modules.quartz.model.QuartzJob;
 import org.utility.modules.quartz.service.QuartzJobService;
@@ -36,6 +37,7 @@ public class QuartzJobController {
     @ApiOperation(value = "新增定时任务")
     @Log(value = "新增定时任务")
     @PreAuthorize(value = "@authorize.check('timing:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result save(@Validated @RequestBody QuartzJob resource) {
         quartzJobService.save(resource);
@@ -54,6 +56,7 @@ public class QuartzJobController {
     @ApiOperation(value = "修改定时任务")
     @Log(value = "修改定时任务")
     @PreAuthorize(value = "@authorize.check('timing:edit')")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody QuartzJob resource) {
         quartzJobService.updateById(resource);
@@ -63,6 +66,7 @@ public class QuartzJobController {
     @ApiOperation(value = "更改定时任务状态")
     @Log(value = "更改定时任务状态")
     @PreAuthorize(value = "@authorize.check('timing:edit')")
+    @NoRepeatSubmit
     @PutMapping(value = "/{id}")
     public Result update(@PathVariable Long id) {
         quartzJobService.updateIsPause(quartzJobService.getById(id));
@@ -86,6 +90,7 @@ public class QuartzJobController {
     @ApiOperation(value = "执行定时任务")
     @Log(value = "执行定时任务")
     @PreAuthorize(value = "@authorize.check('timing:edit')")
+    @NoRepeatSubmit
     @PutMapping(value = "/exec/{id}")
     public Result execution(@PathVariable Long id) {
         quartzJobService.executionJob(quartzJobService.getById(id));

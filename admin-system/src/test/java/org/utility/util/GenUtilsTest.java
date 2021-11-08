@@ -66,10 +66,10 @@ public class GenUtilsTest {
             genConfig.setModuleName("admin-test");
             // 包路径
             genConfig.setPack("org.utility");
+            // 后端代码生成的路径
+            genConfig.setAdminPath("D:\\code\\admin\\");
             // 前端代码生成的路径
-            genConfig.setPath("D:\\front\\");
-            // 前端Api文件路径
-            genConfig.setApiPath("D:\\front\\api\\");
+            genConfig.setFrontPath("D:\\code\\front\\");
             // 作者
             genConfig.setAuthor("Li Yanfeng");
             // 表前缀

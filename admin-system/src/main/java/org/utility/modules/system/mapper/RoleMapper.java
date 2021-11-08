@@ -24,7 +24,7 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @param userId 用户ID
      * @return /
      */
-    @Select("SELECT r.* FROM sys_role r, sys_user_role ur WHERE r.role_id = ur.role_id AND u.user_id = #{userId}")
+    @Select("SELECT r.* FROM sys_role r, sys_user_role ur WHERE r.role_id = ur.role_id AND ur.user_id = #{userId}")
     Set<Role> selectByUserId(@Param("userId") Long userId);
 
     /**
@@ -33,6 +33,6 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @param menuIds 菜单Id集合
      * @return /
      */
-    @Select("SELECT r.* FROM sys_role r, sys_role_menu rm WHERE r.role_id = rm.role_id AND rm.menu_id IN <foreach item='item' index='index' collection='menuIds' open='(' separator=',' close=')'> #{item} </foreach>")
+    @Select("<script>SELECT r.* FROM sys_role r, sys_role_menu rm WHERE r.role_id = rm.role_id AND rm.menu_id IN <foreach item='item' index='index' collection='menuIds' open='(' separator=',' close=')'> #{item} </foreach></script>")
     List<Role> selectByMenuIds(@Param("menuIds") List<Long> menuIds);
 }

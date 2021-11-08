@@ -34,7 +34,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @param roleIds 角色Id集合
      * @return /
      */
-    @Select("SELECT m.* FROM sys_menu m, sys_role_menu rm WHERE m.menu_id = rm.menu_id AND rm.role_id IN <foreach item='item' index='index' collection='roleIds' open='(' separator=',' close=')'> #{item} </foreach>")
+    @Select("<script>SELECT m.* FROM sys_menu m, sys_role_menu rm WHERE m.menu_id = rm.menu_id AND rm.role_id IN <foreach item='item' index='index' collection='roleIds' open='(' separator=',' close=')'> #{item} </foreach></script>")
     List<Menu> selectByRoleIds(@Param("roleIds") Set<Long> roleIds);
 
     /**
@@ -44,6 +44,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @param type    /
      * @return /
      */
-    @Select("SELECT m.* FROM sys_menu m LEFT JOIN sys_role_menu rm ON m.menu_id = rm.menu_id LEFT JOIN sys_role r ON r.role_id = rm.role_id WHERE r.role_id IN <foreach item='item' index='index' collection='roleIds' open='(' separator=',' close=')'> #{item} </foreach> AND m.type &lt;&gt; #{type} ORDER BY m.menu_sort ASC")
+    @Select("<script>SELECT m.* FROM sys_menu m LEFT JOIN sys_role_menu rm ON m.menu_id = rm.menu_id LEFT JOIN sys_role r ON r.role_id = rm.role_id WHERE r.role_id IN <foreach item='item' index='index' collection='roleIds' open='(' separator=',' close=')'> #{item} </foreach> AND m.type &lt;&gt; #{type} ORDER BY m.menu_sort ASC</script>")
     LinkedHashSet<Menu> selectByRoleIdsAndType(@Param("roleIds") Set<Long> roleIds, @Param("type") Long type);
 }

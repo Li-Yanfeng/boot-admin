@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Jwt 认证入口
+ * Jwt 认证入口: 匿名用户访问无权限资源时的异常
  *
  * @author Li Yanfeng
  */

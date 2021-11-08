@@ -2,6 +2,7 @@ package org.utility.exception.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -56,7 +57,17 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * BadCredentialsException
+     * 处理 AccessDeniedException
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public Result<Object> handlerAccessDeniedException(AccessDeniedException e) {
+        // 打印堆栈信息
+        logger.error(ThrowableUtils.getStackTrace(e));
+        return Result.failure(UserErrorCode.NO_ACCESS_TO_API);
+    }
+
+    /**
+     * 处理 BadCredentialsException
      */
     @ExceptionHandler(BadCredentialsException.class)
     public Result<Object> handlerBadCredentialsException(BadCredentialsException e) {

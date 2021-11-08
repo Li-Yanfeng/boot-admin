@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.config.RsaProperties;
 import org.utility.exception.BadRequestException;
@@ -63,6 +64,7 @@ public class UserController {
     @ApiOperation(value = "新增用户")
     @Log(value = "新增用户")
     @PreAuthorize(value = "@authorize.check('user:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result save(@Validated @RequestBody UserDTO resource) {
         checkLevel(resource);
@@ -98,6 +100,7 @@ public class UserController {
     @ApiOperation(value = "修改用户")
     @Log(value = "修改用户")
     @PreAuthorize(value = "@authorize.check('user:edit')")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody UserDTO resource) throws Exception {
         checkLevel(resource);
@@ -106,6 +109,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "修改密码")
+    @NoRepeatSubmit
     @PostMapping(value = "/updatePass")
     public Result updatePass(@RequestBody UserPassVO passVo) throws Exception {
         String oldPass = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey, passVo.getOldPass());
@@ -123,6 +127,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "修改头像")
+    @NoRepeatSubmit
     @PostMapping(value = "/updateAvatar")
     public Result updateAvatar(@RequestParam MultipartFile avatar) {
         return Result.success(userService.updateAvatar(avatar));
@@ -130,6 +135,7 @@ public class UserController {
 
     @ApiOperation(value = "修改邮箱")
     @Log(value = "修改邮箱")
+    @NoRepeatSubmit
     @PostMapping(value = "/updateEmail/{code}")
     public Result updateEmail(@PathVariable String code, @RequestBody User user) throws Exception {
         String password = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey, user.getPassword());
@@ -144,6 +150,7 @@ public class UserController {
 
     @ApiOperation(value = "修改用户：个人中心")
     @Log(value = "修改用户：个人中心")
+    @NoRepeatSubmit
     @PutMapping(value = "/center")
     public Result center(@Validated @RequestBody User resources) {
         if (!resources.getUserId().equals(SecurityUtils.getCurrentUserId())) {

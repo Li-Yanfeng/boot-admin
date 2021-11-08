@@ -1,6 +1,8 @@
 package org.utility.util;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -9,11 +11,13 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ReflectionUtils;
 import org.utility.annotation.DataPermission;
 import org.utility.annotation.Query;
+import org.utility.annotation.Scene;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -49,6 +53,7 @@ public class QueryHelp {
      * @param <Q>   查询对象
      * @return QueryWrapper
      */
+    // TODO DataPermission
     public static <T, Q> QueryWrapper<T> queryWrapper(Q query) {
         QueryWrapper<T> queryWrapper = Wrappers.query();
         if (query == null) {
@@ -61,13 +66,37 @@ public class QueryHelp {
             // 获取数据权限
             List<Long> dataScopes = SecurityUtils.getCurrentUserDataScope();
             if (CollectionUtil.isNotEmpty(dataScopes)) {
-                if (StringUtils.isNotBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
-                    /// Join join = root.join(permission.joinName(), JoinType.LEFT);
-                    /// list.add(getExpression(permission.fieldName(),join, root).in(dataScopes));
-                    throw new RuntimeException("未实现");
-                } else if (StringUtils.isBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
-                    /// list.add(getExpression(permission.fieldName(),null, root).in(dataScopes));
-                    queryWrapper.in(permission.fieldName(), dataScopes);
+                // 过滤场景
+                boolean ignoreScene = false;
+                if(ArrayUtil.isNotEmpty(permission.ignoreScene())) {
+                    boolean exits = query.getClass().isAnnotationPresent(Scene.class);
+                    if(exits) {
+                        for(Field field : query.getClass().getDeclaredFields()) {
+                            Scene scene = field.getAnnotation(Scene.class);
+                            if (scene != null) {
+                                Object sceneValue = ReflectionUtils.getField(field, query);
+                                if(ObjectUtil.isNotNull(sceneValue)) {
+                                    if(StringUtils.equalsAny(String.valueOf(sceneValue), permission.ignoreScene())) {
+                                        ignoreScene = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        throw new RuntimeException("需要用 @Scene 注解标识场景字段值, 根据字段对应的值判断是否忽略");
+                    }
+                }
+                if(!ignoreScene) {
+                    if(StringUtils.isNotBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
+                        //Join join = root.join(permission.joinName(), JoinType.LEFT);
+                        //list.add(getExpression(permission.fieldName(),join, root).in(dataScopes));
+
+                        throw new RuntimeException("未实现");
+                    } else if (StringUtils.isBlank(permission.joinName()) && StringUtils.isNotBlank(permission.fieldName())) {
+                        //list.add(getExpression(permission.fieldName(),null, root).in(dataScopes));
+                        queryWrapper.in(permission.fieldName(), dataScopes);
+                    }
                 }
             }
         }
@@ -121,10 +150,14 @@ public class QueryHelp {
                             queryWrapper.le(attributeName, value);
                             break;
                         case IN:
-                            queryWrapper.in(attributeName, value);
+                            if (CollUtil.isNotEmpty((Collection<?>) value)) {
+                                queryWrapper.in(attributeName, value);
+                            }
                             break;
                         case NOT_IN:
-                            queryWrapper.notIn(attributeName, value);
+                            if (CollUtil.isNotEmpty((Collection<?>) value)) {
+                                queryWrapper.notIn(attributeName, value);
+                            }
                             break;
                         case LIKE:
                             queryWrapper.like(attributeName, value);
@@ -142,8 +175,10 @@ public class QueryHelp {
                             queryWrapper.isNotNull(attributeName);
                             break;
                         case BETWEEN:
-                            List<Object> between = new ArrayList<>((List<Object>) value);
-                            queryWrapper.between(attributeName, between.get(0), between.get(1));
+                            List<Object> between = CollUtil.newArrayList((Collection<Object>) value);
+                            if (CollUtil.isNotEmpty(between)) {
+                                queryWrapper.between(attributeName, between.get(0), between.get(1));
+                            }
                             break;
                         case ASC:
                             queryWrapper.orderByAsc(attributeName);

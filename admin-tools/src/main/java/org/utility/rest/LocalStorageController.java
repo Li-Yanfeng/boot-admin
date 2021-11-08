@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.exception.BadRequestException;
 import org.utility.exception.enums.UserErrorCode;
@@ -35,6 +36,7 @@ public class LocalStorageController {
 
     @ApiOperation(value = "上传文件")
     @PreAuthorize(value = "@authorize.check('storage:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result uploadFile(@RequestParam String name, @RequestParam("file") MultipartFile file) {
         localStorageService.save(name, file);
@@ -42,6 +44,7 @@ public class LocalStorageController {
     }
 
     @ApiOperation(value = "上传图片")
+    @NoRepeatSubmit
     @PostMapping(value = "/pictures")
     public Result uploadPicture(@RequestParam MultipartFile file) {
         // 判断文件是否为图片
@@ -64,7 +67,7 @@ public class LocalStorageController {
     @ApiOperation(value = "修改文件")
     @Log(value = "修改文件")
     @PreAuthorize(value = "@authorize.check('storage:edit')")
-    @PutMapping
+    @NoRepeatSubmit
     public Result update(@Validated @RequestBody LocalStorage resource) {
         localStorageService.updateById(resource);
         return Result.success();

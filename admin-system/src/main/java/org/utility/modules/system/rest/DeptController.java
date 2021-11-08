@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.modules.system.model.Dept;
 import org.utility.modules.system.service.DeptService;
@@ -38,6 +39,7 @@ public class DeptController {
     @ApiOperation(value = "新增部门")
     @Log(value = "新增部门")
     @PreAuthorize(value = "@authorize.check('dept:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result save(@Validated @RequestBody Dept resource) {
         deptService.save(resource);
@@ -66,6 +68,7 @@ public class DeptController {
     @ApiOperation(value = "修改部门")
     @Log(value = "修改部门")
     @PreAuthorize(value = "@authorize.check('dept:edit')")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody Dept resource) {
         deptService.updateById(resource);
@@ -79,8 +82,9 @@ public class DeptController {
         return Result.success(deptService.page(query));
     }
 
-    @ApiOperation(value = "查询部门:根据ID获取同级与上级数据")
+    @ApiOperation(value = "根据ID获取同级与上级数据")
     @PreAuthorize(value = "@authorize.check('user:list','dept:list')")
+    @NoRepeatSubmit
     @PostMapping("/superior")
     public Result getSuperior(@RequestBody List<Long> ids) {
         Set<DeptDTO> deptDtos = CollUtil.newLinkedHashSet();

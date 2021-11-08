@@ -28,12 +28,6 @@ spring:
             max-lifetime: 1800000
             # 连接超时时间,默认30秒
             connection-timeout: 30000
-        slave:
-          url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:admin-slave}?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false
-          username: ${DB_USER:root}
-          password: ${DB_PWD:root}
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          type: com.zaxxer.hikari.HikariDataSource
 
 # 登录相关配置
 login:

@@ -1,6 +1,7 @@
 package org.utility.modules.system.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
@@ -52,6 +53,7 @@ public class User extends BaseEntity implements Serializable {
     private String password;
 
     @ApiModelProperty(value = "是否为admin账号")
+    @TableField(value = "is_admin")
     private Boolean admin;
 
     @ApiModelProperty(value = "状态：1启用、0禁用")

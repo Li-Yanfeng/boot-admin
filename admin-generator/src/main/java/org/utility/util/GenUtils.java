@@ -64,6 +64,7 @@ public class GenUtils {
         templateNames.add("service");
         templateNames.add("serviceImpl");
         templateNames.add("controller");
+        templateNames.add("sql");
         return templateNames;
     }
 
@@ -129,7 +130,7 @@ public class GenUtils {
         List<String> templates = getAdminTemplateNames();
         for (String templateName : templates) {
             Template template = engine.getTemplate(ADMIN_TEMPLATE_PATH + templateName + TEMPLATE_SUFFIX);
-            String filePath = getAdminFilePath(templateName, genConfig, genMap.get("className").toString(), tempPath + "admin" + File.separator);
+            String filePath = getAdminFilePath(templateName, genConfig, genMap.get("className").toString());
 
             assert filePath != null;
             File file = new File(filePath);
@@ -144,12 +145,7 @@ public class GenUtils {
         templates = getFrontTemplateNames();
         for (String templateName : templates) {
             Template template = engine.getTemplate(FRONT_TEMPLATE_PATH + templateName + ADMIN_TEMPLATE_PATH);
-            String path = tempPath + "admin-web" + File.separator;
-            String apiPath = path + "src" + File.separator + "api" + File.separator;
-            String srcPath =
-                    path + "src" + File.separator + "views" + File.separator + genMap.get("changeClassName").toString() + File.separator;
-            String filePath = getFrontFilePath(templateName, apiPath, srcPath,
-                    genMap.get("changeClassName").toString());
+            String filePath = getFrontFilePath(templateName, genConfig, genMap.get("changeClassName").toString());
 
             assert filePath != null;
             File file = new File(filePath);
@@ -177,7 +173,7 @@ public class GenUtils {
         List<String> templates = getAdminTemplateNames();
         for (String templateName : templates) {
             Template template = engine.getTemplate(ADMIN_TEMPLATE_PATH + templateName + TEMPLATE_SUFFIX);
-            String filePath = getAdminFilePath(templateName, genConfig, genMap.get("className").toString(), System.getProperty("user.dir"));
+            String filePath = getAdminFilePath(templateName, genConfig, genMap.get("className").toString());
 
             assert filePath != null;
             File file = new File(filePath);
@@ -192,7 +188,7 @@ public class GenUtils {
         templates = getFrontTemplateNames();
         for (String templateName : templates) {
             Template template = engine.getTemplate(FRONT_TEMPLATE_PATH + templateName + TEMPLATE_SUFFIX);
-            String filePath = getFrontFilePath(templateName, genConfig.getApiPath(), genConfig.getPath(), genMap.get("changeClassName").toString());
+            String filePath = getFrontFilePath(templateName, genConfig, genMap.get("changeClassName").toString());
 
             assert filePath != null;
             File file = new File(filePath);
@@ -389,10 +385,10 @@ public class GenUtils {
     /**
      * 定义后端文件路径以及名称
      */
-    private static String getAdminFilePath(String templateName, GenConfig genConfig, String className, String rootPath) {
-        String projectPath = new File(rootPath).getParent()+ File.separator + genConfig.getModuleName();
+    private static String getAdminFilePath(String templateName, GenConfig genConfig, String className) {
+        String projectPath = new File(genConfig.getAdminPath()).getParent() + File.separator + genConfig.getModuleName();
         String packagePath = projectPath + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
-        String resourcePath = projectPath + File.separator + "src" +File.separator+ "main" + File.separator + "resources" + File.separator;
+        String resourcePath = projectPath + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
         if (!ObjectUtils.isEmpty(genConfig.getPack())) {
             packagePath += genConfig.getPack().replace(".", File.separator) + File.separator;
         }
@@ -422,6 +418,9 @@ public class GenUtils {
             case "controller":
                 return packagePath + "rest" + File.separator + className + "Controller.java";
 
+            case "sql":
+                return resourcePath + "sql" + File.separator + className + "Menu.sql";
+
             default:
                 return null;
         }
@@ -430,13 +429,16 @@ public class GenUtils {
     /**
      * 定义前端文件路径以及名称
      */
-    private static String getFrontFilePath(String templateName, String apiPath, String path, String apiName) {
+    private static String getFrontFilePath(String templateName, GenConfig genConfig, String apiName) {
+        String projectPath =
+                new File(genConfig.getFrontPath()).getParent() + File.separator + genConfig.getModuleName() + "-web" + File.separator;
+
         switch (templateName) {
             case "api":
-                return apiPath + File.separator + apiName + ".js";
+                return projectPath + "src" + File.separator + "api" + File.separator + apiName + ".js";
 
             case "index":
-                return path + File.separator + "index.vue";
+                return projectPath + "src" + File.separator + "views" + File.separator + apiName + File.separator + "index.vue";
 
             default:
                 return null;

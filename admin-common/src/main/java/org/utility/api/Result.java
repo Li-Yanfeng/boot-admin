@@ -121,18 +121,12 @@ public class Result<T> implements Serializable {
         // 处理数据
         if (data instanceof IPage) {
             // 数据列表
-            this.data.put("records", ((IPage<?>) data).getRecords());
-            // 当前页
-            this.data.put("current", ((IPage<?>) data).getCurrent());
-            // 每页显示条数
-            this.data.put("size", ((IPage<?>) data).getSize());
+            this.data.put("content", ((IPage<?>) data).getRecords());
             // 总数
             this.data.put("total", ((IPage<?>) data).getTotal());
-            // 总页数
-            this.data.put("pages", ((IPage<?>) data).getPages());
         } else {
             // 数据列表
-            this.data.put("records", data);
+            this.data.put("content", data);
         }
     }
 

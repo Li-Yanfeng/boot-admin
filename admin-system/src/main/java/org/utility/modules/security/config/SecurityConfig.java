@@ -91,6 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 // 禁用 CSRF
                 .csrf().disable()
+                // 添加JWT filter
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 // 授权异常
                 .exceptionHandling()

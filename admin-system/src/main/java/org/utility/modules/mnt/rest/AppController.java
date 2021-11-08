@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.modules.mnt.model.App;
 import org.utility.modules.mnt.service.AppService;
@@ -33,6 +34,7 @@ public class AppController {
     @ApiOperation(value = "新增应用")
     @Log(value = "新增应用")
     @PreAuthorize(value = "@authorize.check('app:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result save(@Validated @RequestBody App resource) {
         appService.save(resource);
@@ -51,7 +53,7 @@ public class AppController {
     @ApiOperation(value = "修改应用")
     @Log(value = "修改应用")
     @PreAuthorize(value = "@authorize.check('app:edit')")
-    @PutMapping
+    @NoRepeatSubmit
     public Result update(@Validated @RequestBody App resource) {
         appService.updateById(resource);
         return Result.success();

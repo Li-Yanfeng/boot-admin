@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.model.EmailConfig;
 import org.utility.model.vo.EmailVO;
@@ -33,6 +34,7 @@ public class EmailController {
 
     @ApiOperation(value = "配置邮件")
     @Log(value = "配置邮件")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody EmailConfig emailConfig) throws Exception {
         emailService.config(emailConfig, emailService.getConfig());
@@ -41,6 +43,7 @@ public class EmailController {
 
     @ApiOperation(value = "发送邮件")
     @Log(value = "发送邮件")
+    @NoRepeatSubmit
     @PostMapping
     public Result sendEmail(@Validated @RequestBody EmailVO emailVo) {
         emailService.send(emailVo, emailService.getConfig());

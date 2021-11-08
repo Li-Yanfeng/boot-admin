@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.modules.mnt.model.DeployHistory;
 import org.utility.modules.mnt.service.DeployService;
@@ -43,6 +44,7 @@ public class DeployController {
     @ApiOperation(value = "新增部署")
     @Log(value = "新增部署")
     @PreAuthorize(value = "@authorize.check('deploy:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result save(@Validated @RequestBody DeployDTO resource) {
         deployService.save(resource);
@@ -61,6 +63,7 @@ public class DeployController {
     @ApiOperation(value = "修改部署")
     @Log(value = "修改部署")
     @PreAuthorize(value = "@authorize.check('deploy:edit')")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody DeployDTO resource) {
         deployService.updateById(resource);
@@ -85,6 +88,7 @@ public class DeployController {
     @ApiOperation(value = "上传文件部署")
     @Log(value = "上传文件部署")
     @PreAuthorize(value = "@authorize.check('deploy:edit')")
+    @NoRepeatSubmit
     @PostMapping(value = "/upload")
     public Result upload(@RequestBody MultipartFile file, HttpServletRequest request) throws Exception {
         Long id = Long.valueOf(request.getParameter("id"));
@@ -109,6 +113,7 @@ public class DeployController {
     @ApiOperation(value = "系统还原")
     @Log(value = "系统还原")
     @PreAuthorize(value = "@authorize.check('deploy:edit')")
+    @NoRepeatSubmit
     @PostMapping(value = "/serverReduction")
     public Result serverReduction(@Validated @RequestBody DeployHistory resource) {
         String result = deployService.serverReduction(resource);
@@ -118,6 +123,7 @@ public class DeployController {
     @ApiOperation(value = "服务运行状态")
     @Log(value = "服务运行状态")
     @PreAuthorize(value = "@authorize.check('deploy:edit')")
+    @NoRepeatSubmit
     @PostMapping(value = "/serverStatus")
     public Result serverStatus(@Validated @RequestBody DeployDTO resource) {
         String result = deployService.serverStatus(resource);
@@ -127,6 +133,7 @@ public class DeployController {
     @ApiOperation(value = "启动服务")
     @Log(value = "启动服务")
     @PreAuthorize(value = "@authorize.check('deploy:edit')")
+    @NoRepeatSubmit
     @PostMapping(value = "/startServer")
     public Result startServer(@Validated @RequestBody DeployDTO resource) {
         String result = deployService.startServer(resource);
@@ -136,6 +143,7 @@ public class DeployController {
     @ApiOperation(value = "停止服务")
     @Log(value = "停止服务")
     @PreAuthorize(value = "@authorize.check('deploy:edit')")
+    @NoRepeatSubmit
     @PostMapping(value = "/stopServer")
     public Result stopServer(@Validated @RequestBody DeployDTO resource) {
         String result = deployService.stopServer(resource);

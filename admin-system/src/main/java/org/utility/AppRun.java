@@ -13,6 +13,7 @@ import org.utility.annotation.rest.AnonymousGetMapping;
 import org.utility.util.SpringContextHolder;
 
 /**
+ * 系统入口函数
  *
  * @author Li Yanfeng
  */

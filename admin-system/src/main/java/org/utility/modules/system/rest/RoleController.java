@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.exception.BadRequestException;
 import org.utility.modules.system.service.RoleService;
@@ -40,6 +41,7 @@ public class RoleController {
     @ApiOperation(value = "新增角色")
     @Log(value = "新增角色")
     @PreAuthorize(value = "@authorize.check('role:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result save(@Validated @RequestBody RoleDTO resource) {
         this.getLevels(resource.getLevel());
@@ -65,6 +67,7 @@ public class RoleController {
     @ApiOperation(value = "修改角色")
     @Log(value = "修改角色")
     @PreAuthorize(value = "@authorize.check('role:edit')")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody RoleDTO resource) {
         this.getLevels(resource.getLevel());
@@ -75,6 +78,7 @@ public class RoleController {
     @ApiOperation(value = "修改角色菜单")
     @Log(value = "修改角色菜单")
     @PreAuthorize(value = "@authorize.check('role:edit')")
+    @NoRepeatSubmit
     @PutMapping(value = "/menu")
     public Result updateMenu(@RequestBody RoleDTO resource) {
         RoleDTO role = roleService.getById(resource.getRoleId());

@@ -37,12 +37,13 @@ public class GenConfig implements Serializable {
     @NotBlank
     private String pack;
 
+    @ApiModelProperty(value = "后端代码生成的路径")
+    @NotBlank
+    private String adminPath;
+
     @ApiModelProperty(value = "前端代码生成的路径")
     @NotBlank
-    private String path;
-
-    @ApiModelProperty(value = "前端Api文件路径")
-    private String apiPath;
+    private String frontPath;
 
     @ApiModelProperty(value = "作者")
     private String author;
@@ -94,20 +95,20 @@ public class GenConfig implements Serializable {
         this.pack = pack;
     }
 
-    public String getPath() {
-        return path;
+    public String getAdminPath() {
+        return adminPath;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setAdminPath(String adminPath) {
+        this.adminPath = adminPath;
     }
 
-    public String getApiPath() {
-        return apiPath;
+    public String getFrontPath() {
+        return frontPath;
     }
 
-    public void setApiPath(String apiPath) {
-        this.apiPath = apiPath;
+    public void setFrontPath(String frontPath) {
+        this.frontPath = frontPath;
     }
 
     public String getAuthor() {

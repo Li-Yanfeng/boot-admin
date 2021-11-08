@@ -45,7 +45,7 @@
     </appender>
 
     <!--将该包下的日志操作行为追加到文件-->
-    <logger name="org.utility.rest.**" level="error">
+    <logger name="org.utility" level="error">
         <appender-ref ref="file" />
     </logger>
 

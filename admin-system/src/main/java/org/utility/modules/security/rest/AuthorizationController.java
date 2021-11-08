@@ -124,7 +124,8 @@ public class AuthorizationController {
         redisUtils.set(uuid, captchaValue, loginProperties.getLoginCode().getExpiration(), TimeUnit.MINUTES);
         // 验证码信息
         Map<String, Object> imgResult = new HashMap<String, Object>(2) {{
-            put("img", captcha.toBase64());
+//            put("img", captcha.toBase64());
+            put("img", captcha.text());
             put("uuid", uuid);
         }};
         return Result.success(imgResult);

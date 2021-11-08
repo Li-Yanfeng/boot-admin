@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
 
@@ -13,7 +14,7 @@ import java.sql.Timestamp;
  * @author Li Yanfeng
  */
 @ApiModel(description = "基础实体,包含通用实体字段")
-public class BaseEntity {
+public abstract class BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "创建人")
     @TableField(fill = FieldFill.INSERT)

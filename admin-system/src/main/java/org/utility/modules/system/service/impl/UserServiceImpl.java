@@ -326,10 +326,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDTO, UserQuery,
 
     @Override
     public UserDTO getByUsername(String username) {
-        UserDTO userDto = ConvertUtils.convert(getByUsername(username), UserDTO.class);
-///        userDto.setRoles();
-///        userDto.setJobs();
-///        userDto.setDept();
+        LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(User::getUsername, username);
+        UserDTO userDto = ConvertUtils.convert(userMapper.selectOne(wrapper), UserDTO.class);
+        if (userDto == null) {
+            return userDto;
+        }
+//        userDto.setRoles();
+//        userDto.setJobs();
+        userDto.setDept(new DeptSmallDTO(userDto.getDeptId(), deptService.getById(userDto.getDeptId()).getName()));
         return userDto;
     }
 

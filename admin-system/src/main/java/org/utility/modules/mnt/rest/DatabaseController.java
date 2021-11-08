@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.exception.BadRequestException;
 import org.utility.modules.mnt.model.Database;
@@ -42,6 +43,7 @@ public class DatabaseController {
     @ApiOperation(value = "新增数据库")
     @Log(value = "新增数据库")
     @PreAuthorize(value = "@authorize.check('database:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result save(@Validated @RequestBody Database resource) {
         databaseService.save(resource);
@@ -60,6 +62,7 @@ public class DatabaseController {
     @ApiOperation(value = "修改数据库")
     @Log(value = "修改数据库")
     @PreAuthorize(value = "@authorize.check('database:edit')")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody Database resource) {
         databaseService.updateById(resource);
@@ -76,6 +79,7 @@ public class DatabaseController {
     @ApiOperation(value = "测试数据库链接")
     @Log(value = "测试数据库链接")
     @PreAuthorize(value = "@authorize.check('database:testConnect')")
+    @NoRepeatSubmit
     @PostMapping("/testConnect")
     public Result testConnect(@Validated @RequestBody Database resources) {
         return Result.success(databaseService.testConnection(resources));
@@ -84,6 +88,7 @@ public class DatabaseController {
     @ApiOperation(value = "执行SQL脚本")
     @Log(value = "执行SQL脚本")
     @PreAuthorize(value = "@authorize.check('database:add')")
+    @NoRepeatSubmit
     @PostMapping(value = "/upload")
     public Result upload(@RequestBody MultipartFile file, HttpServletRequest request, Long id) throws Exception {
         DatabaseDTO database = databaseService.getById(id);

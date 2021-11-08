@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
+import org.utility.annotation.NoRepeatSubmit;
 import org.utility.api.Result;
 import org.utility.modules.system.model.DictDetail;
 import org.utility.modules.system.service.DictDetailService;
@@ -37,6 +38,7 @@ public class DictDetailController {
     @ApiOperation(value = "新增数据字典详情")
     @Log(value = "新增数据字典详情")
     @PreAuthorize(value = "@authorize.check('dict:add')")
+    @NoRepeatSubmit
     @PostMapping
     public Result save(@Validated @RequestBody DictDetail resource) {
         dictDetailService.save(resource);
@@ -55,6 +57,7 @@ public class DictDetailController {
     @ApiOperation(value = "修改数据字典详情")
     @Log(value = "修改数据字典详情")
     @PreAuthorize(value = "@authorize.check('dict:edit')")
+    @NoRepeatSubmit
     @PutMapping
     public Result update(@Validated @RequestBody DictDetail resource) {
         dictDetailService.updateById(resource);

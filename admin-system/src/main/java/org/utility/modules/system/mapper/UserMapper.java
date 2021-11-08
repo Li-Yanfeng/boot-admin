@@ -42,7 +42,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param deptId 部门Id
      * @return /
      */
-    @Select("SELECT u.* FROM sys_user u, sys_user_role ur, sys_role_dept rd WHERE u.user_id = ur.user_id AND ur.role_id = rd.role_id AND r.dept_id = #{deptId} GROUP BY u.user_id")
+    @Select("SELECT u.* FROM sys_user u, sys_user_role ur, sys_role_dept rd WHERE u.user_id = ur.user_id AND ur.role_id = rd.role_id AND rd.dept_id = #{deptId} GROUP BY u.user_id")
     List<User> selectByDeptId(Long deptId);
 
     /**
@@ -51,6 +51,6 @@ public interface UserMapper extends BaseMapper<User> {
      * @param deptIds 部门Id集合
      * @return /
      */
-    @Select("SELECT count(1) FROM sys_user u WHERE u.dept_id IN <foreach item='item' index='index' collection='ids' open='(' separator=',' close=')'> #{item} </foreach>")
+    @Select("<script>SELECT count(1) FROM sys_user u WHERE u.dept_id IN <foreach item='item' index='index' collection='ids' open='(' separator=',' close=')'> #{item} </foreach></script>")
     int countByDeptIds(@Param("ids") Set<Long> deptIds);
 }
