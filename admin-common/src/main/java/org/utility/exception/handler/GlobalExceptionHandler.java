@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     public Result<Object> handlerEntityExistException(EntityExistException e) {
         // 打印堆栈信息
         logger.error(ThrowableUtils.getStackTrace(e));
-        return Result.failure(e.getMessage());
+        return Result.failure(UserErrorCode.DATA_HAS_UNIQUENESS.getCode(), e.getMessage());
     }
 
     /**
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
     public Result<Object> handlerEntityNotFoundException(EntityNotFoundException e) {
         // 打印堆栈信息
         logger.error(ThrowableUtils.getStackTrace(e));
-        return Result.failure(UserErrorCode.ENTITY_NOT_FOUND.getCode(), e.getMessage());
+        return Result.failure(UserErrorCode.REQUEST_DATA_NOT_FOUND.getCode(), e.getMessage());
     }
 
     /**

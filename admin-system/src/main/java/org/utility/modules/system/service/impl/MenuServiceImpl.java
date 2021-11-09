@@ -66,30 +66,40 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDTO, MenuQuery,
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void save(Menu resource) {
-        if (this.getByTitle(resource.getTitle()) != null) {
+        if (getByTitle(resource.getTitle()) != null) {
             throw new EntityExistException(Menu.class, "title", resource.getTitle());
         }
+
         if (StrUtil.isNotBlank(resource.getComponentName())) {
-            if (this.getByComponentName(resource.getComponentName()) != null) {
+            if (getByComponentName(resource.getComponentName()) != null) {
                 throw new EntityExistException(Menu.class, "componentName", resource.getComponentName());
             }
         }
+
         if (resource.getiFrame()) {
             String http = "http://", https = "https://";
             if (!(resource.getPath().toLowerCase().startsWith(http) || resource.getPath().toLowerCase().startsWith(https))) {
                 throw new BadRequestException("外链必须以http://或者https://开头");
             }
         }
-        menuMapper.insert(resource);
+
+        if (ObjectUtil.equal(resource.getPid(), 0L)) {
+            resource.setPid(null);
+        }
 
         // 计算子节点数目
         resource.setSubCount(resource.getSubCount() == null ? 0 : resource.getSubCount());
         resource.setMenuSort(resource.getMenuSort() == null ? 999 : resource.getMenuSort());
-        // 更新子节点菜单数目
-        this.updateSubCnt(resource.getPid());
+        menuMapper.insert(resource);
+
+        // 计算子节点数目
+        if (resource.getPid() != null) {
+            // 清理缓存
+            updateSubCnt(resource.getPid());
+        }
         // 清理缓存
         if (resource.getPid() != null) {
-            redisUtils.del(CacheConsts.MENU_PID + resource.getPid());
+            redisUtils.del(CacheConsts.MENU_PID + (resource.getPid() == null ? 0 : resource.getPid()));
         }
         List<String> keys = redisUtils.scan(CacheConsts.MENU_USER + "*");
         keys.forEach(redisUtils::del);
@@ -100,10 +110,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDTO, MenuQuery,
     public void removeByIds(Collection<Long> ids) {
         roleMenuService.removeByMenuIds(ids);
         for (Long id : ids) {
-            MenuDTO menu = this.getById(id);
-            this.delCaches(menu.getMenuId(), menu.getPid());
+            MenuDTO menu = getById(id);
+            delCaches(menu.getMenuId(), menu.getPid());
             if (menu.getPid() != null) {
-                this.updateSubCnt(menu.getPid());
+                updateSubCnt(menu.getPid());
             }
         }
         menuMapper.deleteBatchIds(ids);
@@ -115,10 +125,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDTO, MenuQuery,
         if (resource.getMenuId().equals(resource.getPid())) {
             throw new BadRequestException("上级不能为自己");
         }
-        Menu menu = Optional.ofNullable(menuMapper.selectById(resource.getMenuId())).orElseGet(Menu::new);
+        Menu menu = menuMapper.selectById(resource.getMenuId());
+        ValidationUtils.notNull(menu.getMenuId(), "Permission", "id", resource.getMenuId());
         // 记录旧的父节点ID
         Long pid = menu.getPid();
-        ValidationUtils.isNull(menu.getMenuId(), "Permission", "id", resource.getMenuId());
 
         if (resource.getiFrame()) {
             String http = "http://", https = "https://";
@@ -126,15 +136,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDTO, MenuQuery,
                 throw new BadRequestException("外链必须以http://或者https://开头");
             }
         }
-        Menu menu1 = this.getByTitle(resource.getTitle());
 
+        Menu menu1 = getByTitle(resource.getTitle());
         if (menu1 != null && ObjectUtil.notEqual(menu1.getMenuId(), menu.getMenuId())) {
             throw new EntityExistException(Menu.class, "name", resource.getTitle());
         }
 
+        if (ObjectUtil.equal(resource.getPid(), 0L)) {
+            resource.setPid(null);
+        }
+
         if (StringUtils.isNotBlank(resource.getComponentName())) {
-            menu1 = this.getByComponentName(resource.getComponentName());
-            ;
+            menu1 = getByComponentName(resource.getComponentName());
             if (menu1 != null && ObjectUtil.notEqual(menu1.getMenuId(), menu.getMenuId())) {
                 throw new EntityExistException(Menu.class, "componentName", resource.getComponentName());
             }
@@ -166,16 +179,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDTO, MenuQuery,
         menuMapper.updateById(menu);
 
         // 计算父级菜单节点数目
-        this.updateSubCnt(oldPid);
-        this.updateSubCnt(newPid);
+        updateSubCnt(oldPid);
+        updateSubCnt(newPid);
         // 清理缓存
-        this.delCaches(resource.getMenuId(), pid);
+        delCaches(resource.getMenuId(), pid);
     }
 
     @Override
     public List<MenuDTO> list(MenuQuery query) {
         QueryWrapper<Menu> wrapper = QueryHelp.queryWrapper(query);
-        wrapper.orderByAsc("menu_sort");
         return ConvertUtils.convertList(menuMapper.selectList(wrapper), MenuDTO.class);
     }
 
@@ -245,7 +257,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDTO, MenuQuery,
         }
         wrapper.eq(Menu::getPid, menuDto.getPid()).orderByAsc(Menu::getMenuSort);
         menus.addAll(menuMapper.selectList(wrapper));
-        return getSuperior(this.getById(menuDto.getPid()), menus);
+        return getSuperior(getById(menuDto.getPid()), menus);
     }
 
     @Override
@@ -298,7 +310,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDTO, MenuQuery,
                 if (CollectionUtil.isNotEmpty(menuDtoList)) {
                     menuVo.setAlwaysShow(true);
                     menuVo.setRedirect("noredirect");
-                    menuVo.setChildren(this.buildMenu(menuDtoList));
+                    menuVo.setChildren(buildMenu(menuDtoList));
                     // 处理是一级菜单并且没有子菜单的情况
                 } else if (menuDTO.getPid() == null) {
                     MenuVO menuVo1 = new MenuVO();
@@ -353,9 +365,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDTO, MenuQuery,
      * @param title 菜单标题
      */
     private Menu getByTitle(String title) {
-        LambdaQueryWrapper<Menu> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(Menu::getTitle, title);
-        return menuMapper.selectOne(wrapper);
+        return lambdaQuery().eq(Menu::getTitle, title).one();
     }
 
     /**
@@ -364,9 +374,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDTO, MenuQuery,
      * @param componentName 组件名称
      */
     private Menu getByComponentName(String componentName) {
-        LambdaQueryWrapper<Menu> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(Menu::getComponentName, componentName);
-        return menuMapper.selectOne(wrapper);
+        return lambdaQuery().eq(Menu::getComponentName, componentName).one();
     }
 
     /**
@@ -376,9 +384,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDTO, MenuQuery,
      */
     private void updateSubCnt(Long menuId) {
         if (menuId != null) {
-            LambdaQueryWrapper<Menu> queryWrapper = Wrappers.lambdaQuery();
-            queryWrapper.eq(Menu::getPid, menuId);
-            int count = menuMapper.selectCount(queryWrapper);
+            int count = lambdaQuery().eq(Menu::getPid, menuId).count();
 
             LambdaUpdateWrapper<Menu> updateWrapper = Wrappers.lambdaUpdate();
             updateWrapper.eq(Menu::getMenuId, menuId);

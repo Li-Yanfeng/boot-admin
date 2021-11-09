@@ -76,6 +76,8 @@ public enum UserErrorCode implements ErrorCode {
     USER_REQUEST_PARAMETER_ERROR("A0400", "用户请求参数错误"),
     CONTAINS_ILLEGAL_AND_MALICIOUS_REDIRECT_LINKS("A0401", "包含非法恶意跳转链接"),
     INVALID_USER_INPUT("A0402", "无效的用户输入"),
+    DATA_HAS_UNIQUENESS("A0403", "数据具有唯一性"),
+    REQUEST_DATA_NOT_FOUND("A0404", "请求数据未找到"),
     REQUIRED_PARAMETERS_FOR_REQUEST_ARE_EMPTY("A0410", "请求必填参数为空"),
     USER_ORDER_NUMBER_IS_EMPTY("A0411", "用户订单号为空"),
     THE_ORDER_QUANTITY_IS_EMPTY("A0412", "订购数量为空"),
@@ -137,11 +139,7 @@ public enum UserErrorCode implements ErrorCode {
     USER_MICROPHONE_IS_ABNORMAL("A1002", "用户麦克风异常"),
     THE_USER_EARPIECE_IS_ABNORMAL("A1003", "用户听筒异常"),
     USER_SPEAKER_IS_ABNORMAL("A1004", "用户扬声器异常"),
-    USER_GPS_POSITIONING_IS_ABNORMAL("A1005", "用户 GPS 定位异常"),
-
-    PLEASE_CONFIGURE_FIRST("A0400", "请先配置，再操作"),
-    ENTITY_EXIST("A0405", "实体存在"),
-    ENTITY_NOT_FOUND("A0404", "找不到实体");
+    USER_GPS_POSITIONING_IS_ABNORMAL("A1005", "用户 GPS 定位异常");
 
 
     /**

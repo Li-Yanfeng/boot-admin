@@ -13,7 +13,7 @@ import java.util.List;
  * @param <T> Entity 实体
  * @author Li Yanfeng
  */
-public interface Service<D, Q, T> {
+public interface Service<D, Q, T> extends IService<T> {
 
     /**
      * 插入一条记录（选择字段，策略插入）

@@ -12,9 +12,9 @@ import org.utility.exception.BadRequestException;
 public class ValidationUtils {
 
     /**
-     * 验证空
+     * 验证不为空
      */
-    public static void isNull(Object obj, String entity, String parameter, Object value) {
+    public static void notNull(Object obj, String entity, String parameter, Object value) {
         if (ObjectUtil.isNull(obj)) {
             String msg = entity + " 不存在: " + parameter + " is " + value;
             throw new BadRequestException(msg);

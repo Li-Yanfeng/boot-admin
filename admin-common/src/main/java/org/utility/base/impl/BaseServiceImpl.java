@@ -1,17 +1,22 @@
 package org.utility.base.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.utility.base.BaseService;
 import org.utility.util.QueryHelp;
+import org.utility.util.ValidationUtils;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service 实现类
@@ -27,6 +32,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, Q, T> implements BaseServi
 
     @Autowired
     protected M baseMapper;
+
+    protected Class<T> entityClass = currentModelClass();
 
     @Override
     public void save(T resource) {
@@ -59,24 +66,41 @@ public class BaseServiceImpl<M extends BaseMapper<T>, Q, T> implements BaseServi
 
     @Override
     public List<T> list(Q query) {
-        return baseMapper.selectList(QueryHelp.queryWrapper(query));
+        return Optional.ofNullable(baseMapper.selectList(QueryHelp.queryWrapper(query))).orElseGet(ListUtil::empty);
     }
 
     @Override
     public IPage<T> page(Q query) {
-        return baseMapper.selectPage(QueryHelp.page(query), QueryHelp.queryWrapper(query));
+        return Optional.ofNullable(baseMapper.selectPage(QueryHelp.page(query), QueryHelp.queryWrapper(query))).orElseGet(Page::new);
     }
 
     @Override
     public T getById(Long id) {
-        if (ObjectUtil.isNull(id)) {
-            return null;
-        }
-        return baseMapper.selectById(id);
+        T t = baseMapper.selectById(id);
+        ValidationUtils.notNull(t, entityClass.getSimpleName(), "id", id);
+        return t;
     }
 
     @Override
     public T getOne(Q query) {
-        return baseMapper.selectOne(QueryHelp.queryWrapper(query));
+        return Optional.ofNullable(baseMapper.selectOne(QueryHelp.queryWrapper(query))).orElseGet(this::newInstance);
+    }
+
+
+    @Override
+    public M getBaseMapper() {
+        return baseMapper;
+    }
+
+    public T newInstance() {
+        try {
+            return entityClass.newInstance();
+        } catch (ReflectiveOperationException e) {
+            return null;
+        }
+    }
+
+    protected Class<T> currentModelClass() {
+        return (Class<T>) ReflectionKit.getSuperClassGenericType(getClass(), 2);
     }
 }

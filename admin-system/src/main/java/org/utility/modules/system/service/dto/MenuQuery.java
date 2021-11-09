@@ -44,6 +44,11 @@ public class MenuQuery extends BaseQuery {
      */
     @Query(blurry = "title,component,permission")
     private String blurry;
+    /**
+     * 排序
+     */
+    @Query(type = Query.Type.ASC)
+    private Integer menuSort;
 
 
     public Long getMenuId() {
@@ -84,5 +89,13 @@ public class MenuQuery extends BaseQuery {
 
     public void setBlurry(String blurry) {
         this.blurry = blurry;
+    }
+
+    public Integer getMenuSort() {
+        return menuSort;
+    }
+
+    public void setMenuSort(Integer menuSort) {
+        this.menuSort = menuSort;
     }
 }

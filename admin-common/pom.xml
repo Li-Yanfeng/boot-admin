@@ -50,12 +50,6 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <!--Spring boot Aop-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
         <!--Spring boot 测试-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
