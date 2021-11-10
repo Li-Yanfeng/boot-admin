@@ -1,4 +1,4 @@
-package org.utility.base.impl;
+package org.utility.core.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.utility.base.Service;
+import org.utility.core.service.Service;
 import org.utility.util.ConvertUtils;
 import org.utility.util.QueryHelp;
 import org.utility.util.ValidationUtils;

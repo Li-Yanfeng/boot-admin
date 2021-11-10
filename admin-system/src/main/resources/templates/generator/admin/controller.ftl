@@ -7,9 +7,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
 import org.utility.annotation.NoRepeatSubmit;
-import org.utility.api.Result;
 import ${package}.model.${className};
 import ${package}.service.${className}Service;
+import ${package}.service.dto.${className}DTO;
 import ${package}.service.dto.${className}Query;
 
 import javax.servlet.http.HttpServletResponse;
@@ -36,18 +36,16 @@ public class ${className}Controller {
     @PreAuthorize(value = "@authorize.check('${changeClassName}:add')")
     @NoRepeatSubmit
     @PostMapping
-    public Result save(@Validated @RequestBody ${className} resource) {
+    public void save(@Validated @RequestBody ${className} resource) {
         ${changeClassName}Service.save(resource);
-        return Result.success();
     }
 
     @ApiOperation(value = "删除${apiAlias!}")
     @Log(value = "删除${apiAlias!}")
     @PreAuthorize(value = "@authorize.check('${changeClassName}:del')")
     @DeleteMapping
-    public Result delete(@RequestBody Set<${pkColumnType}> ids) {
+    public void delete(@RequestBody Set<${pkColumnType}> ids) {
         ${changeClassName}Service.removeByIds(ids);
-        return Result.success();
     }
 
     @ApiOperation(value = "修改${apiAlias!}")
@@ -55,16 +53,15 @@ public class ${className}Controller {
     @PreAuthorize(value = "@authorize.check('${changeClassName}:edit')")
     @NoRepeatSubmit
     @PutMapping
-    public Result update(@Validated @RequestBody ${className} resource) {
+    public void update(@Validated @RequestBody ${className} resource) {
         ${changeClassName}Service.updateById(resource);
-        return Result.success();
     }
 
     @ApiOperation(value = "查询${apiAlias!}")
     @PreAuthorize(value = "@authorize.check('${changeClassName}:list')")
     @GetMapping
-    public Result page(${className}Query query) {
-        return Result.success(${changeClassName}Service.page(query));
+    public IPage<${className}DTO> page(${className}Query query) {
+        return ${changeClassName}Service.page(query);
     }
 
     @ApiOperation(value = "导出${apiAlias!}")

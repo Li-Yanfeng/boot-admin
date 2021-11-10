@@ -2,7 +2,7 @@ package org.utility.modules.system.service.dto;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.utility.annotation.Query;
-import org.utility.base.BaseQuery;
+import org.utility.core.service.dto.BaseQuery;
 
 import java.util.Date;
 import java.util.HashSet;

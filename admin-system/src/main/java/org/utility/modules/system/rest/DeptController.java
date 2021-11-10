@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
 import org.utility.annotation.NoRepeatSubmit;
-import org.utility.api.Result;
+import org.utility.core.model.Result;
 import org.utility.modules.system.model.Dept;
 import org.utility.modules.system.service.DeptService;
 import org.utility.modules.system.service.dto.DeptDTO;

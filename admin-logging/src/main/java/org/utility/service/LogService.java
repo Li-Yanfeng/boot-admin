@@ -2,7 +2,7 @@ package org.utility.service;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
-import org.utility.base.Service;
+import org.utility.core.service.Service;
 import org.utility.model.Log;
 import org.utility.service.dto.LogDTO;
 import org.utility.service.dto.LogQuery;

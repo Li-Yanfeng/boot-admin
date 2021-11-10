@@ -1,6 +1,6 @@
 package org.utility.exception.enums;
 
-import org.utility.api.ErrorCode;
+import org.utility.core.interfaces.ErrorCode;
 
 /**
  * 系统错误代码 { B 表示错误来源于当前系统 }

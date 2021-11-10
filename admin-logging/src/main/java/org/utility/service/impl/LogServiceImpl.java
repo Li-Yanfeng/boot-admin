@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.utility.base.impl.ServiceImpl;
+import org.utility.core.service.impl.ServiceImpl;
 import org.utility.mapper.LogMapper;
 import org.utility.model.Log;
 import org.utility.service.LogService;

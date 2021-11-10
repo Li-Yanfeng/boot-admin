@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.utility.base.impl.ServiceImpl;
+import org.utility.core.service.impl.ServiceImpl;
 import org.utility.constant.CacheConsts;
 import org.utility.modules.system.mapper.DictDetailMapper;
 import org.utility.modules.system.mapper.DictMapper;

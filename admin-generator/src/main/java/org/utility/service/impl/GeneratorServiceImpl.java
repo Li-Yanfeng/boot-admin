@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.utility.api.Result;
+import org.utility.core.model.Result;
 import org.utility.exception.BadRequestException;
 import org.utility.mapper.ColumnInfoMapper;
 import org.utility.model.ColumnInfo;

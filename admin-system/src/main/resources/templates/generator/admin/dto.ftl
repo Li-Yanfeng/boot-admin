@@ -5,7 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 </#if>
 <#if extendsSuperEntity>
-import org.utility.base.BaseDTO;
+import org.utility.core.service.dto.BaseDTO;
 </#if>
 
 <#if hasBigDecimal>

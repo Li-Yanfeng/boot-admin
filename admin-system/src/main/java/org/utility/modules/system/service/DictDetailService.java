@@ -1,6 +1,6 @@
 package org.utility.modules.system.service;
 
-import org.utility.base.Service;
+import org.utility.core.service.Service;
 import org.utility.modules.system.model.DictDetail;
 import org.utility.modules.system.service.dto.DictDetailDTO;
 import org.utility.modules.system.service.dto.DictDetailQuery;

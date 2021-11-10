@@ -1,7 +1,7 @@
 package org.utility.modules.quartz.service;
 
 import org.springframework.scheduling.annotation.Async;
-import org.utility.base.BaseService;
+import org.utility.core.service.BaseService;
 import org.utility.modules.quartz.model.QuartzJob;
 import org.utility.modules.quartz.service.dto.QuartzJobQuery;
 

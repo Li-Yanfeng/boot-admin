@@ -1,6 +1,6 @@
 package org.utility.modules.system.service;
 
-import org.utility.base.Service;
+import org.utility.core.service.Service;
 import org.utility.modules.system.model.Dept;
 import org.utility.modules.system.service.dto.DeptDTO;
 import org.utility.modules.system.service.dto.DeptQuery;

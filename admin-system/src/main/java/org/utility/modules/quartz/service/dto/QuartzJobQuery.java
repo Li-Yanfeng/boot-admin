@@ -1,7 +1,7 @@
 package org.utility.modules.quartz.service.dto;
 
 import org.utility.annotation.Query;
-import org.utility.base.BaseQuery;
+import org.utility.core.service.dto.BaseQuery;
 
 import java.sql.Timestamp;
 import java.util.List;

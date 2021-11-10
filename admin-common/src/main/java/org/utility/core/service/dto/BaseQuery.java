@@ -1,4 +1,4 @@
-package org.utility.base;
+package org.utility.core.service.dto;
 
 import java.io.Serializable;
 

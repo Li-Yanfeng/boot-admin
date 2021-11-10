@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
-import org.utility.api.Result;
+import org.utility.core.model.Result;
 import org.utility.service.LogService;
 import org.utility.service.dto.LogQuery;
 

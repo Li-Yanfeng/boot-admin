@@ -1,4 +1,4 @@
-package org.utility.base;
+package org.utility.core.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
@@ -8,11 +8,12 @@ import java.util.List;
 /**
  * 通用 Service 接口
  *
+ * @param <D> DTO 数据传输对象
  * @param <Q> Query 数据查询对象
  * @param <T> Entity 实体
  * @author Li Yanfeng
  */
-public interface BaseService<Q, T> extends IService<T> {
+public interface Service<D, Q, T> extends org.utility.core.interfaces.Service<T> {
 
     /**
      * 插入一条记录（选择字段，策略插入）
@@ -55,7 +56,7 @@ public interface BaseService<Q, T> extends IService<T> {
      * @param query 数据查询对象
      * @return 列表查询结果
      */
-    List<T> list(Q query);
+    List<D> list(Q query);
 
     /**
      * 翻页查询（根据 query 条件）
@@ -63,7 +64,7 @@ public interface BaseService<Q, T> extends IService<T> {
      * @param query 数据查询对象
      * @return 翻页查询结果
      */
-    IPage<T> page(Q query);
+    IPage<D> page(Q query);
 
     /**
      * 根据 ID 查询
@@ -71,7 +72,7 @@ public interface BaseService<Q, T> extends IService<T> {
      * @param id 主键ID
      * @return 实体对象
      */
-    T getById(Long id);
+    D getById(Long id);
 
     /**
      * 根据 query 条件 查询一条记录
@@ -79,5 +80,5 @@ public interface BaseService<Q, T> extends IService<T> {
      * @param query 数据查询对象
      * @return 实体对象
      */
-    T getOne(Q query);
+    D getOne(Q query);
 }

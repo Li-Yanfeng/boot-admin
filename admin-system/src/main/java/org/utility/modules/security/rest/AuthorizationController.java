@@ -18,7 +18,7 @@ import org.utility.annotation.Log;
 import org.utility.annotation.rest.AnonymousDeleteMapping;
 import org.utility.annotation.rest.AnonymousGetMapping;
 import org.utility.annotation.rest.AnonymousPostMapping;
-import org.utility.api.Result;
+import org.utility.core.model.Result;
 import org.utility.config.RsaProperties;
 import org.utility.exception.BadRequestException;
 import org.utility.exception.enums.UserErrorCode;
@@ -124,7 +124,8 @@ public class AuthorizationController {
         redisUtils.set(uuid, captchaValue, loginProperties.getLoginCode().getExpiration(), TimeUnit.MINUTES);
         // 验证码信息
         Map<String, Object> imgResult = new HashMap<String, Object>(2) {{
-            put("img", captcha.toBase64());
+//            put("img", captcha.toBase64());
+            put("img", captcha.text());
             put("uuid", uuid);
         }};
         return Result.success(imgResult);

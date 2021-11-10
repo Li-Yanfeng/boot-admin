@@ -2,7 +2,7 @@ package org.utility.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.scheduling.annotation.Async;
-import org.utility.api.Result;
+import org.utility.core.model.Result;
 import org.utility.model.ColumnInfo;
 import org.utility.model.GenConfig;
 import org.utility.model.vo.TableInfo;

@@ -3,7 +3,7 @@ package org.utility.modules.mnt.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import org.springframework.stereotype.Service;
-import org.utility.base.impl.ServiceImpl;
+import org.utility.core.service.impl.ServiceImpl;
 import org.utility.exception.BadRequestException;
 import org.utility.modules.mnt.mapper.AppMapper;
 import org.utility.modules.mnt.model.App;

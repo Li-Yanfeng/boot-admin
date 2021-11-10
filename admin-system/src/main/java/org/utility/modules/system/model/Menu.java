@@ -1,13 +1,11 @@
 package org.utility.modules.system.model;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.bean.copier.CopyOptions;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.google.common.base.Objects;
 import io.swagger.annotations.ApiModelProperty;
-import org.utility.base.BaseEntity;
+import org.utility.core.model.BaseEntity;
 
 import java.io.Serializable;
 

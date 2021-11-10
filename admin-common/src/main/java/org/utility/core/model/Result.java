@@ -1,6 +1,7 @@
-package org.utility.api;
+package org.utility.core.model;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.utility.core.interfaces.ErrorCode;
 import org.utility.exception.enums.UserErrorCode;
 
 import javax.validation.constraints.NotNull;
@@ -28,7 +29,7 @@ public class Result<T> implements Serializable {
     /**
      * 返回参数
      */
-    private Map<String, Object> data = new HashMap<>(5);
+    private Map<String, Object> data = new HashMap<>(2);
 
 
     /**

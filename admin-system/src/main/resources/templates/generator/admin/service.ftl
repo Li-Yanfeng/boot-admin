@@ -1,6 +1,6 @@
 package ${package}.service;
 
-import org.utility.base.Service;
+import org.utility.core.service.Service;
 import ${package}.model.${className};
 import ${package}.service.dto.${className}DTO;
 import ${package}.service.dto.${className}Query;

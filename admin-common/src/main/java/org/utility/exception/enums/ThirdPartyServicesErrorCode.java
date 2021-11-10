@@ -1,6 +1,6 @@
 package org.utility.exception.enums;
 
-import org.utility.api.ErrorCode;
+import org.utility.core.interfaces.ErrorCode;
 
 /**
  * 第三方服务错误代码 { C 表示错误来源于第三方服务 }

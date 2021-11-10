@@ -13,7 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.utility.base.impl.ServiceImpl;
+import org.utility.core.service.impl.ServiceImpl;
 import org.utility.constant.CacheConsts;
 import org.utility.exception.BadRequestException;
 import org.utility.exception.EntityExistException;

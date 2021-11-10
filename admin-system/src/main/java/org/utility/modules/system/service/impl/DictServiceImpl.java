@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.utility.base.impl.ServiceImpl;
+import org.utility.core.service.impl.ServiceImpl;
 import org.utility.constant.CacheConsts;
 import org.utility.modules.system.mapper.DictMapper;
 import org.utility.modules.system.model.Dict;

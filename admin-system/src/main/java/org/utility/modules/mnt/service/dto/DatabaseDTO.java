@@ -1,6 +1,6 @@
 package org.utility.modules.mnt.service.dto;
 
-import org.utility.base.BaseDTO;
+import org.utility.core.service.dto.BaseDTO;
 
 import java.io.Serializable;
 

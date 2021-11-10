@@ -1,6 +1,6 @@
 package org.utility.modules.system.service;
 
-import org.utility.base.Service;
+import org.utility.core.service.Service;
 import org.utility.modules.system.model.Menu;
 import org.utility.modules.system.model.vo.MenuVO;
 import org.utility.modules.system.service.dto.MenuDTO;

@@ -1,4 +1,4 @@
-package org.utility.base;
+package org.utility.core.interfaces;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
@@ -13,7 +13,7 @@ import com.baomidou.mybatisplus.extension.toolkit.ChainWrappers;
  * @param <T> Entity 实体
  * @author Li Yanfeng
  */
-public interface IService<T> {
+public interface Service<T> {
 
     /**
      * 获取对应 entity 的 BaseMapper

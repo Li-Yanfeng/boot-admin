@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.utility.base.BaseQuery;
+import org.utility.core.service.dto.BaseQuery;
 import org.utility.modules.security.config.bean.SecurityProperties;
 import org.utility.modules.security.service.dto.JwtUserDTO;
 import org.utility.modules.security.service.dto.OnlineUserDTO;

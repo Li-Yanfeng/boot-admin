@@ -7,7 +7,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.utility.api.Result;
+import org.utility.core.model.Result;
 import org.utility.exception.BadRequestException;
 import org.utility.exception.EntityExistException;
 import org.utility.exception.EntityNotFoundException;

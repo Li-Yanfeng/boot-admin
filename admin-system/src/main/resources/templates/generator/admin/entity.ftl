@@ -3,7 +3,7 @@ package ${package}.model;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 <#if extendsSuperEntity>
-import org.utility.base.BaseEntity;
+import org.utility.core.model.BaseEntity;
 </#if>
 
 <#if (isNotNullColumns?size > 0)>

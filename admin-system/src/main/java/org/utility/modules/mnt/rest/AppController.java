@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
 import org.utility.annotation.NoRepeatSubmit;
-import org.utility.api.Result;
+import org.utility.core.model.Result;
 import org.utility.modules.mnt.model.App;
 import org.utility.modules.mnt.service.AppService;
 import org.utility.modules.mnt.service.dto.AppQuery;

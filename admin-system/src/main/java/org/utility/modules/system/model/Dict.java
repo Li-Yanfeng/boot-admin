@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
-import org.utility.base.BaseEntity;
+import org.utility.core.model.BaseEntity;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;

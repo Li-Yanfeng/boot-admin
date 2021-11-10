@@ -1,6 +1,6 @@
 package org.utility.modules.mnt.service;
 
-import org.utility.base.Service;
+import org.utility.core.service.Service;
 import org.utility.modules.mnt.model.App;
 import org.utility.modules.mnt.service.dto.AppDTO;
 import org.utility.modules.mnt.service.dto.AppQuery;

@@ -7,7 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import org.quartz.CronExpression;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.utility.base.impl.BaseServiceImpl;
+import org.utility.core.service.impl.BaseServiceImpl;
 import org.utility.exception.BadRequestException;
 import org.utility.modules.quartz.mapper.QuartzJobMapper;
 import org.utility.modules.quartz.model.QuartzJob;

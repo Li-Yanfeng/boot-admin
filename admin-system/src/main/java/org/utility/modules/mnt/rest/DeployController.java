@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.utility.annotation.Log;
 import org.utility.annotation.NoRepeatSubmit;
-import org.utility.api.Result;
+import org.utility.core.model.Result;
 import org.utility.modules.mnt.model.DeployHistory;
 import org.utility.modules.mnt.service.DeployService;
 import org.utility.modules.mnt.service.dto.DeployDTO;

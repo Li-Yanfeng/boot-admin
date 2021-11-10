@@ -4,8 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.utility.api.Result;
-import org.utility.base.BaseQuery;
+import org.utility.core.model.Result;
+import org.utility.core.service.dto.BaseQuery;
 import org.utility.modules.security.service.OnlineUserService;
 import org.utility.util.EncryptUtils;
 

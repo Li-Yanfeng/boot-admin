@@ -1,6 +1,6 @@
 package org.utility.exception;
 
-import org.utility.api.ErrorCode;
+import org.utility.core.interfaces.ErrorCode;
 import org.utility.exception.enums.UserErrorCode;
 
 /**

@@ -8,7 +8,7 @@ import org.utility.annotation.AnonymousAccess;
 import org.utility.annotation.Log;
 import org.utility.annotation.NoRepeatSubmit;
 import org.utility.annotation.rest.AnonymousGetMapping;
-import org.utility.api.Result;
+import org.utility.core.model.Result;
 import org.utility.exception.enums.UserErrorCode;
 import org.utility.model.AlipayConfig;
 import org.utility.model.vo.TradeVO;

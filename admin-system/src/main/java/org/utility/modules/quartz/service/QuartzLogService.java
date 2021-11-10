@@ -1,6 +1,6 @@
 package org.utility.modules.quartz.service;
 
-import org.utility.base.BaseService;
+import org.utility.core.service.BaseService;
 import org.utility.modules.quartz.model.QuartzLog;
 import org.utility.modules.quartz.service.dto.QuartzJobQuery;
 

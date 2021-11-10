@@ -1,6 +1,7 @@
-package org.utility.api;
+package org.utility.core.interfaces;
 
 import org.utility.exception.enums.SystemErrorCode;
+import org.utility.exception.enums.ThirdPartyServicesErrorCode;
 import org.utility.exception.enums.UserErrorCode;
 
 /**

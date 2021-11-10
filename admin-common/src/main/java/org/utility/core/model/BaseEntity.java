@@ -1,5 +1,9 @@
-package org.utility.base;
+package org.utility.core.model;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
@@ -7,33 +11,35 @@ import java.lang.reflect.Field;
 import java.sql.Timestamp;
 
 /**
- * 基础数据传输对象,包含通用实体字段
- * <p>
- * 浅析VO、DTO、DO、PO的概念、区别和用处
- * https://www.cnblogs.com/qixuejia/p/4390086.html
- * </p>
- *
  * @author Li Yanfeng
  */
-public abstract class BaseDTO implements Serializable {
+@ApiModel(description = "基础实体,包含通用实体字段")
+public abstract class BaseEntity implements Serializable {
 
-    /**
-     * 创建人
-     */
+    @ApiModelProperty(value = "创建人")
+    @TableField(fill = FieldFill.INSERT)
     protected String createBy;
-    /**
-     * 更新人
-     */
+
+    @ApiModelProperty(value = "更新人")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     protected String updateBy;
-    /**
-     * 创建时间
-     */
+
+    @ApiModelProperty(value = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
     protected Timestamp createTime;
-    /**
-     * 更新时间
-     */
+
+    @ApiModelProperty(value = "更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     protected Timestamp updateTime;
 
+
+    /* 分组校验 */
+    public @interface Create {
+    }
+
+    /* 分组校验 */
+    public @interface Update {
+    }
 
     public String getCreateBy() {
         return createBy;

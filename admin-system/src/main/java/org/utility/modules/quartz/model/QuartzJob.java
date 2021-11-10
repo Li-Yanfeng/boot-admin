@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
-import org.utility.base.BaseEntity;
+import org.utility.core.model.BaseEntity;
 
 import java.io.Serializable;
 

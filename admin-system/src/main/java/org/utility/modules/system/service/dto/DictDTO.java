@@ -2,7 +2,7 @@ package org.utility.modules.system.service.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
-import org.utility.base.BaseDTO;
+import org.utility.core.service.dto.BaseDTO;
 
 import java.io.Serializable;
 import java.util.List;

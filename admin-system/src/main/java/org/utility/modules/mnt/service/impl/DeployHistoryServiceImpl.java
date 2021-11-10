@@ -3,7 +3,7 @@ package org.utility.modules.mnt.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import org.springframework.stereotype.Service;
-import org.utility.base.impl.ServiceImpl;
+import org.utility.core.service.impl.ServiceImpl;
 import org.utility.modules.mnt.mapper.DeployHistoryMapper;
 import org.utility.modules.mnt.model.DeployHistory;
 import org.utility.modules.mnt.service.DeployHistoryService;

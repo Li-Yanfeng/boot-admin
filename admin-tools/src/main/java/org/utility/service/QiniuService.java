@@ -1,7 +1,7 @@
 package org.utility.service;
 
 import org.springframework.web.multipart.MultipartFile;
-import org.utility.base.BaseService;
+import org.utility.core.service.BaseService;
 import org.utility.model.QiniuConfig;
 import org.utility.model.QiniuContent;
 import org.utility.service.dto.QiniuConfigQuery;

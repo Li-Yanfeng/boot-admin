@@ -3,7 +3,7 @@ package org.utility.modules.quartz.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import org.springframework.stereotype.Service;
-import org.utility.base.impl.BaseServiceImpl;
+import org.utility.core.service.impl.BaseServiceImpl;
 import org.utility.modules.quartz.mapper.QuartzLogMapper;
 import org.utility.modules.quartz.model.QuartzLog;
 import org.utility.modules.quartz.service.QuartzLogService;

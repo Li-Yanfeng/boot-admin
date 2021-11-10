@@ -2,10 +2,9 @@ package org.utility.modules.mnt.service.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
-import org.utility.base.BaseDTO;
+import org.utility.core.service.dto.BaseDTO;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 应用管理 数据传输对象

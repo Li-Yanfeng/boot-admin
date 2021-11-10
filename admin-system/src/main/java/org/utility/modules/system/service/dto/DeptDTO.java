@@ -4,7 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.Objects;
-import org.utility.base.BaseDTO;
+import org.utility.core.service.dto.BaseDTO;
 
 import java.io.Serializable;
 import java.util.List;

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.utility.annotation.Log;
 import org.utility.annotation.NoRepeatSubmit;
-import org.utility.api.Result;
+import org.utility.core.model.Result;
 import org.utility.exception.BadRequestException;
 import org.utility.exception.enums.UserErrorCode;
 import org.utility.model.LocalStorage;

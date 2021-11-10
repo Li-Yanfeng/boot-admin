@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.utility.annotation.NoRepeatSubmit;
-import org.utility.api.Result;
+import org.utility.core.model.Result;
 import org.utility.util.IpUtils;
 import org.utility.util.RequestHolder;
 

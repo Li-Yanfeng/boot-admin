@@ -3,7 +3,7 @@ package ${package}.service.dto;
 <#if (queryColumns?size > 0)>
 import org.utility.annotation.Query;
 </#if>
-import org.utility.base.BaseQuery;
+import org.utility.core.service.dto.BaseQuery;
 
 <#if queryHasBigDecimal>
 import java.math.BigDecimal;

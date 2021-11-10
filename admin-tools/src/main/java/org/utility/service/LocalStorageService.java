@@ -1,7 +1,7 @@
 package org.utility.service;
 
 import org.springframework.web.multipart.MultipartFile;
-import org.utility.base.BaseService;
+import org.utility.core.service.BaseService;
 import org.utility.model.LocalStorage;
 import org.utility.service.dto.LocalStorageQuery;
 

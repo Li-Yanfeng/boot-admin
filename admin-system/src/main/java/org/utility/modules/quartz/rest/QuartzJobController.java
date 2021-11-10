@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.utility.annotation.Log;
 import org.utility.annotation.NoRepeatSubmit;
-import org.utility.api.Result;
+import org.utility.core.model.Result;
 import org.utility.modules.quartz.model.QuartzJob;
 import org.utility.modules.quartz.service.QuartzJobService;
 import org.utility.modules.quartz.service.QuartzLogService;
