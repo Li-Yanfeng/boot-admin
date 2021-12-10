@@ -1,92 +1,64 @@
 package org.utility.service.dto;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Date;
 
 /**
  * @author Li Yanfeng
- * @since 2021-04-15
  */
-@ApiModel(description = "日志数据传输对象")
+@ApiModel(description = "日志 数据传输对象")
 public class LogDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * ID
-     */
-    private Long id;
-    /**
-     * 方法名
-     */
+    @ApiModelProperty(value = "ID")
+    private Long logId;
+
+    @ApiModelProperty(value = "方法名")
     private String method;
-    /**
-     * 参数
-     */
+
+    @ApiModelProperty(value = "参数")
     private String params;
-    /**
-     * 日志类型
-     */
+
+    @ApiModelProperty(value = "日志类型")
     private String logType;
-    /**
-     * 请求Ip
-     */
+
+    @ApiModelProperty(value = "请求Ip")
     private String requestIp;
-    /**
-     * 请求耗时
-     */
+
+    @ApiModelProperty(value = "请求耗时")
     private Long time;
-    /**
-     * 操作用户
-     */
+
+    @ApiModelProperty(value = "操作用户")
     private String username;
-    /**
-     * 地址
-     */
+
+    @ApiModelProperty(value = "地址")
     private String address;
-    /**
-     * 浏览器
-     */
+
+    @ApiModelProperty(value = "浏览器")
     private String browser;
-    /**
-     * 描述
-     */
+
+    @ApiModelProperty(value = "描述")
     private String description;
-    /**
-     * 异常详细
-     */
+
+    @ApiModelProperty(value = "异常详细")
     private byte[] exceptionDetail;
-    /**
-     * 创建时间
-     */
-    protected Date createTime;
+
+    @ApiModelProperty(value = "创建时间")
+    private Date createTime;
 
 
-    public Long getId() {
-        return id;
+    public Long getLogId() {
+        return logId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getLogType() {
-        return logType;
-    }
-
-    public void setLogType(String logType) {
-        this.logType = logType;
+    public void setLogId(Long logId) {
+        this.logId = logId;
     }
 
     public String getMethod() {
@@ -103,6 +75,14 @@ public class LogDTO implements Serializable {
 
     public void setParams(String params) {
         this.params = params;
+    }
+
+    public String getLogType() {
+        return logType;
+    }
+
+    public void setLogType(String logType) {
+        this.logType = logType;
     }
 
     public String getRequestIp() {
@@ -145,6 +125,14 @@ public class LogDTO implements Serializable {
         this.browser = browser;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public byte[] getExceptionDetail() {
         return exceptionDetail;
     }
@@ -163,19 +151,6 @@ public class LogDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "LogDTO{" +
-                "id=" + id +
-                ", method='" + method + '\'' +
-                ", params='" + params + '\'' +
-                ", logType='" + logType + '\'' +
-                ", requestIp='" + requestIp + '\'' +
-                ", time=" + time +
-                ", username='" + username + '\'' +
-                ", address='" + address + '\'' +
-                ", browser='" + browser + '\'' +
-                ", description='" + description + '\'' +
-                ", exceptionDetail=" + Arrays.toString(exceptionDetail) +
-                ", createTime=" + createTime +
-                '}';
+        return getClass().getSimpleName() + ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
 }

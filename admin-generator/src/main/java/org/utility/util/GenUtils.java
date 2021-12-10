@@ -3,7 +3,8 @@ package org.utility.util;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.template.*;
 import org.springframework.util.ObjectUtils;
-import org.utility.model.ColumnInfo;
+import org.utility.constant.SystemConstant;
+import org.utility.model.ColumnConfig;
 import org.utility.model.GenConfig;
 
 import java.io.File;
@@ -87,10 +88,11 @@ public class GenUtils {
      * @param genConfig 代码生成配置
      * @return /
      */
-    public static List<Map<String, Object>> preview(List<ColumnInfo> columns, GenConfig genConfig) {
+    public static List<Map<String, Object>> preview(List<ColumnConfig> columns, GenConfig genConfig) {
         Map<String, Object> genMap = getGenMap(columns, genConfig);
         List<Map<String, Object>> genList = new ArrayList<>();
-        TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig(TEMPLATE_PATH, TemplateConfig.ResourceMode.CLASSPATH));
+        TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig(TEMPLATE_PATH,
+            TemplateConfig.ResourceMode.CLASSPATH));
         // 获取后端模版
         List<String> templates = getAdminTemplateNames();
         for (String templateName : templates) {
@@ -121,11 +123,12 @@ public class GenUtils {
      * @return /
      * @throws IOException /
      */
-    public static String download(List<ColumnInfo> columns, GenConfig genConfig) throws IOException {
+    public static String download(List<ColumnConfig> columns, GenConfig genConfig) throws IOException {
         // 拼接的路径：/tmpadmin-gen-temp/，这个路径在Linux下需要root用户才有权限创建,非root用户会权限错误而失败，更改为： /tmp/admin-gen-temp/
         String tempPath = SYS_TEM_DIR + "admin-gen-temp" + File.separator + genConfig.getTableName() + File.separator;
         Map<String, Object> genMap = getGenMap(columns, genConfig);
-        TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig(TEMPLATE_PATH, TemplateConfig.ResourceMode.CLASSPATH));
+        TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig(TEMPLATE_PATH,
+            TemplateConfig.ResourceMode.CLASSPATH));
         // 生成后端代码
         List<String> templates = getAdminTemplateNames();
         for (String templateName : templates) {
@@ -135,7 +138,7 @@ public class GenUtils {
             assert filePath != null;
             File file = new File(filePath);
             // 如果非覆盖生成
-            if (!genConfig.getCover() && FileUtils.exist(file)) {
+            if (SystemConstant.NO.equals(genConfig.getCover()) && FileUtils.exist(file)) {
                 continue;
             }
             // 生成代码
@@ -150,7 +153,7 @@ public class GenUtils {
             assert filePath != null;
             File file = new File(filePath);
             // 如果非覆盖生成
-            if (!genConfig.getCover() && FileUtils.exist(file)) {
+            if (SystemConstant.YES.equals(genConfig.getCover()) && FileUtils.exist(file)) {
                 continue;
             }
             // 生成代码
@@ -166,9 +169,10 @@ public class GenUtils {
      * @param genConfig 代码生成配置
      * @throws IOException /
      */
-    public static void generatorCode(List<ColumnInfo> columns, GenConfig genConfig) throws IOException {
+    public static void generatorCode(List<ColumnConfig> columns, GenConfig genConfig) throws IOException {
         Map<String, Object> genMap = getGenMap(columns, genConfig);
-        TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig(TEMPLATE_PATH, TemplateConfig.ResourceMode.CLASSPATH));
+        TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig(TEMPLATE_PATH,
+            TemplateConfig.ResourceMode.CLASSPATH));
         // 生成后端代码
         List<String> templates = getAdminTemplateNames();
         for (String templateName : templates) {
@@ -178,7 +182,7 @@ public class GenUtils {
             assert filePath != null;
             File file = new File(filePath);
             // 如果非覆盖生成
-            if (!genConfig.getCover() && FileUtils.exist(file)) {
+            if (SystemConstant.NO.equals(genConfig.getCover()) && FileUtils.exist(file)) {
                 continue;
             }
             // 生成代码
@@ -193,7 +197,7 @@ public class GenUtils {
             assert filePath != null;
             File file = new File(filePath);
             // 如果非覆盖生成
-            if (!genConfig.getCover() && FileUtils.exist(file)) {
+            if (SystemConstant.NO.equals(genConfig.getCover()) && FileUtils.exist(file)) {
                 continue;
             }
             // 生成代码
@@ -208,7 +212,7 @@ public class GenUtils {
      * @param genConfig   代码生成配置
      * @return /
      */
-    private static Map<String, Object> getGenMap(List<ColumnInfo> columnInfos, GenConfig genConfig) {
+    private static Map<String, Object> getGenMap(List<ColumnConfig> columnInfos, GenConfig genConfig) {
         // 存储模版字段数据
         Map<String, Object> genMap = new HashMap<>(16);
         // 接口别名
@@ -229,13 +233,17 @@ public class GenUtils {
         String changeClassName = StringUtils.toCamelCase(genConfig.getTableName());
         // 判断是否去除表前缀
         if (StringUtils.isNotEmpty(genConfig.getPrefix())) {
-            className = StringUtils.toCapitalizeCamelCase(StrUtil.removePrefix(genConfig.getTableName(), genConfig.getPrefix()));
-            changeClassName = StringUtils.toCamelCase(StrUtil.removePrefix(genConfig.getTableName(), genConfig.getPrefix()));
+            className = StringUtils.toCapitalizeCamelCase(StrUtil.removePrefix(genConfig.getTableName(),
+                genConfig.getPrefix()));
+            changeClassName = StringUtils.toCamelCase(StrUtil.removePrefix(genConfig.getTableName(),
+                genConfig.getPrefix()));
         }
         // 保存类名
         genMap.put("className", className);
         // 保存小写开头的类名
         genMap.put("changeClassName", changeClassName);
+        // 保存缓存Key
+        genMap.put("cacheKey", StringUtils.toUnderlineCase(className).toUpperCase());
         // 继承实体父类
         genMap.put("extendsSuperEntity", false);
         // 存在 Timestamp 字段
@@ -252,8 +260,6 @@ public class GenUtils {
         genMap.put("auto", false);
         // 存在字典
         genMap.put("hasDict", false);
-        // 存在日期注解
-        genMap.put("hasDateAnnotation", false);
         // 保存字段信息
         List<Map<String, Object>> columns = new ArrayList<>();
         // 保存公共字段信息
@@ -267,7 +273,7 @@ public class GenUtils {
         // 存储不为空的字段信息
         List<Map<String, Object>> isNotNullColumns = new ArrayList<>();
 
-        for (ColumnInfo column : columnInfos) {
+        for (ColumnConfig column : columnInfos) {
             Map<String, Object> listMap = new HashMap<>(16);
             // 字段描述
             listMap.put("remark", column.getRemark());
@@ -276,9 +282,9 @@ public class GenUtils {
             // 主键类型
             String colType = ColUtils.cloToJava(column.getColumnType());
             // 小写开头的字段名
-            String changeColumnName = StringUtils.toCamelCase(column.getColumnName());
+            String changeColumnName = StringUtils.toCamelCase(removeIsPrefix(column.getColumnName()));
             // 大写开头的字段名
-            String capitalColumnName = StringUtils.toCapitalizeCamelCase(column.getColumnName());
+            String capitalColumnName = StringUtils.toCapitalizeCamelCase(removeIsPrefix(column.getColumnName()));
             if (PK.equals(column.getKeyType())) {
                 // 存储主键类型
                 genMap.put("pkColumnType", colType);
@@ -297,7 +303,7 @@ public class GenUtils {
             }
             // 主键是否自增
             if (EXTRA.equals(column.getExtra())) {
-                genMap.put("auto", false);
+                genMap.put("auto", true);
             }
             // 主键存在字典
             if (StringUtils.isNotBlank(column.getDictName())) {
@@ -310,7 +316,7 @@ public class GenUtils {
             // 存储字原始段名称
             listMap.put("columnName", column.getColumnName());
             // 不为空
-            listMap.put("istNotNull", column.getNotNull());
+            listMap.put("isNotNull", SystemConstant.YES.equals(column.getNotNull()));
             // 字段列表显示
             listMap.put("columnShow", column.getListShow());
             // 表单显示
@@ -323,13 +329,8 @@ public class GenUtils {
             listMap.put("capitalColumnName", capitalColumnName);
             // 字典名称
             listMap.put("dictName", column.getDictName());
-            // 日期注解
-            listMap.put("dateAnnotation", column.getDateAnnotation());
-            if (StringUtils.isNotBlank(column.getDateAnnotation())) {
-                genMap.put("hasDateAnnotation", true);
-            }
             // 添加非空字段信息
-            if (column.getNotNull()) {
+            if (SystemConstant.YES.equals(column.getNotNull())) {
                 isNotNullColumns.add(listMap);
             }
             // 判断是否有查询，如有则把查询的字段set进columnQuery
@@ -353,8 +354,7 @@ public class GenUtils {
                     queryColumns.add(listMap);
                 }
             }
-            // 添加到字段列表中
-            //  -- 如果是公共字段
+            // 添加到通用字段列表中
             if (changeColumnName.startsWith("create") || changeColumnName.startsWith("update")) {
                 commonColumns.add(listMap);
             } else {
@@ -386,9 +386,12 @@ public class GenUtils {
      * 定义后端文件路径以及名称
      */
     private static String getAdminFilePath(String templateName, GenConfig genConfig, String className) {
-        String projectPath = new File(genConfig.getAdminPath()).getParent() + File.separator + genConfig.getModuleName();
-        String packagePath = projectPath + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
-        String resourcePath = projectPath + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
+        String projectPath =
+            new File(genConfig.getAdminPath()).getParent() + File.separator + genConfig.getModuleName();
+        String packagePath =
+            projectPath + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
+        String resourcePath = projectPath + File.separator + "src" + File.separator + "main" + File.separator +
+            "resources" + File.separator;
         if (!ObjectUtils.isEmpty(genConfig.getPack())) {
             packagePath += genConfig.getPack().replace(".", File.separator) + File.separator;
         }
@@ -431,14 +434,15 @@ public class GenUtils {
      */
     private static String getFrontFilePath(String templateName, GenConfig genConfig, String apiName) {
         String projectPath =
-                new File(genConfig.getFrontPath()).getParent() + File.separator + genConfig.getModuleName() + "-web" + File.separator;
+            new File(genConfig.getFrontPath()).getParent() + File.separator + genConfig.getModuleName() + "-web" + File.separator;
 
         switch (templateName) {
             case "api":
                 return projectPath + "src" + File.separator + "api" + File.separator + apiName + ".js";
 
             case "index":
-                return projectPath + "src" + File.separator + "views" + File.separator + apiName + File.separator + "index.vue";
+                return projectPath + "src" + File.separator + "views" + File.separator + apiName + File.separator +
+                    "index.vue";
 
             default:
                 return null;
@@ -466,5 +470,15 @@ public class GenUtils {
             assert writer != null;
             writer.close();
         }
+    }
+
+    /**
+     * 删除 is 前缀
+     *
+     * @param columnName 列名
+     */
+    private static String removeIsPrefix(String columnName) {
+        String isPrefix = "is_";
+        return columnName.startsWith(isPrefix) ? columnName.replaceFirst(isPrefix, "") : columnName;
     }
 }

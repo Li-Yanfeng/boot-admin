@@ -196,6 +196,5 @@ public class RsaUtils {
         public String getPrivateKey() {
             return privateKey;
         }
-
     }
 }

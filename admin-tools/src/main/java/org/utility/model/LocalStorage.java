@@ -3,27 +3,30 @@ package org.utility.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.utility.core.model.BaseEntity;
+import org.utility.core.validation.Update;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 本地存储
- *
  * @author Li Yanfeng
- * @since 2021-06-29
+ * @since 2021-06-01
  */
+@ApiModel(description = "本地存储")
 @TableName(value = "tool_local_storage")
 public class LocalStorage extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "ID")
-    @TableId(value = "storage_id", type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
+    @NotNull(groups = Update.class)
     private Long storageId;
 
-    @ApiModelProperty(value = "真实文件名")
+    @ApiModelProperty(value = "文件真实名称")
     private String realName;
 
     @ApiModelProperty(value = "文件名")
@@ -96,6 +99,9 @@ public class LocalStorage extends BaseEntity implements Serializable {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public LocalStorage() {
     }
 
     public LocalStorage(String realName, String name, String suffix, String path, String type, String size) {

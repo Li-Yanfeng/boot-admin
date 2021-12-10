@@ -53,8 +53,8 @@ public class RedisConfig extends CachingConfigurerSupport {
     public RedisCacheConfiguration redisCacheConfiguration() {
         FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig();
-        configuration = configuration.serializeValuesWith(RedisSerializationContext.SerializationPair
-                .fromSerializer(fastJsonRedisSerializer)).entryTtl(Duration.ofHours(6));
+        configuration =
+            configuration.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(fastJsonRedisSerializer)).entryTtl(Duration.ofHours(6));
         return configuration;
     }
 
@@ -132,8 +132,8 @@ public class RedisConfig extends CachingConfigurerSupport {
             }
         };
     }
-
 }
+
 
 /**
  * Value 序列化
@@ -168,6 +168,7 @@ class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
     }
 
 }
+
 
 /**
  * 重写序列化器

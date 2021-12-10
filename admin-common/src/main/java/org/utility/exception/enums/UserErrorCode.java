@@ -1,5 +1,7 @@
 package org.utility.exception.enums;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.utility.core.interfaces.ErrorCode;
 
 /**
@@ -61,6 +63,7 @@ public enum UserErrorCode implements ErrorCode {
     UNAUTHORIZED_ACCESS("A0301", "访问未授权"),
     AUTHORIZING("A0302", "正在授权中"),
     USER_AUTHORIZATION_REQUEST_REJECTED("A0303", "用户授权申请被拒绝"),
+    INSUFFICIENT_ROLE_PERMISSIONS("A0304", "角色权限不足"),
     BLOCKED_DUE_TO_THE_PRIVACY_SETTINGS_OF_THE_VISITOR("A0310", "因访问对象隐私设置被拦截"),
     AUTHORIZATION_HAS_EXPIRED("A0311", "授权已过期"),
     NO_ACCESS_TO_API("A0312", "无权限使用 API"),
@@ -162,7 +165,6 @@ public enum UserErrorCode implements ErrorCode {
     }
 
 
-    /** Getter | AllArgsConstructor | toString() */
     @Override
     public String getCode() {
         return code;
@@ -180,6 +182,6 @@ public enum UserErrorCode implements ErrorCode {
 
     @Override
     public String toString() {
-        return String.format(" ErrorCode:{code=%s, userTip=%s} ", code, userTip);
+        return getClass().getSimpleName() + ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
 }

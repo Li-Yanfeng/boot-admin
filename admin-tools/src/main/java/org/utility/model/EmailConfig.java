@@ -3,24 +3,27 @@ package org.utility.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.utility.core.validation.Update;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 邮件配置，数据存覆盖式存入数据存
- *
  * @author Li Yanfeng
- * @since 2021-06-29
+ * @since 2021-06-01
  */
+@ApiModel(description = "邮件配置")
 @TableName(value = "tool_email_config")
 public class EmailConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "ID")
-    @TableId(value = "config_id", type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.ASSIGN_ID)
+    @NotNull(groups = Update.class)
     private Long configId;
 
     @ApiModelProperty(value = "邮件服务器 SMTP 地址")

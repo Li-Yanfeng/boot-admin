@@ -3,24 +3,27 @@ package org.utility.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.utility.core.validation.Update;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 七牛云存储 配置类
- *
  * @author Li Yanfeng
- * @since 2021-06-29
+ * @since 2021-06-01
  */
+@ApiModel(description = "七牛云存储配置")
 @TableName(value = "tool_qiniu_config")
 public class QiniuConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "ID")
-    @TableId(value = "config_id", type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.ASSIGN_ID)
+    @NotNull(groups = Update.class)
     private Long configId;
 
     @ApiModelProperty(value = "accessKey")
@@ -37,11 +40,11 @@ public class QiniuConfig implements Serializable {
 
     /**
      * Zone表示与机房的对应关系
-     * 华东	Zone.zone0()
-     * 华北	Zone.zone1()
-     * 华南	Zone.zone2()
-     * 北美	Zone.zoneNa0()
-     * 东南亚	Zone.zoneAs0()
+     * 华东	 Zone.zone0()
+     * 华北	 Zone.zone1()
+     * 华南	 Zone.zone2()
+     * 北美	 Zone.zoneNa0()
+     * 东南亚 Zone.zoneAs0()
      */
     @ApiModelProperty(value = "Zone表示与机房的对应关系")
     @NotBlank

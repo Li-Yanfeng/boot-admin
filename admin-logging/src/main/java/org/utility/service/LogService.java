@@ -1,43 +1,92 @@
 package org.utility.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
 import org.utility.core.service.Service;
 import org.utility.model.Log;
 import org.utility.service.dto.LogDTO;
 import org.utility.service.dto.LogQuery;
+import org.utility.service.dto.LogSmallDTO;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 /**
- * 系统日志 服务类
+ * 日志 服务类
  *
  * @author Li Yanfeng
- * @since 2021-04-15
  */
-public interface LogService extends Service<LogDTO, LogQuery, Log> {
+public interface LogService extends Service<Log> {
 
     /**
-     * 插入一条记录（选择字段，策略插入）
+     * 插入一条记录
      *
-     * 保存日志数据
-     * @param username 用户
-     * @param browser 浏览器
-     * @param ip 请求IP
+     * @param username  用户
+     * @param browser   浏览器
+     * @param ip        请求IP
      * @param joinPoint /
-     * @param log 日志实体
+     * @param resource  日志实体
      */
     @Async
-    void save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, Log log);
+    void saveLog(String username, String browser, String ip, ProceedingJoinPoint joinPoint, Log resource);
+
+    /**
+     * 根据 ID 批量删除
+     *
+     * @param ids 主键ID列表
+     */
+    void removeLogByIds(Collection<Long> ids);
+
+    /**
+     * 根据 ID 选择修改
+     *
+     * @param resource 实体对象
+     */
+    void updateLogById(Log resource);
+
+    /**
+     * 根据 query 条件查询
+     *
+     * @param query 数据查询对象
+     * @return 列表查询结果
+     */
+    List<LogDTO> listLogs(LogQuery query);
+
+    /**
+     * 根据 query 条件翻页查询
+     *
+     * @param query 数据查询对象
+     * @param page  分页参数对象
+     * @return 翻页查询结果
+     */
+    Page<LogDTO> listLogs(LogQuery query, Page<Log> page);
+
+    /**
+     * 根据 User 翻页查询
+     *
+     * @param query 数据查询对象
+     * @param page  分页参数对象
+     * @return 翻页查询结果
+     */
+    Page<LogSmallDTO> listLogsByUser(LogQuery query, Page<Log> page);
+
+    /**
+     * 根据 ID 查询
+     *
+     * @param id 主键ID
+     * @return 实体对象
+     */
+    LogDTO getLogById(Long id);
 
     /**
      * 导出数据
      *
-     * @param response 响应对象
-     * @param queryAll 待导出的数据
+     * @param exportData 待导出数据
+     * @param response   响应对象
      * @throws IOException /
      */
-    void download(HttpServletResponse response, List<LogDTO> queryAll) throws IOException;
+    void exportLog(List<LogDTO> exportData, HttpServletResponse response) throws IOException;
 }

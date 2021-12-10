@@ -1,84 +1,79 @@
 package org.utility.core.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-
-import java.util.Collection;
-import java.util.List;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.conditions.query.ChainQuery;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
+import com.baomidou.mybatisplus.extension.conditions.update.ChainUpdate;
+import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
+import com.baomidou.mybatisplus.extension.conditions.update.UpdateChainWrapper;
+import com.baomidou.mybatisplus.extension.toolkit.ChainWrappers;
 
 /**
  * 通用 Service 接口
  *
- * @param <D> DTO 数据传输对象
- * @param <Q> Query 数据查询对象
  * @param <T> Entity 实体
  * @author Li Yanfeng
  */
-public interface Service<D, Q, T> extends org.utility.core.interfaces.Service<T> {
+public interface Service<T> {
 
     /**
-     * 插入一条记录（选择字段，策略插入）
+     * 以下的方法使用介绍:
      *
-     * @param resource 实体对象
+     * 一. 名称介绍
+     * 1. 方法名带有 query 的为对数据的查询操作, 方法名带有 update 的为对数据的修改操作
+     * 2. 方法名带有 lambda 的为内部方法入参 column 支持函数式的
+     *
+     * 二. 支持介绍
+     * 1. 方法名带有 query 的支持以 {@link ChainQuery} 内部的方法名结尾进行数据查询操作
+     * 2. 方法名带有 update 的支持以 {@link ChainUpdate} 内部的方法名为结尾进行数据修改操作
+     *
+     * 三. 使用示例,只用不带 lambda 的方法各展示一个例子,其他类推
+     * 1. 根据条件获取一条数据: `query().eq("column", value).one()`
+     * 2. 根据条件删除一条数据: `update().eq("column", value).remove()`
+     *
      */
-    void save(T resource);
 
     /**
-     * 根据 ID 删除
+     * 链式查询 普通
      *
-     * @param id 主键ID
+     * @return QueryWrapper 的包装类
      */
-    void removeById(Long id);
+    default QueryChainWrapper<T> query() {
+        return ChainWrappers.queryChain(getBaseMapper());
+    }
 
     /**
-     * 根据 query 条件，删除记录
+     * 链式查询 lambda 式
      *
-     * @param query 数据查询对象
+     * @return LambdaQueryWrapper 的包装类
      */
-    void remove(Q query);
+    default LambdaQueryChainWrapper<T> lambdaQuery() {
+        return ChainWrappers.lambdaQueryChain(getBaseMapper());
+    }
 
     /**
-     * 删除（根据ID 批量删除）
+     * 链式更改 普通
      *
-     * @param ids 主键ID列表
+     * @return UpdateWrapper 的包装类
      */
-    void removeByIds(Collection<Long> ids);
+    default UpdateChainWrapper<T> update() {
+        return ChainWrappers.updateChain(getBaseMapper());
+    }
 
     /**
-     * 根据 ID 选择修改
+     * 链式更改 lambda 式
      *
-     * @param resource 实体对象
+     * @return LambdaUpdateWrapper 的包装类
      */
-    void updateById(T resource);
+    default LambdaUpdateChainWrapper<T> lambdaUpdate() {
+        return ChainWrappers.lambdaUpdateChain(getBaseMapper());
+    }
 
     /**
-     * 查询（根据 query 条件）
+     * 获取对应 entity 的 BaseMapper
      *
-     * @param query 数据查询对象
-     * @return 列表查询结果
+     * @return BaseMapper
      */
-    List<D> list(Q query);
-
-    /**
-     * 翻页查询（根据 query 条件）
-     *
-     * @param query 数据查询对象
-     * @return 翻页查询结果
-     */
-    IPage<D> page(Q query);
-
-    /**
-     * 根据 ID 查询
-     *
-     * @param id 主键ID
-     * @return 实体对象
-     */
-    D getById(Long id);
-
-    /**
-     * 根据 query 条件 查询一条记录
-     *
-     * @param query 数据查询对象
-     * @return 实体对象
-     */
-    D getOne(Q query);
+    abstract BaseMapper<T> getBaseMapper();
 }

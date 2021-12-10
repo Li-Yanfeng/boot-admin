@@ -23,11 +23,11 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-29
+ * @since 2021-06-01
  */
 @Api(tags = "工具：支付宝管理")
 @RestController
-@RequestMapping(value = "/api/aliPay")
+@RequestMapping(value = "/v1/ali_pay")
 public class AlipayController {
 
     private final AlipayService alipayService;
@@ -39,55 +39,55 @@ public class AlipayController {
         this.alipayUtils = alipayUtils;
     }
 
-    @ApiOperation(value = "获取支付宝配置")
-    @GetMapping
-    public Result config() {
-        return Result.success(alipayService.getConfig());
-    }
-
-    @ApiOperation(value = "配置支付宝")
-    @Log(value = "配置支付宝")
+    @ApiOperation(value = "修改支付宝配置")
+    @Log(value = "修改支付宝配置")
     @NoRepeatSubmit
     @PutMapping
-    public Result update(@Validated @RequestBody AlipayConfig alipayConfig) {
-        alipayService.config(alipayConfig);
-        return Result.success();
+    public void update(@Validated @RequestBody AlipayConfig resource) {
+        alipayService.updateAlipayConfig(resource);
     }
 
-    @ApiOperation(value = "PC网页支付")
+    @ApiOperation(value = "获取支付宝配置")
+    @GetMapping
+    public AlipayConfig config() {
+        return alipayService.getAlipayConfig();
+    }
+
+    @ApiOperation(value = "PC 网页支付")
     @Log(value = "支付宝PC网页支付")
     @NoRepeatSubmit
     @PostMapping(value = "/toPayAsPC")
-    public Result toPayAsPc(@Validated @RequestBody TradeVO trade) throws Exception {
-        AlipayConfig aliPay = alipayService.getConfig();
+    public String toPayAsPc(@Validated @RequestBody TradeVO trade) throws Exception {
+        AlipayConfig aliPay = alipayService.getAlipayConfig();
         trade.setOutTradeNo(alipayUtils.getOrderCode());
-        String payUrl = alipayService.toPayAsPc(aliPay, trade);
-        return Result.success(payUrl);
+        return alipayService.toPayAsPc(aliPay, trade);
     }
 
     @ApiOperation(value = "手机网页支付")
     @Log(value = "支付宝手机网页支付")
     @NoRepeatSubmit
     @PostMapping(value = "/toPayAsWeb")
-    public Result toPayAsWeb(@Validated @RequestBody TradeVO trade) throws Exception {
-        AlipayConfig alipay = alipayService.getConfig();
+    public String toPayAsWeb(@Validated @RequestBody TradeVO trade) throws Exception {
+        AlipayConfig alipay = alipayService.getAlipayConfig();
         trade.setOutTradeNo(alipayUtils.getOrderCode());
-        String payUrl = alipayService.toPayAsWeb(alipay, trade);
-        return Result.success(payUrl);
+        return alipayService.toPayAsWeb(alipay, trade);
     }
 
     @ApiIgnore
     @ApiOperation(value = "支付之后跳转的链接")
     @AnonymousGetMapping(value = "/return")
     public Result returnPage(HttpServletRequest request, HttpServletResponse response) {
-        AlipayConfig alipay = alipayService.getConfig();
+        AlipayConfig alipay = alipayService.getAlipayConfig();
         response.setContentType("text/html;charset=" + alipay.getCharset());
         // 内容验签，防止黑客篡改参数
         if (alipayUtils.rsaCheck(request, alipay)) {
             // 商户订单号
-            String outTradeNo = new String(request.getParameter("out_trade_no").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            String outTradeNo = new String(request.getParameter("out_trade_no").getBytes(StandardCharsets.ISO_8859_1)
+                , StandardCharsets.UTF_8);
             // 支付宝交易号
-            String tradeNo = new String(request.getParameter("trade_no").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            String tradeNo = new String(request.getParameter("trade_no").getBytes(StandardCharsets.ISO_8859_1),
+                StandardCharsets.UTF_8);
+            System.out.println("商户订单号" + outTradeNo + "  " + "第三方交易号" + tradeNo);
 
             // 根据业务需要返回数据，这里统一返回OK
             return Result.success("payment successful");
@@ -102,17 +102,23 @@ public class AlipayController {
     @AnonymousAccess
     @AnonymousGetMapping(value = "/notify")
     public Result notify(HttpServletRequest request) {
-        AlipayConfig alipay = alipayService.getConfig();
+        AlipayConfig alipay = alipayService.getAlipayConfig();
         // 内容验签，防止黑客篡改参数
         if (alipayUtils.rsaCheck(request, alipay)) {
             // 交易状态
-            String tradeStatus = new String(request.getParameter("trade_status").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            String tradeStatus =
+                new String(request.getParameter("trade_status").getBytes(StandardCharsets.ISO_8859_1),
+                    StandardCharsets.UTF_8);
             // 商户订单号
-            String outTradeNo = new String(request.getParameter("out_trade_no").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            String outTradeNo = new String(request.getParameter("out_trade_no").getBytes(StandardCharsets.ISO_8859_1)
+                , StandardCharsets.UTF_8);
             // 支付宝交易号
-            String tradeNo = new String(request.getParameter("trade_no").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            String tradeNo = new String(request.getParameter("trade_no").getBytes(StandardCharsets.ISO_8859_1),
+                StandardCharsets.UTF_8);
             // 付款金额
-            String totalAmount = new String(request.getParameter("total_amount").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            String totalAmount =
+                new String(request.getParameter("total_amount").getBytes(StandardCharsets.ISO_8859_1),
+                    StandardCharsets.UTF_8);
             // 验证
             if (tradeStatus.equals(AliPayStatusEnum.SUCCESS.getValue()) || tradeStatus.equals(AliPayStatusEnum.FINISHED.getValue())) {
                 // 验证通过后应该根据业务需要处理订单

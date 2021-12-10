@@ -4,22 +4,27 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import org.utility.core.service.impl.BaseServiceImpl;
 import org.utility.config.FileProperties;
+import org.utility.core.service.impl.ServiceImpl;
 import org.utility.exception.BadRequestException;
 import org.utility.exception.enums.UserErrorCode;
 import org.utility.mapper.LocalStorageMapper;
 import org.utility.model.LocalStorage;
 import org.utility.service.LocalStorageService;
 import org.utility.service.dto.LocalStorageQuery;
+import org.utility.util.ConvertUtils;
 import org.utility.util.FileUtils;
+import org.utility.util.QueryHelp;
+import org.utility.util.ValidationUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -27,23 +32,19 @@ import java.util.Map;
  * 本地存储 服务实现类
  *
  * @author Li Yanfeng
- * @since 2021-06-29
+ * @since 2021-06-01
  */
 @Service
-public class LocalStorageServiceImpl extends BaseServiceImpl<LocalStorageMapper, LocalStorageQuery, LocalStorage> implements LocalStorageService {
-
-    private final LocalStorageMapper localStorageMapper;
+public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, LocalStorage> implements LocalStorageService {
 
     private final FileProperties fileProperties;
 
-    public LocalStorageServiceImpl(LocalStorageMapper localStorageMapper, FileProperties fileProperties) {
-        this.localStorageMapper = localStorageMapper;
+    public LocalStorageServiceImpl(FileProperties fileProperties) {
         this.fileProperties = fileProperties;
     }
 
-
     @Override
-    public LocalStorage save(String name, MultipartFile file) {
+    public void uploadLocalStorage(String filename, MultipartFile file) {
         FileUtils.checkSize(fileProperties.getMaxSize(), file.getSize());
         String suffix = FileUtils.getExtensionName(file.getOriginalFilename());
         String type = FileUtils.getFileType(suffix);
@@ -52,17 +53,16 @@ public class LocalStorageServiceImpl extends BaseServiceImpl<LocalStorageMapper,
             throw new BadRequestException(UserErrorCode.USER_UPLOAD_FILE_IS_ABNORMAL);
         }
         try {
-            name = StrUtil.isBlank(name) ? FileUtils.getFileNameNoEx(file.getOriginalFilename()) : name;
+            filename = StrUtil.isBlank(filename) ? FileUtils.getFileNameNoEx(file.getOriginalFilename()) : filename;
             LocalStorage localStorage = new LocalStorage(
-                    uploadFile.getName(),
-                    name,
-                    suffix,
-                    uploadFile.getPath(),
-                    type,
-                    FileUtils.getSize(file.getSize())
+                uploadFile.getName(),
+                filename,
+                suffix,
+                uploadFile.getPath(),
+                type,
+                FileUtils.getSize(file.getSize())
             );
-            localStorageMapper.insert(localStorage);
-            return localStorage;
+            baseMapper.insert(localStorage);
         } catch (Exception e) {
             FileUtils.del(uploadFile);
             throw e;
@@ -71,18 +71,42 @@ public class LocalStorageServiceImpl extends BaseServiceImpl<LocalStorageMapper,
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void removeByIds(Long[] ids) {
-        for (Long id : ids) {
-            LocalStorage storage = localStorageMapper.selectById(id);
+    public void removeLocalStorageByIds(Collection<Long> ids) {
+        List<LocalStorage> localStorages = baseMapper.selectBatchIds(ids);
+        baseMapper.deleteBatchIds(ids);
+        for (LocalStorage storage : localStorages) {
             FileUtils.del(storage.getPath());
-            localStorageMapper.deleteById(id);
         }
     }
 
     @Override
-    public void download(HttpServletResponse response, List<LocalStorage> queryAll) throws IOException {
+    public void updateLocalStorageById(LocalStorage resource) {
+        Long storageId = resource.getStorageId();
+        ValidationUtils.notNull(baseMapper.selectById(storageId), "LocalStorage", "storageId", storageId);
+        baseMapper.updateById(resource);
+    }
+
+    @Override
+    public List<LocalStorage> listLocalStorages(LocalStorageQuery query) {
+        return ConvertUtils.convert(baseMapper.selectList(QueryHelp.queryWrapper(query)), LocalStorage.class);
+    }
+
+    @Override
+    public Page<LocalStorage> listLocalStorages(LocalStorageQuery query, Page<LocalStorage> page) {
+        return ConvertUtils.convert(baseMapper.selectPage(page, QueryHelp.queryWrapper(query)), LocalStorage.class);
+    }
+
+    @Override
+    public LocalStorage getLocalStorageById(Long id) {
+        LocalStorage localStorage = baseMapper.selectById(id);
+        ValidationUtils.notNull(localStorage, "LocalStorage", "storageId", id);
+        return localStorage;
+    }
+
+    @Override
+    public void exportLocalStorage(List<LocalStorage> exportData, HttpServletResponse response) throws IOException {
         List<Map<String, Object>> list = CollUtil.newArrayList();
-        for (LocalStorage localStorage : queryAll) {
+        exportData.forEach(localStorage -> {
             Map<String, Object> map = MapUtil.newHashMap(6, true);
             map.put("文件名", localStorage.getRealName());
             map.put("备注名", localStorage.getName());
@@ -91,7 +115,7 @@ public class LocalStorageServiceImpl extends BaseServiceImpl<LocalStorageMapper,
             map.put("创建者", localStorage.getCreateBy());
             map.put("创建日期", localStorage.getCreateTime());
             list.add(map);
-        }
+        });
         FileUtils.downloadExcel(list, response);
     }
 }

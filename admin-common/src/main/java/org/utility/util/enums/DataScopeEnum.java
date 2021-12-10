@@ -44,12 +44,4 @@ public enum DataScopeEnum {
         this.value = value;
         this.description = description;
     }
-
-    @Override
-    public String toString() {
-        return "DataScopeEnum{" +
-                "value='" + value + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

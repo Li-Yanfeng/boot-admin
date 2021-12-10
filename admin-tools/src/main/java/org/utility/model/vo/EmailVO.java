@@ -1,28 +1,33 @@
 package org.utility.model.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.List;
 
 /**
- *  发送邮件时，接收参数的类
- *
  * @author Li Yanfeng
- * @since 2021-06-29
+ * @since 2021-06-01
  */
-public class EmailVO {
+@ApiModel(description = "发送邮件时，接收参数的类")
+public class EmailVO implements Serializable {
 
-    /**
-     * 收件人，支持多个收件人
-     */
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "收件人，支持多个收件人")
     @NotEmpty
     private List<String> tos;
 
+    @ApiModelProperty(value = "主题")
     @NotBlank
     private String subject;
-    /**
-     * 内容
-     */
+
+    @ApiModelProperty(value = "内容")
     @NotBlank
     private String content;
 
@@ -62,10 +67,6 @@ public class EmailVO {
 
     @Override
     public String toString() {
-        return "EmailVO{" +
-                "tos=" + tos +
-                ", subject='" + subject + '\'' +
-                ", content='" + content + '\'' +
-                '}';
+        return getClass().getSimpleName() + ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
 }

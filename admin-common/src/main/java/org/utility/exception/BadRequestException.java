@@ -6,7 +6,7 @@ import org.utility.exception.enums.UserErrorCode;
 /**
  * 自定义异常
  *
- * @author LiYanfeng
+ * @author liYanfeng
  */
 public class BadRequestException extends RuntimeException {
 

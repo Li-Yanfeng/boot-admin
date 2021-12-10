@@ -4,6 +4,8 @@ import com.fasterxml.classmate.TypeResolver;
 import com.google.common.base.Predicates;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,33 +52,33 @@ public class SwaggerConfig {
         ParameterBuilder ticketPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
         ticketPar.name(tokenHeader).description("token")
-                .modelRef(new ModelRef("string"))
-                .parameterType("header")
-                .defaultValue(tokenStartWith + " ")
-                .required(true)
-                .build();
+            .modelRef(new ModelRef("string"))
+            .parameterType("header")
+            .defaultValue(tokenStartWith + " ")
+            .required(true)
+            .build();
         pars.add(ticketPar.build());
         return new Docket(DocumentationType.SWAGGER_2)
-                // 是否启用Swagger
-                .enable(enabled)
-                // 用来创建该API的基本信息，展示在文档的页面中（自定义展示的信息）
-                .apiInfo(apiInfo())
-                // 设置哪些接口暴露给Swagger展示
-                .select()
-                .paths(Predicates.not(PathSelectors.regex("/error.*")))
-                .build()
-                .globalOperationParameters(pars);
+            // 是否启用Swagger
+            .enable(enabled)
+            // 用来创建该API的基本信息，展示在文档的页面中（自定义展示的信息）
+            .apiInfo(apiInfo())
+            // 设置哪些接口暴露给Swagger展示
+            .select()
+            .paths(Predicates.not(PathSelectors.regex("/error.*")))
+            .build()
+            .globalOperationParameters(pars);
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                // 标题
-                .title("ADMIN 接口文档")
-                // 描述
-                .description("一个简单且易上手的 Spring boot 后台管理框架")
-                // 版本
-                .version("1.0")
-                .build();
+            // 标题
+            .title("ADMIN 接口文档")
+            // 描述
+            .description("一个简单且易上手的 Spring boot 后台管理框架")
+            // 版本
+            .version("1.0")
+            .build();
     }
 }
 
@@ -103,6 +105,7 @@ class SwaggerDataConfig {
 
     @ApiModel
     private static class Page {
+
         @ApiModelProperty("页码 (0..N)")
         private Long page;
 
@@ -113,7 +116,6 @@ class SwaggerDataConfig {
         private List<String> sort;
 
 
-        /** Getter and Setter | NoArgsConstructor | toString() */
         public Long getPage() {
             return page;
         }
@@ -138,16 +140,9 @@ class SwaggerDataConfig {
             this.sort = sort;
         }
 
-        public Page() {
-        }
-
         @Override
         public String toString() {
-            return "Page{" +
-                    "page=" + page +
-                    ", size=" + size +
-                    ", sort=" + sort +
-                    '}';
+            return getClass().getSimpleName() + ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
         }
     }
 }

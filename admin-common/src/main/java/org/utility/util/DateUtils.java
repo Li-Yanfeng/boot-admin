@@ -11,7 +11,13 @@ import java.util.Date;
  */
 public class DateUtils {
 
+    /**
+     * 日期格式：yyyy-MM-dd HH:mm:ss
+     */
     public static final DateTimeFormatter DFY_MD_HMS = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    /**
+     * 日期格式：yyyy-MM-dd
+     */
     public static final DateTimeFormatter DFY_MD = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /**
@@ -97,7 +103,7 @@ public class DateUtils {
      * @param localDateTime /
      * @return /
      */
-    public static String localDateTimeFormatyMdHms(LocalDateTime localDateTime) {
+    public static String localDateTimeFormatMdHms(LocalDateTime localDateTime) {
         return DFY_MD_HMS.format(localDateTime);
     }
 
@@ -107,7 +113,7 @@ public class DateUtils {
      * @param localDateTime /
      * @return /
      */
-    public String localDateTimeFormatyMd(LocalDateTime localDateTime) {
+    public String localDateTimeFormatMd(LocalDateTime localDateTime) {
         return DFY_MD.format(localDateTime);
     }
 
@@ -138,7 +144,7 @@ public class DateUtils {
      * @param localDateTime /
      * @return /
      */
-    public static LocalDateTime parseLocalDateTimeFormatyMdHms(String localDateTime) {
+    public static LocalDateTime parseLocalDateTimeFormatMdHms(String localDateTime) {
         return LocalDateTime.from(DFY_MD_HMS.parse(localDateTime));
     }
 }

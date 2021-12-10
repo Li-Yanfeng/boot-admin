@@ -8,8 +8,9 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.utility.core.service.impl.ServiceImpl;
 import org.utility.exception.BadRequestException;
-import org.utility.mapper.AlipayMapper;
+import org.utility.mapper.AlipayConfigMapper;
 import org.utility.model.AlipayConfig;
 import org.utility.model.vo.TradeVO;
 import org.utility.service.AlipayService;
@@ -18,30 +19,23 @@ import org.utility.service.AlipayService;
  * 支付宝配置 服务实现类
  *
  * @author Li Yanfeng
- * @since 2021-06-29
+ * @since 2021-06-01
  */
 @Service
-@CacheConfig(cacheNames = {"aliPay"})
-public class AlipayServiceImpl implements AlipayService {
-
-    private final AlipayMapper alipayMapper;
-
-    public AlipayServiceImpl(AlipayMapper alipayMapper) {
-        this.alipayMapper = alipayMapper;
-    }
+@CacheConfig(cacheNames = {"alipay"})
+public class AlipayServiceImpl extends ServiceImpl<AlipayConfigMapper, AlipayConfig> implements AlipayService {
 
     @CachePut(key = "'config'")
     @Override
-    public AlipayConfig config(AlipayConfig alipayConfig) {
-        alipayConfig.setConfigId(1L);
-        alipayMapper.updateById(alipayConfig);
-        return alipayConfig;
+    public void updateAlipayConfig(AlipayConfig resource) {
+        resource.setConfigId(1L);
+        baseMapper.updateById(resource);
     }
 
     @Cacheable(key = "'config'")
     @Override
-    public AlipayConfig getConfig() {
-        return alipayMapper.selectById(1L);
+    public AlipayConfig getAlipayConfig() {
+        return baseMapper.selectById(1L);
     }
 
     @Override
@@ -50,8 +44,8 @@ public class AlipayServiceImpl implements AlipayService {
             throw new BadRequestException("请先添加相应配置，再操作");
         }
         AlipayClient alipayClient = new DefaultAlipayClient(alipay.getGatewayUrl(), alipay.getAppId(),
-                alipay.getPrivateKey(), alipay.getFormat(), alipay.getCharset(), alipay.getPublicKey(),
-                alipay.getSignType());
+            alipay.getPrivateKey(), alipay.getFormat(), alipay.getCharset(), alipay.getPublicKey(),
+            alipay.getSignType());
 
         // 创建API对应的request(电脑网页版)
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
@@ -61,15 +55,15 @@ public class AlipayServiceImpl implements AlipayService {
         request.setNotifyUrl(alipay.getNotifyUrl());
         // 填充订单参数
         request.setBizContent("{" +
-                "    \"out_trade_no\":\"" + trade.getOutTradeNo() + "\"," +
-                "    \"product_code\":\"FAST_INSTANT_TRADE_PAY\"," +
-                "    \"total_amount\":" + trade.getTotalAmount() + "," +
-                "    \"subject\":\"" + trade.getSubject() + "\"," +
-                "    \"body\":\"" + trade.getBody() + "\"," +
-                "    \"extend_params\":{" +
-                "    \"sys_service_provider_id\":\"" + alipay.getSysServiceProviderId() + "\"" +
-                "    }" +
-                "  }");//填充业务参数
+            "    \"out_trade_no\":\"" + trade.getOutTradeNo() + "\"," +
+            "    \"product_code\":\"FAST_INSTANT_TRADE_PAY\"," +
+            "    \"total_amount\":" + trade.getTotalAmount() + "," +
+            "    \"subject\":\"" + trade.getSubject() + "\"," +
+            "    \"body\":\"" + trade.getBody() + "\"," +
+            "    \"extend_params\":{" +
+            "    \"sys_service_provider_id\":\"" + alipay.getSysServiceProviderId() + "\"" +
+            "    }" +
+            "  }");//填充业务参数
         // 调用SDK生成表单, 通过GET方式，口可以获取url
         return alipayClient.pageExecute(request, "GET").getBody();
     }
@@ -80,8 +74,8 @@ public class AlipayServiceImpl implements AlipayService {
             throw new BadRequestException("请先添加相应配置，再操作");
         }
         AlipayClient alipayClient = new DefaultAlipayClient(alipay.getGatewayUrl(), alipay.getAppId(),
-                alipay.getPrivateKey(), alipay.getFormat(), alipay.getCharset(), alipay.getPublicKey(),
-                alipay.getSignType());
+            alipay.getPrivateKey(), alipay.getFormat(), alipay.getCharset(), alipay.getPublicKey(),
+            alipay.getSignType());
 
         double money = Double.parseDouble(trade.getTotalAmount());
         double maxMoney = 5000;
@@ -93,15 +87,15 @@ public class AlipayServiceImpl implements AlipayService {
         request.setReturnUrl(alipay.getReturnUrl());
         request.setNotifyUrl(alipay.getNotifyUrl());
         request.setBizContent("{" +
-                "    \"out_trade_no\":\"" + trade.getOutTradeNo() + "\"," +
-                "    \"product_code\":\"FAST_INSTANT_TRADE_PAY\"," +
-                "    \"total_amount\":" + trade.getTotalAmount() + "," +
-                "    \"subject\":\"" + trade.getSubject() + "\"," +
-                "    \"body\":\"" + trade.getBody() + "\"," +
-                "    \"extend_params\":{" +
-                "    \"sys_service_provider_id\":\"" + alipay.getSysServiceProviderId() + "\"" +
-                "    }" +
-                "  }");
+            "    \"out_trade_no\":\"" + trade.getOutTradeNo() + "\"," +
+            "    \"product_code\":\"FAST_INSTANT_TRADE_PAY\"," +
+            "    \"total_amount\":" + trade.getTotalAmount() + "," +
+            "    \"subject\":\"" + trade.getSubject() + "\"," +
+            "    \"body\":\"" + trade.getBody() + "\"," +
+            "    \"extend_params\":{" +
+            "    \"sys_service_provider_id\":\"" + alipay.getSysServiceProviderId() + "\"" +
+            "    }" +
+            "  }");
         return alipayClient.pageExecute(request, "GET").getBody();
     }
 }

@@ -1,48 +1,46 @@
 package org.utility.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.utility.core.validation.Update;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 代码生成配置
- *
  * @author Li Yanfeng
  */
+@ApiModel(description = "代码生成配置")
 @TableName(value = "code_gen_config")
 public class GenConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID", hidden = true)
-    @TableId(value = "config_id", type = IdType.ASSIGN_ID)
-    private Long id;
+    @ApiModelProperty(value = "ID")
+    @TableId(type = IdType.AUTO)
+    @NotNull(groups = Update.class)
+    private Long configId;
 
     @ApiModelProperty(value = "表名")
-    @NotBlank
     private String tableName;
 
     @ApiModelProperty(value = "接口名称")
     private String apiAlias;
 
-    @ApiModelProperty(value = "模块名")
-    @NotBlank
+    @ApiModelProperty(value = "模块名称")
     private String moduleName;
 
     @ApiModelProperty(value = "包路径")
-    @NotBlank
     private String pack;
 
     @ApiModelProperty(value = "后端代码生成的路径")
-    @NotBlank
     private String adminPath;
 
     @ApiModelProperty(value = "前端代码生成的路径")
-    @NotBlank
     private String frontPath;
 
     @ApiModelProperty(value = "作者")
@@ -52,15 +50,16 @@ public class GenConfig implements Serializable {
     private String prefix;
 
     @ApiModelProperty(value = "是否覆盖")
-    private Boolean cover = false;
+    @TableField(value = "is_cover")
+    private Integer cover;
 
 
-    public Long getId() {
-        return id;
+    public Long getConfigId() {
+        return configId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setConfigId(Long configId) {
+        this.configId = configId;
     }
 
     public String getTableName() {
@@ -127,11 +126,11 @@ public class GenConfig implements Serializable {
         this.prefix = prefix;
     }
 
-    public Boolean getCover() {
+    public Integer getCover() {
         return cover;
     }
 
-    public void setCover(Boolean cover) {
+    public void setCover(Integer cover) {
         this.cover = cover;
     }
 
@@ -142,4 +141,3 @@ public class GenConfig implements Serializable {
         this.tableName = tableName;
     }
 }
-

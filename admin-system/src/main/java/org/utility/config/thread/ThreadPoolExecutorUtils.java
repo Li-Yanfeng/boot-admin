@@ -22,12 +22,12 @@ public class ThreadPoolExecutorUtils {
     public static ThreadPoolExecutor getPool() {
         AsyncTaskProperties properties = SpringContextHolder.getBean(AsyncTaskProperties.class);
         return new ThreadPoolExecutor(
-                properties.getCorePoolSize(),
-                properties.getMaxPoolSize(),
-                properties.getKeepAliveSeconds(),
-                TimeUnit.SECONDS,
-                new ArrayBlockingQueue<>(properties.getQueueCapacity()),
-                new TheadFactoryName()
+            properties.getCorePoolSize(),
+            properties.getMaxPoolSize(),
+            properties.getKeepAliveSeconds(),
+            TimeUnit.SECONDS,
+            new ArrayBlockingQueue<>(properties.getQueueCapacity()),
+            new TheadFactoryName()
         );
     }
 }

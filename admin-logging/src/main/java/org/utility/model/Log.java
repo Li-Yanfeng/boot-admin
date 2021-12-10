@@ -1,25 +1,24 @@
 package org.utility.model;
 
 import com.baomidou.mybatisplus.annotation.*;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 日志
- *
  * @author Li Yanfeng
- * @since 2021-04-15
  */
+@ApiModel(description = "日志")
 @TableName(value = "sys_log")
 public class Log implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "ID")
-    @TableId(value = "log_id", type = IdType.ASSIGN_ID)
-    private Long id;
+    @TableId(type = IdType.AUTO)
+    private Long logId;
 
     @ApiModelProperty(value = "方法名")
     private String method;
@@ -52,32 +51,16 @@ public class Log implements Serializable {
     private byte[] exceptionDetail;
 
     @ApiModelProperty(value = "创建时间")
-    @TableField(fill = FieldFill.INSERT)
-    protected Date createTime;
+    @TableField(fill= FieldFill.INSERT)
+    private Date createTime;
 
 
-    public Long getId() {
-        return id;
+    public Long getLogId() {
+        return logId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getLogType() {
-        return logType;
-    }
-
-    public void setLogType(String logType) {
-        this.logType = logType;
+    public void setLogId(Long logId) {
+        this.logId = logId;
     }
 
     public String getMethod() {
@@ -94,6 +77,14 @@ public class Log implements Serializable {
 
     public void setParams(String params) {
         this.params = params;
+    }
+
+    public String getLogType() {
+        return logType;
+    }
+
+    public void setLogType(String logType) {
+        this.logType = logType;
     }
 
     public String getRequestIp() {
@@ -136,6 +127,14 @@ public class Log implements Serializable {
         this.browser = browser;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public byte[] getExceptionDetail() {
         return exceptionDetail;
     }
@@ -150,6 +149,9 @@ public class Log implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Log() {
     }
 
     public Log(String logType, Long time) {

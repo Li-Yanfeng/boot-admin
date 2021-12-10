@@ -1,5 +1,7 @@
 package org.utility.exception.enums;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.utility.core.interfaces.ErrorCode;
 
 /**
@@ -43,7 +45,6 @@ public enum SystemErrorCode implements ErrorCode {
     private final String userTip;
 
 
-    /** Getter | AllArgsConstructor | toString() */
     @Override
     public String getCode() {
         return code;
@@ -61,6 +62,6 @@ public enum SystemErrorCode implements ErrorCode {
 
     @Override
     public String toString() {
-        return String.format(" ErrorCode:{code=%s, userTip=%s} ", code, userTip);
+        return getClass().getSimpleName() + ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
 }

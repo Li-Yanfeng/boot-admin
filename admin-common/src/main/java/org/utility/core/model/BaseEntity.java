@@ -4,11 +4,9 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author Li Yanfeng
@@ -26,20 +24,12 @@ public abstract class BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
-    protected Timestamp createTime;
+    protected Date createTime;
 
     @ApiModelProperty(value = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    protected Timestamp updateTime;
+    protected Date updateTime;
 
-
-    /* 分组校验 */
-    public @interface Create {
-    }
-
-    /* 分组校验 */
-    public @interface Update {
-    }
 
     public String getCreateBy() {
         return createBy;
@@ -57,34 +47,19 @@ public abstract class BaseEntity implements Serializable {
         this.updateBy = updateBy;
     }
 
-    public Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public Timestamp getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        ToStringBuilder builder = new ToStringBuilder(this);
-        Field[] fields = this.getClass().getDeclaredFields();
-        try {
-            for (Field f : fields) {
-                f.setAccessible(true);
-                builder.append(f.getName(), f.get(this)).append("\n");
-            }
-        } catch (Exception e) {
-            builder.append("toString builder encounter an error");
-        }
-        return builder.toString();
     }
 }

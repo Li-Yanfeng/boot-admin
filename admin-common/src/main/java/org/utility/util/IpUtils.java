@@ -10,7 +10,7 @@ import org.lionsoul.ip2region.DbSearcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
-import org.utility.constant.AdminConsts;
+import org.utility.constant.AdminConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -105,7 +105,7 @@ public class IpUtils {
      * 根据ip获取详细地址
      */
     public static String getHttpCityInfo(String ip) {
-        String api = String.format(AdminConsts.Url.IP_URL, ip);
+        String api = String.format(AdminConstant.Url.IP_URL, ip);
         JSONObject object = JSONUtil.parseObj(HttpUtil.get(api));
         return object.get("addr", String.class);
     }
@@ -122,7 +122,7 @@ public class IpUtils {
             if (address.charAt(address.length() - 1) == symbol) {
                 address = address.substring(0, address.length() - 1);
             }
-            return address.equals(AdminConsts.REGION) ? "内网IP" : address;
+            return address.equals(AdminConstant.REGION) ? "内网IP" : address;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }

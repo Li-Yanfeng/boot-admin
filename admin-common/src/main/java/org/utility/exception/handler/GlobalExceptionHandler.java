@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
      * 处理自定义异常
      */
     @ExceptionHandler(value = BadRequestException.class)
-    public Result<Object> handlerBadRequestException(BadRequestException e) {
+    public Result handlerBadRequestException(BadRequestException e) {
         // 打印堆栈信息
         logger.error(ThrowableUtils.getStackTrace(e));
         return Result.failure(e.getCode(), e.getMessage());
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
      * 处理 EntityExist
      */
     @ExceptionHandler(value = EntityExistException.class)
-    public Result<Object> handlerEntityExistException(EntityExistException e) {
+    public Result handlerEntityExistException(EntityExistException e) {
         // 打印堆栈信息
         logger.error(ThrowableUtils.getStackTrace(e));
         return Result.failure(UserErrorCode.DATA_HAS_UNIQUENESS.getCode(), e.getMessage());
@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
      * 处理 EntityNotFound
      */
     @ExceptionHandler(value = EntityNotFoundException.class)
-    public Result<Object> handlerEntityNotFoundException(EntityNotFoundException e) {
+    public Result handlerEntityNotFoundException(EntityNotFoundException e) {
         // 打印堆栈信息
         logger.error(ThrowableUtils.getStackTrace(e));
         return Result.failure(UserErrorCode.REQUEST_DATA_NOT_FOUND.getCode(), e.getMessage());
@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
      * 处理 AccessDeniedException
      */
     @ExceptionHandler(AccessDeniedException.class)
-    public Result<Object> handlerAccessDeniedException(AccessDeniedException e) {
+    public Result handlerAccessDeniedException(AccessDeniedException e) {
         // 打印堆栈信息
         logger.error(ThrowableUtils.getStackTrace(e));
         return Result.failure(UserErrorCode.NO_ACCESS_TO_API);
@@ -70,7 +70,7 @@ public class GlobalExceptionHandler {
      * 处理 BadCredentialsException
      */
     @ExceptionHandler(BadCredentialsException.class)
-    public Result<Object> handlerBadCredentialsException(BadCredentialsException e) {
+    public Result handlerBadCredentialsException(BadCredentialsException e) {
         // 打印堆栈信息
         String message = "坏的凭证".equals(e.getMessage()) ? "用户名或密码不正确" : e.getMessage();
         logger.error(message);
@@ -81,13 +81,14 @@ public class GlobalExceptionHandler {
      * 处理所有接口数据验证异常
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result<Object> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public Result handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         // 打印堆栈信息
         logger.error(ThrowableUtils.getStackTrace(e));
         String[] str = Objects.requireNonNull(e.getBindingResult().getAllErrors().get(0).getCodes())[1].split("\\.");
         String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
         String msg = "不能为空";
-        if (msg.equals(message)) message = str[1] + ":" + message;
+        if (msg.equals(message))
+            message = str[1] + ":" + message;
         return Result.failure(message);
     }
 
@@ -95,7 +96,7 @@ public class GlobalExceptionHandler {
      * 处理所有不可知的异常
      */
     @ExceptionHandler(Throwable.class)
-    public Result<Object> handleException(Throwable e) {
+    public Result handleException(Throwable e) {
         // 打印堆栈信息
         logger.error(ThrowableUtils.getStackTrace(e));
         return Result.failure(UserErrorCode.CLIENT_ERROR);

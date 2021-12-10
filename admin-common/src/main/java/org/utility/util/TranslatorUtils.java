@@ -22,10 +22,10 @@ public class TranslatorUtils {
     public static String english2Chinese(String word) {
         try {
             String url = "https://translate.googleapis.com/translate_a/single?" +
-                    "client=gtx&" +
-                    "sl=en" +
-                    "&tl=zh-CN" +
-                    "&dt=t&q=" + URLEncoder.encode(word, "UTF-8");
+                "client=gtx&" +
+                "sl=en" +
+                "&tl=zh-CN" +
+                "&dt=t&q=" + URLEncoder.encode(word, "UTF-8");
 
             return translate(url);
         } catch (Exception e) {
@@ -39,10 +39,10 @@ public class TranslatorUtils {
     public static String chinese2English(String word) {
         try {
             String url = "https://translate.googleapis.com/translate_a/single?" +
-                    "client=gtx&" +
-                    "sl=zh-CN" +
-                    "&tl=en" +
-                    "&dt=t&q=" + URLEncoder.encode(word, "UTF-8");
+                "client=gtx&" +
+                "sl=zh-CN" +
+                "&tl=en" +
+                "&dt=t&q=" + URLEncoder.encode(word, "UTF-8");
 
             return translate(url);
         } catch (Exception e) {
@@ -58,8 +58,7 @@ public class TranslatorUtils {
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestProperty("User-Agent", "Mozilla/5.0");
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuilder response = new StringBuilder();
 

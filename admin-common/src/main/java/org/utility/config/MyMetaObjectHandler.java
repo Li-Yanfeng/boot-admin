@@ -5,7 +5,7 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Configuration;
 import org.utility.util.SecurityUtils;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * MybatisPlus 公共字段填充
@@ -22,15 +22,15 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        Date currentTime = new Date();
         // 创建人
         this.strictInsertFill(metaObject, "createBy", String.class, getUsername());
+        // 创建时间
+        this.strictInsertFill(metaObject, "createTime", Date.class, currentTime);
         // 更新人
         this.strictInsertFill(metaObject, "updateBy", String.class, getUsername());
-        // 创建时间
-        this.strictInsertFill(metaObject, "createTime", Timestamp.class, currentTime);
         // 更新时间
-        this.strictInsertFill(metaObject, "updateTime",  Timestamp.class, currentTime);
+        this.strictInsertFill(metaObject, "updateTime", Date.class, currentTime);
     }
 
     /**
@@ -40,13 +40,16 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        Date currentTime = new Date();
         // 更新人
         this.strictUpdateFill(metaObject, "updateBy", String.class, getUsername());
         // 更新时间
-        this.strictInsertFill(metaObject, "updateTime",  Timestamp.class, currentTime);
+        this.strictInsertFill(metaObject, "updateTime", Date.class, currentTime);
     }
 
+    /**
+     * 获取系统用户名称
+     */
     private String getUsername() {
         try {
             return SecurityUtils.getCurrentUsername();

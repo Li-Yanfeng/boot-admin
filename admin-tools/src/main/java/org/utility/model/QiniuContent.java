@@ -1,24 +1,27 @@
 package org.utility.model;
 
 import com.baomidou.mybatisplus.annotation.*;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.utility.core.validation.Update;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 七牛云文件
- *
  * @author Li Yanfeng
- * @since 2021-06-29
+ * @since 2021-06-01
  */
+@ApiModel(description = "七牛云文件")
 @TableName(value = "tool_qiniu_content")
 public class QiniuContent implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "ID")
-    @TableId(value = "content_id", type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
+    @NotNull(groups = Update.class)
     private Long contentId;
 
     @ApiModelProperty(value = "Bucket 识别符")
@@ -41,7 +44,7 @@ public class QiniuContent implements Serializable {
     private String suffix;
 
     @ApiModelProperty(value = "上传或同步的时间")
-    @TableField(fill= FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
 

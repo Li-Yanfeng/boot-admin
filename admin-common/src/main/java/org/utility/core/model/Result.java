@@ -1,142 +1,118 @@
 package org.utility.core.model;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.utility.core.interfaces.ErrorCode;
 import org.utility.exception.enums.UserErrorCode;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * REST API 返回结果
  *
  * @author Li Yanfeng
  */
-public class Result<T> implements Serializable {
+public class Result extends HashMap<String, Object> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 业务错误码
      */
-    private String code;
+    private static final String CODE_TAG = "code";
     /**
      * 用户提示
      */
-    private String message;
+    private static final String MSG_TAG = "msg";
     /**
-     * 返回参数
+     * 返回数据
      */
-    private Map<String, Object> data = new HashMap<>(2);
+    private static final String DATA_TAG = "data";
+    /**
+     * 数据总数
+     */
+    private static final String TOTAL_TAG = "total";
 
 
     /**
      * 业务成功返回业务代码和提示信息
      */
-    public static <T> Result<T> success() {
+    public static Result success() {
         return success(null);
     }
 
     /**
      * 业务成功返回业务代码,描述和返回的参数
      */
-    public static <T> Result<T> success(T data) {
+    public static Result success(Object data) {
         ErrorCode ec = UserErrorCode.SUCCESS;
         if (data instanceof Boolean && Boolean.FALSE.equals(data)) {
             ec = UserErrorCode.CLIENT_ERROR;
         }
-        return new Result<>(ec, data);
+        return new Result(ec, data);
     }
 
 
     /**
      * 业务异常返回业务代码,提示信息
      */
-    public static <T> Result<T> failure() {
+    public static Result failure() {
         return failure(UserErrorCode.CLIENT_ERROR);
     }
 
     /**
      * 业务异常返回业务代码,提示信息
      */
-    public static <T> Result<T> failure(@NotNull String message) {
-        return failure(UserErrorCode.CLIENT_ERROR.getCode(), message);
+    public static Result failure(@NotNull String msg) {
+        return failure(UserErrorCode.CLIENT_ERROR.getCode(), msg);
     }
 
     /**
      * 业务异常返回业务代码,提示信息
      */
-    public static <T> Result<T> failure(String code, String message) {
-        return new Result<>(code, message);
+    public static Result failure(String code, String msg) {
+        return new Result(code, msg);
     }
 
     /**
      * 业务异常返回业务代码,提示信息
      */
-    public static <T> Result<T> failure(@NotNull ErrorCode errorCode) {
+    public static Result failure(@NotNull ErrorCode errorCode) {
         return failure(errorCode.getCode(), errorCode.getUserTip());
     }
 
 
-    public String getCode() {
-        return code;
+    private Result(String code, String msg) {
+        this(code, msg, null);
     }
 
-    public Result setCode(String code) {
-        this.code = code;
-        return this;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public Result setMessage(String message) {
-        this.message = message;
-        return this;
-    }
-
-    public Map<String, Object> getData() {
-        return data;
-    }
-
-    public Result setData(Map<String, Object> data) {
-        this.data = data;
-        return this;
-    }
-
-    private Result(String code, String message) {
-        this.code = code;
-        this.message = message;
-    }
-
-    private Result(ErrorCode errorCode, T data) {
+    private Result(ErrorCode errorCode, Object data) {
         this(errorCode.getCode(), errorCode.getUserTip(), data);
     }
 
-    private Result(String code, String message, T data) {
-        this.code = code;
-        this.message = message;
+    private Result(String code, String msg, Object data) {
+        super.put(CODE_TAG, code);
+        super.put(MSG_TAG, msg);
         // 处理数据
-        if (data instanceof IPage) {
-            // 数据列表
-            this.data.put("content", ((IPage<?>) data).getRecords());
-            // 总数
-            this.data.put("total", ((IPage<?>) data).getTotal());
-        } else {
-            // 数据列表
-            this.data.put("content", data);
+        if (ObjectUtil.isNotNull(data)) {
+            if (data instanceof IPage) {
+                // 数据列表
+                super.put(DATA_TAG, ((IPage<?>) data).getRecords());
+                // 总数
+                super.put(TOTAL_TAG, ((IPage<?>) data).getTotal());
+            } else {
+                // 数据列表
+                super.put(DATA_TAG, data);
+            }
         }
     }
 
     @Override
     public String toString() {
-        return "Result{" +
-                "code='" + code + '\'' +
-                ", message='" + message + '\'' +
-                ", data=" + data +
-                '}';
+        return getClass().getSimpleName() + ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
 }

@@ -1,32 +1,30 @@
 package org.utility.service.dto;
 
+import com.baomidou.mybatisplus.core.enums.SqlKeyword;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.utility.annotation.Query;
-import org.utility.core.service.dto.BaseQuery;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-
 /**
- * 本地存储 数据查询对象
- *
  * @author Li Yanfeng
- * @since 2021-06-29
+ * @since 2021-06-01
  */
-public class LocalStorageQuery extends BaseQuery {
+@ApiModel(description = "本地存储 数据查询对象")
+public class LocalStorageQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 时间
-     */
+    @ApiModelProperty(value = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Query(type = Query.Type.BETWEEN)
+    @Query(type = SqlKeyword.BETWEEN)
     private List<Date> createTime;
-    /**
-     * 多字段模糊
-     */
+
+    @ApiModelProperty(value = "多字段模糊")
     @Query(blurry = "name,suffix,type,createBy,size")
     private String blurry;
 

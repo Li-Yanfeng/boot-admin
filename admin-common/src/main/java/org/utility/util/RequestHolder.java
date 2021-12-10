@@ -16,11 +16,11 @@ import java.util.Objects;
 public class RequestHolder {
 
     private static final UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzer
-            .newBuilder()
-            .hideMatcherLoadStats()
-            .withCache(10000)
-            .withField(UserAgent.AGENT_NAME_VERSION)
-            .build();
+        .newBuilder()
+        .hideMatcherLoadStats()
+        .withCache(10000)
+        .withField(UserAgent.AGENT_NAME_VERSION)
+        .build();
 
     public static HttpServletRequest getHttpServletRequest() {
         return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();

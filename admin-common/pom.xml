@@ -81,7 +81,7 @@
             <version>3.8.7</version>
         </dependency>
 
-        <!-- Mybatis Plus -->
+        <!--Mybatis Plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -116,7 +116,7 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- Swagger UI 相关 -->
+        <!--Swagger UI 相关-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -183,7 +183,7 @@
             <version>1.6.2</version>
         </dependency>
 
-        <!-- 解析客户端操作系统、浏览器信息 -->
+        <!--解析客户端操作系统、浏览器信息-->
         <dependency>
             <groupId>nl.basjes.parse.useragent</groupId>
             <artifactId>yauaa</artifactId>

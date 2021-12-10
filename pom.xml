@@ -23,5 +23,6 @@
         <module>admin-logging</module>
         <module>admin-system</module>
         <module>admin-tools</module>
+        <module>admin-entrance</module>
     </modules>
 </project>

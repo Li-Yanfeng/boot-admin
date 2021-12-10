@@ -6,8 +6,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.stereotype.Component;
 import org.utility.model.Log;
@@ -27,8 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 @Component
 public class LogAspect {
-
-    private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
     ThreadLocal<Long> currentTime = new ThreadLocal<>();
 
@@ -58,7 +54,7 @@ public class LogAspect {
         Log log = new Log(LogLevel.INFO.name(), System.currentTimeMillis() - currentTime.get());
         currentTime.remove();
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
-        logService.save(getUsername(), RequestHolder.getBrowser(request), IpUtils.getIp(request),joinPoint, log);
+        logService.saveLog(getUsername(), RequestHolder.getBrowser(request), IpUtils.getIp(request), joinPoint, log);
         return result;
     }
 
@@ -74,13 +70,13 @@ public class LogAspect {
         currentTime.remove();
         log.setExceptionDetail(ThrowableUtils.getStackTrace(e).getBytes());
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
-        logService.save(getUsername(), RequestHolder.getBrowser(request), IpUtils.getIp(request), (ProceedingJoinPoint)joinPoint, log);
+        logService.saveLog(getUsername(), RequestHolder.getBrowser(request), IpUtils.getIp(request), (ProceedingJoinPoint) joinPoint, log);
     }
 
     private String getUsername() {
         try {
             return SecurityUtils.getCurrentUsername();
-        }catch (Exception e){
+        } catch (Exception e) {
             return "";
         }
     }

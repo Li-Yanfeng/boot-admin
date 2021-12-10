@@ -10,17 +10,17 @@ import org.utility.model.QiniuContent;
  * 七牛云文件 Mapper 接口
  *
  * @author Li Yanfeng
- * @since 2021-06-29
+ * @since 2021-06-01
  */
 @Repository
 public interface QiniuContentMapper extends BaseMapper<QiniuContent> {
 
     /**
-     * 根据key查询
+     * 根据 Key 查询
      *
      * @param key 文件名
      * @return /
      */
-    @Select("SELECT content_id AS id, bucket, name, size, type , url, suffix, update_time FROM tool_qiniu_content WHERE name = #{key}")
+    @Select("SELECT content_id, bucket, name, size, type , url, suffix, update_time FROM tool_qiniu_content WHERE name = #{key}")
     QiniuContent selectByKey(@Param("key") String key);
 }

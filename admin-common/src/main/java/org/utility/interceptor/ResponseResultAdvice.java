@@ -50,7 +50,7 @@ public class ResponseResultAdvice implements ResponseBodyAdvice<Object> {
      */
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest request, ServerHttpResponse response) {
-        // 如果返回的 Result，直接返回
+        // 如果返回 Result，直接返回
         if (body instanceof Result) {
             return body;
         } else if (body instanceof String) {

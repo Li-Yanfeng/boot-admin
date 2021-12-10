@@ -38,7 +38,7 @@ public class MybatisPlusConfig {
         // 配置多数据源
         sqlSessionFactory.setDataSource(dataSource);
         sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath" +
-                "*:mapper/**/*Mapper.xml"));
+            "*:mapper/**/*Mapper.xml"));
         // 实体扫描，多个package用逗号或者分号分隔
         sqlSessionFactory.setTypeAliasesPackage("org.utility.**.model");
 
@@ -55,7 +55,7 @@ public class MybatisPlusConfig {
         GlobalConfig.DbConfig dbConfig = new GlobalConfig.DbConfig();
         // 主键类型  AUTO:"数据库ID自增", NONE:"该类型为未设置主键类型", INPUT:"用户输入ID", ASSIGN_ID:"全局唯一ID (数字类型唯一ID)",
         // ASSIGN_UUID:"全局唯一ID UUID"
-        dbConfig.setIdType(IdType.ASSIGN_ID);
+        dbConfig.setIdType(IdType.AUTO);
         // 字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
         dbConfig.setInsertStrategy(FieldStrategy.NOT_NULL);
         dbConfig.setUpdateStrategy(FieldStrategy.NOT_NULL);

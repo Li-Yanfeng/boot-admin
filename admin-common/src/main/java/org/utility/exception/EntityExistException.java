@@ -5,7 +5,7 @@ import org.springframework.util.StringUtils;
 /**
  * 实体存在异常
  *
- * @author LiYanfeng
+ * @author liYanfeng
  */
 public class EntityExistException extends RuntimeException {
 

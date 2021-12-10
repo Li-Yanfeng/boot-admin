@@ -2,7 +2,7 @@ package org.utility.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.utility.constant.AdminConsts;
+import org.utility.constant.AdminConstant;
 
 /**
  * 文件属性配置
@@ -30,9 +30,9 @@ public class FileProperties {
 
     public AdminPath getPath() {
         String os = System.getProperty("os.name");
-        if (os.toLowerCase().startsWith(AdminConsts.WIN)) {
+        if (os.toLowerCase().startsWith(AdminConstant.WIN)) {
             return windows;
-        } else if (os.toLowerCase().startsWith(AdminConsts.MAC)) {
+        } else if (os.toLowerCase().startsWith(AdminConstant.MAC)) {
             return mac;
         }
         return linux;
@@ -59,14 +59,6 @@ public class FileProperties {
 
         public void setAvatar(String avatar) {
             this.avatar = avatar;
-        }
-
-        @Override
-        public String toString() {
-            return "AdminPath{" +
-                    "path='" + path + '\'' +
-                    ", avatar='" + avatar + '\'' +
-                    '}';
         }
     }
 
@@ -109,17 +101,6 @@ public class FileProperties {
 
     public void setWindows(AdminPath windows) {
         this.windows = windows;
-    }
-
-    @Override
-    public String toString() {
-        return "FileProperties{" +
-                "maxSize=" + maxSize +
-                ", avatarMaxSize=" + avatarMaxSize +
-                ", mac=" + mac +
-                ", linux=" + linux +
-                ", windows=" + windows +
-                '}';
     }
 }
 

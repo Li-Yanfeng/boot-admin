@@ -3,24 +3,24 @@ package org.utility.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
- * 支付宝配置
- *
  * @author Li Yanfeng
- * @since 2021-06-29
+ * @since 2021-06-01
  */
+@ApiModel(description = "支付宝配置")
 @TableName(value = "tool_alipay_config")
 public class AlipayConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "ID")
-    @TableId(value = "config_id", type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long configId;
 
     @ApiModelProperty(value = "应用ID")
@@ -45,7 +45,7 @@ public class AlipayConfig implements Serializable {
     @ApiModelProperty(value = "编码", hidden = true)
     private String charset = "utf-8";
 
-    @ApiModelProperty(value = "类型 固定格式json")
+    @ApiModelProperty(value = "类型")
     private String format = "JSON";
 
     @ApiModelProperty(value = "支付宝开放安全地址", hidden = true)

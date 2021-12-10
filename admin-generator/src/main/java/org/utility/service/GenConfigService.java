@@ -1,28 +1,44 @@
 package org.utility.service;
 
+import org.utility.core.service.Service;
 import org.utility.model.GenConfig;
+
+import java.util.Collection;
 
 /**
  * 代码生成配置 服务类
  *
  * @author Li Yanfeng
  */
-public interface GenConfigService {
+public interface GenConfigService extends Service<GenConfig> {
 
     /**
-     * 查询表配置
+     * 插入一条记录
      *
-     * @param tableName 表名
-     * @return 表配置
+     * @param resource 实体对象
      */
-    GenConfig getByTableName(String tableName);
+    void saveGenConfig(GenConfig resource);
 
     /**
-     * 更新表配置
+     * 根据 ID 批量删除
+     *
+     * @param ids 主键ID列表
+     */
+    void removeGenConfigByIds(Collection<Long> ids);
+
+    /**
+     * 根据 ID 查询
+     *
+     * @param id 主键ID
+     * @return 实体对象
+     */
+    GenConfig getGenConfigById(Long id);
+
+    /**
+     * 根据 TableName 查询
      *
      * @param tableName 表名
-     * @param genConfig 表配置
-     * @return 表配置
+     * @return 实体对象
      */
-    GenConfig update(String tableName, GenConfig genConfig);
+    GenConfig getGenConfigByTableName(String tableName);
 }

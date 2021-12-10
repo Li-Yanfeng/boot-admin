@@ -1,51 +1,48 @@
 package org.utility.model.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.sql.Date;
-import java.sql.Timestamp;
 
 /**
- * 易详情，按需应该存入数据库，这里存入数据库，仅供临时测试
- *
  * @author Li Yanfeng
- * @since 2021-06-29
+ * @since 2021-06-01
  */
-public class TradeVO {
+@ApiModel(description = "交易详情，按需存入数据库")
+public class TradeVO implements Serializable {
 
-    /**
-     * 商品描述（必填）
-     */
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "商品描述")
     @NotBlank
     private String body;
-    /**
-     * 商品名称（必填）
-     */
+
+    @ApiModelProperty(value = "商品名称")
     @NotBlank
     private String subject;
-    /**
-     * 商户订单号，应该由后台生成（必填）
-     */
+
+    @ApiModelProperty(value = "商户订单号，应该由后台生成", hidden = true)
     private String outTradeNo;
-    /**
-     * 第三方订单号（必填）
-     */
+
+    @ApiModelProperty(value = "第三方订单号", hidden = true)
     private String tradeNo;
-    /**
-     * 价格（必填）
-     */
+
+    @ApiModelProperty(value = "价格")
     @NotBlank
     private String totalAmount;
-    /**
-     * 订单状态,已支付，未支付，作废
-     */
+
+    @ApiModelProperty(value = "订单状态（已支付，未支付，作废）", hidden = true)
     private String state;
-    /**
-     * 创建时间，存入数据库时需要
-     */
-    private Timestamp createTime;
-    /**
-     * 作废时间，存入数据库时需要
-     */
+
+    @ApiModelProperty(value = "创建时间", hidden = true)
+    private Date createTime;
+
+    @ApiModelProperty(value = "作废时间", hidden = true)
     private Date cancelTime;
 
 
@@ -97,11 +94,11 @@ public class TradeVO {
         this.state = state;
     }
 
-    public Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
@@ -115,15 +112,6 @@ public class TradeVO {
 
     @Override
     public String toString() {
-        return "TradeVO{" +
-                "body='" + body + '\'' +
-                ", subject='" + subject + '\'' +
-                ", outTradeNo='" + outTradeNo + '\'' +
-                ", tradeNo='" + tradeNo + '\'' +
-                ", totalAmount='" + totalAmount + '\'' +
-                ", state='" + state + '\'' +
-                ", createTime=" + createTime +
-                ", cancelTime=" + cancelTime +
-                '}';
+        return getClass().getSimpleName() + ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
 }

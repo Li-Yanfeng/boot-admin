@@ -21,7 +21,7 @@ public class EncryptUtils {
     private static final IvParameterSpec IV = new IvParameterSpec(STR_PARAM.getBytes(StandardCharsets.UTF_8));
 
     private static DESKeySpec getDesKeySpec(String source) throws Exception {
-        if (source == null || source.length() == 0) {
+        if (StringUtils.isBlank(source)) {
             return null;
         }
         cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
@@ -37,8 +37,7 @@ public class EncryptUtils {
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
         SecretKey secretKey = keyFactory.generateSecret(desKeySpec);
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, IV);
-        return byte2hex(
-                cipher.doFinal(source.getBytes(StandardCharsets.UTF_8))).toUpperCase();
+        return byte2hex(cipher.doFinal(source.getBytes(StandardCharsets.UTF_8))).toUpperCase();
     }
 
     /**

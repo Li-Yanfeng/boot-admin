@@ -1,36 +1,33 @@
 package org.utility.service.dto;
 
+import com.baomidou.mybatisplus.core.enums.SqlKeyword;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.utility.annotation.Query;
-import org.utility.core.service.dto.BaseQuery;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 日志 数据查询对象
- *
  * @author Li Yanfeng
- * @since 2021-04-15
  */
-public class LogQuery extends BaseQuery {
+@ApiModel(description = "日志 数据查询对象")
+public class LogQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 日志类型
-     */
-    @Query(type = Query.Type.EQ)
+    @ApiModelProperty(value = "日志类型")
+    @Query(type = SqlKeyword.EQ)
     private String logType;
-    /**
-     * 时间
-     */
+
+    @ApiModelProperty(value = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Query(type = Query.Type.BETWEEN)
+    @Query(type = SqlKeyword.BETWEEN)
     private List<Date> createTime;
-    /**
-     * 多字段模糊
-     */
+
+    @ApiModelProperty(value = "多字段模糊")
     @Query(blurry = "username,description,address,requestIp,method,params")
     private String blurry;
 

@@ -19,7 +19,7 @@ public class PermissionConfig {
     public Boolean check(String... permissions) {
         // 获取当前用户的所有权限
         List<String> permissionsList =
-                SecurityUtils.getCurrentUser().getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+            SecurityUtils.getCurrentUser().getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
         // 判断当前用户的所有权限是否包含接口上定义的权限
         return permissionsList.contains("admin") || Arrays.stream(permissions).anyMatch(permissionsList::contains);
     }
