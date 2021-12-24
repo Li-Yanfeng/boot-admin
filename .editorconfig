@@ -25,6 +25,12 @@ spaces_around_operators = true
 indent_brace_style = 1tbs
 
 
+# 对所有的 yml,yaml 文件生效
+[*.{yml,yaml}]
+# 使用2个空格缩进
+indent_size = 2
+
+
 # 对所有的 js 文件生效
 [*.js]
 # 字符串使用单引号

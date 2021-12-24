@@ -5,24 +5,24 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.7.RELEASE</version>
+        <version>2.5.6</version>
         <relativePath/>
     </parent>
 
-    <groupId>org.utility</groupId>
-    <artifactId>admin</artifactId>
+    <groupId>com.boot.admin</groupId>
+    <artifactId>boot-admin</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
 
-    <name>admin</name>
+    <name>boot-admin</name>
     <description>一个简单且易上手的 Spring boot 后台管理框架</description>
 
     <modules>
-        <module>admin-common</module>
-        <module>admin-generator</module>
-        <module>admin-logging</module>
-        <module>admin-system</module>
-        <module>admin-tools</module>
-        <module>admin-entrance</module>
+        <module>boot-admin-common</module>
+        <module>boot-admin-generator</module>
+        <module>boot-admin-logging</module>
+        <module>boot-admin-starter</module>
+        <module>boot-admin-system</module>
+        <module>boot-admin-tools</module>
     </modules>
 </project>
