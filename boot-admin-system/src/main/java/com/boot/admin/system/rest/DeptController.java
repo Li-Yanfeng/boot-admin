@@ -79,13 +79,6 @@ public class DeptController {
         return deptService.buildTree(deptService.listDepts(query));
     }
 
-    @ApiOperation(value = "查询部门")
-    @PreAuthorize(value = "@authorize.check('users:list','depts:list')")
-    @GetMapping("/{id}")
-    public DeptDTO info(@PathVariable Long id) {
-        return deptService.getDeptById(id);
-    }
-
     @ApiOperation(value = "查询部门:根据ID获取同级与上级数据")
     @PreAuthorize(value = "@authorize.check('users:list','depts:list')")
     @GetMapping(value = "/superiors")

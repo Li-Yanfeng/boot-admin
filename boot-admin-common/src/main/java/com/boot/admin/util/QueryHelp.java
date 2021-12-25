@@ -82,10 +82,10 @@ public class QueryHelp {
                         continue;
                     }
                 }
+                // 自定义排序
+                setOrder(queryWrapper, query, field);
                 field.setAccessible(accessible);
             }
-            // 自定义排序
-            setOrder(queryWrapper, query, fields);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -97,38 +97,32 @@ public class QueryHelp {
      *
      * @param queryWrapper 查询条件构造器
      * @param query        查询类
-     * @param fields       查询实体属性
+     * @param field        查询实体属性
      * @throws IllegalAccessException /
      */
-    private static <T, Q> void setOrder(QueryWrapper<T> queryWrapper, Q query, List<Field> fields) throws IllegalAccessException {
-        for (Field field : fields) {
-            boolean accessible = field.isAccessible();
-            field.setAccessible(true);
-            // 获取排序字段
-            if ("sort".equals(field.getName())) {
-                String value = (String) field.get(query);
-                if (StrUtil.isNotBlank(value)) {
-                    String[] elements = value.split("[,，]");
-                    // 待排序的字段
-                    String[] attributeNames = new String[elements.length - 1];
-                    // 排序方式
-                    String sort = null;
-                    for (int i = 0, size = elements.length; i < size; i++) {
-                        if (i == elements.length - 1) {
-                            sort = elements[i];
-                        } else {
-                            attributeNames[i] = toUnderScoreCase(elements[i]).toLowerCase();
-                        }
+    private static <T, Q> void setOrder(QueryWrapper<T> queryWrapper, Q query, Field field) throws IllegalAccessException {
+        // 获取排序字段
+        if ("sort".equals(field.getName())) {
+            String value = (String) field.get(query);
+            if (StrUtil.isNotBlank(value)) {
+                String[] elements = value.split("[,，]");
+                // 待排序的字段
+                String[] attributeNames = new String[elements.length - 1];
+                // 排序方式
+                String sort = null;
+                for (int i = 0, size = elements.length; i < size; i++) {
+                    if (i == elements.length - 1) {
+                        sort = elements[i];
+                    } else {
+                        attributeNames[i] = toUnderScoreCase(elements[i]).toLowerCase();
                     }
-                    // 是否排序
-                    boolean isSort = StrUtil.endWithIgnoreCase(sort, "ASC") || StrUtil.endWithIgnoreCase(sort, "DESC");
-                    // 是否升序
-                    boolean isAsc = StrUtil.equalsIgnoreCase("ASC", sort);
-                    queryWrapper.orderBy(isSort, isAsc, attributeNames);
                 }
-                break;
+                // 是否排序
+                boolean isSort = StrUtil.endWithIgnoreCase(sort, SqlKeyword.ASC.name()) || StrUtil.endWithIgnoreCase(sort, SqlKeyword.DESC.name());
+                // 是否升序
+                boolean isAsc = StrUtil.equalsIgnoreCase(SqlKeyword.ASC.name(), sort);
+                queryWrapper.orderBy(isSort, isAsc, attributeNames);
             }
-            field.setAccessible(accessible);
         }
     }
 
@@ -140,8 +134,7 @@ public class QueryHelp {
      * @param attributeName 属性名
      * @param value         属性值
      */
-    private static <T, Q> void setQueryWrapper(QueryWrapper<T> queryWrapper, SqlKeyword type, String attributeName,
-                                               Object value) {
+    private static <T, Q> void setQueryWrapper(QueryWrapper<T> queryWrapper, SqlKeyword type, String attributeName, Object value) {
         switch (type) {
             case EQ:
                 queryWrapper.eq(attributeName, value);
