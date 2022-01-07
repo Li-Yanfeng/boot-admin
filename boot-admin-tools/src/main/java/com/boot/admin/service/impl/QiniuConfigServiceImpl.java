@@ -1,7 +1,7 @@
 package com.boot.admin.service.impl;
 
 import com.boot.admin.constant.CacheKey;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.service.impl.ServiceImpl;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.mapper.QiniuConfigMapper;
@@ -43,7 +43,7 @@ public class QiniuConfigServiceImpl extends ServiceImpl<QiniuConfigMapper, Qiniu
     @Override
     public void updateQiniuConfig(QiniuConfig resource) {
         resource.setConfigId(1L);
-        if (!(resource.getHost().toLowerCase().startsWith(SystemConstant.HTTP) || resource.getHost().toLowerCase().startsWith(SystemConstant.HTTPS))) {
+        if (!(resource.getHost().toLowerCase().startsWith(CommonConstant.HTTP) || resource.getHost().toLowerCase().startsWith(CommonConstant.HTTPS))) {
             throw new BadRequestException("外链域名必须以http://或者https://开头");
         }
         baseMapper.updateById(resource);

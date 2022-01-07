@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 浅析VO、DTO、DO、PO的概念、区别和用处
@@ -24,10 +24,10 @@ public abstract class BaseDTO implements Serializable {
     protected String updateBy;
 
     @ApiModelProperty(value = "创建时间")
-    protected Date createTime;
+    protected LocalDateTime createTime;
 
     @ApiModelProperty(value = "更新时间")
-    protected Date updateTime;
+    protected LocalDateTime updateTime;
 
 
     public String getCreateBy() {
@@ -46,19 +46,19 @@ public abstract class BaseDTO implements Serializable {
         this.updateBy = updateBy;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 

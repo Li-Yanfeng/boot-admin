@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -30,14 +30,14 @@ public class MenuQuery implements Serializable {
     @ApiModelProperty(value = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Query(type = SqlKeyword.BETWEEN)
-    private List<Date> createTime;
+    private List<LocalDateTime> createTime;
 
     @ApiModelProperty(value = "多字段模糊")
     @Query(q = "title,component,permission")
     private String q;
 
     @ApiModelProperty(value = "排序字段")
-    private String sort;
+    private List<String> sort;
 
 
     public Long getMenuId() {
@@ -56,11 +56,11 @@ public class MenuQuery implements Serializable {
         this.pid = pid;
     }
 
-    public List<Date> getCreateTime() {
+    public List<LocalDateTime>getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(List<Date> createTime) {
+    public void setCreateTime(List<LocalDateTime> createTime) {
         this.createTime = createTime;
     }
 
@@ -72,11 +72,11 @@ public class MenuQuery implements Serializable {
         this.q = q;
     }
 
-    public String getSort() {
+    public List<String> getSort() {
         return sort;
     }
 
-    public void setSort(String sort) {
+    public void setSort(List<String> sort) {
         this.sort = sort;
     }
 

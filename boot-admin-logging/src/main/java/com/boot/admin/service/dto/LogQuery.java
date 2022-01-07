@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -25,14 +25,14 @@ public class LogQuery implements Serializable {
     @ApiModelProperty(value = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Query(type = SqlKeyword.BETWEEN)
-    private List<Date> createTime;
+    private List<LocalDateTime> createTime;
 
     @ApiModelProperty(value = "多字段模糊")
     @Query(q = "username,description,address,requestIp,method,params")
     private String q;
 
     @ApiModelProperty(value = "排序字段")
-    private String sort;
+    private List<String> sort;
 
     public String getLogType() {
         return logType;
@@ -42,11 +42,11 @@ public class LogQuery implements Serializable {
         this.logType = logType;
     }
 
-    public List<Date> getCreateTime() {
+    public List<LocalDateTime>getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(List<Date> createTime) {
+    public void setCreateTime(List<LocalDateTime> createTime) {
         this.createTime = createTime;
     }
 
@@ -56,5 +56,13 @@ public class LogQuery implements Serializable {
 
     public void setQ(String q) {
         this.q = q;
+    }
+
+    public List<String> getSort() {
+        return sort;
+    }
+
+    public void setSort(List<String> sort) {
+        this.sort = sort;
     }
 }

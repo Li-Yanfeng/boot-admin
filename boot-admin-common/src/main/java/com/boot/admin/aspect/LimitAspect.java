@@ -68,7 +68,7 @@ public class LimitAspect {
 
         // 构建脚本
         String luaScript = buildLuaScript();
-        RedisScript<Number> redisScript = new DefaultRedisScript<>(luaScript, Number.class);
+        RedisScript<Long> redisScript = new DefaultRedisScript<>(luaScript, Long.class);
         Number count = redisTemplate.execute(redisScript, keys, limit.count(), limit.period());
         // 如果访问次数大于设置的次数 则 访问次数受限制
         if (null != count && count.intValue() <= limit.count()) {

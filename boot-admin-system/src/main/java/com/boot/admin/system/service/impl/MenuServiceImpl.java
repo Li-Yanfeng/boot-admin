@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.boot.admin.constant.CacheKey;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.service.impl.ServiceImpl;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.exception.EntityExistException;
@@ -74,13 +74,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                 throw new EntityExistException(Menu.class, "componentName", resource.getComponentName());
             }
         }
-        if (SystemConstant.YES.equals(resource.getIFrame())) {
-            if (!(resource.getPath().toLowerCase().startsWith(SystemConstant.HTTP) || resource.getPath().toLowerCase().startsWith(SystemConstant.HTTPS))) {
+        if (CommonConstant.YES.equals(resource.getIFrame())) {
+            if (!(resource.getPath().toLowerCase().startsWith(CommonConstant.HTTP) || resource.getPath().toLowerCase().startsWith(CommonConstant.HTTPS))) {
                 throw new BadRequestException("外链必须以http://或者https://开头");
             }
         }
         // 计算子节点数目
-        resource.setSubCount(SystemConstant.NO_RECORD);
+        resource.setSubCount(CommonConstant.NO_RECORD);
         baseMapper.insert(resource);
         // 更新父节点菜单数目
         updateSubCnt(resource.getPid());
@@ -112,8 +112,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         if (menuId.equals(resource.getPid())) {
             throw new BadRequestException("上级不能为自己");
         }
-        if (SystemConstant.YES.equals(resource.getIFrame())) {
-            if (!(resource.getPath().toLowerCase().startsWith(SystemConstant.HTTP) || resource.getPath().toLowerCase().startsWith(SystemConstant.HTTPS))) {
+        if (CommonConstant.YES.equals(resource.getIFrame())) {
+            if (!(resource.getPath().toLowerCase().startsWith(CommonConstant.HTTP) || resource.getPath().toLowerCase().startsWith(CommonConstant.HTTPS))) {
                 throw new BadRequestException("外链必须以http://或者https://开头");
             }
         }
@@ -184,8 +184,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public List<MenuDTO> listMenusSuperior(MenuDTO resource, List<MenuDTO> results) {
         Long pid = resource.getPid();
-        if (SystemConstant.TOP_ID.equals(pid)) {
-            results.addAll(listMenus(new MenuQuery(SystemConstant.TOP_ID)));
+        if (CommonConstant.TOP_ID.equals(pid)) {
+            results.addAll(listMenus(new MenuQuery(CommonConstant.TOP_ID)));
             return results;
         }
         results.addAll(listMenus(new MenuQuery(pid)));
@@ -208,7 +208,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         Set<Long> ids = CollUtil.newHashSet();
         for (MenuDTO menu : resources) {
             // 添加到顶级列表
-            if (SystemConstant.TOP_ID.equals(menu.getPid())) {
+            if (CommonConstant.TOP_ID.equals(menu.getPid())) {
                 trees.add(menu);
             }
             // 如果是子节点
@@ -239,11 +239,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                 menuVO.setName(StringUtils.isNotBlank(menu.getComponentName()) ? menu.getComponentName() :
                     menu.getTitle());
                 // 一级目录需要加斜杠，不然会报警告
-                menuVO.setPath(SystemConstant.TOP_ID.equals(menu.getPid()) ? "/" + menu.getPath() : menu.getPath());
+                menuVO.setPath(CommonConstant.TOP_ID.equals(menu.getPid()) ? "/" + menu.getPath() : menu.getPath());
                 menuVO.setHidden(menu.getHidden());
                 // 如果不是外链
-                if (SystemConstant.NO.equals(menu.getIFrame())) {
-                    if (SystemConstant.TOP_ID.equals(menu.getPid())) {
+                if (CommonConstant.NO.equals(menu.getIFrame())) {
+                    if (CommonConstant.TOP_ID.equals(menu.getPid())) {
                         menuVO.setComponent(StringUtils.isNotBlank(menu.getComponent()) ? menu.getComponent() :
                             "Layout");
                     } else if (MenuType.FOLDER.getValue().equals(menu.getType())) {
@@ -259,12 +259,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                     menuVO.setAlwaysShow(true);
                     menuVO.setRedirect("noredirect");
                     menuVO.setChildren(buildMenus(childrens));
-                } else if (SystemConstant.TOP_ID.equals(menu.getPid())) {
+                } else if (CommonConstant.TOP_ID.equals(menu.getPid())) {
                     // 处理是一级菜单并且没有子菜单的情况
                     MenuVO menuVO1 = new MenuVO();
                     menuVO1.setMeta(menuVO.getMeta());
                     // 如果不是外链
-                    if (SystemConstant.NO.equals(menu.getIFrame())) {
+                    if (CommonConstant.NO.equals(menu.getIFrame())) {
                         menuVO1.setPath("index");
                         menuVO1.setName(menuVO.getName());
                         menuVO1.setComponent(menuVO.getComponent());

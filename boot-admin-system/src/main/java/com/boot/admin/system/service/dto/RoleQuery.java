@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -30,7 +30,7 @@ public class RoleQuery implements Serializable {
     @ApiModelProperty(value = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Query(type = SqlKeyword.BETWEEN)
-    private List<Date> createTime;
+    private List<LocalDateTime> createTime;
 
     @ApiModelProperty(value = "多字段模糊")
     @Query(q = "name,description")
@@ -53,11 +53,11 @@ public class RoleQuery implements Serializable {
         this.name = name;
     }
 
-    public List<Date> getCreateTime() {
+    public List<LocalDateTime>getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(List<Date> createTime) {
+    public void setCreateTime(List<LocalDateTime> createTime) {
         this.createTime = createTime;
     }
 

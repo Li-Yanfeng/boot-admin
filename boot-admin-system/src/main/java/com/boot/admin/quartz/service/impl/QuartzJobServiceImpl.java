@@ -5,7 +5,7 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.service.impl.ServiceImpl;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.quartz.mapper.QuartzJobMapper;
@@ -83,12 +83,12 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
 
     @Override
     public void updateQuartzJobByIsPause(QuartzJob resource) {
-        if (SystemConstant.YES.equals(resource.getPause())) {
+        if (CommonConstant.YES.equals(resource.getPause())) {
             quartzManage.resumeJob(resource);
-            resource.setPause(SystemConstant.NO);
+            resource.setPause(CommonConstant.NO);
         } else {
             quartzManage.pauseJob(resource);
-            resource.setPause(SystemConstant.YES);
+            resource.setPause(CommonConstant.YES);
         }
         updateQuartzJobById(resource);
     }
@@ -149,7 +149,7 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
             map.put("执行方法", quartzJob.getMethodName());
             map.put("参数", quartzJob.getParams());
             map.put("表达式", quartzJob.getCronExpression());
-            map.put("状态", SystemConstant.YES.equals(quartzJob.getPause()) ? "暂停中" : "运行中");
+            map.put("状态", CommonConstant.YES.equals(quartzJob.getPause()) ? "暂停中" : "运行中");
             map.put("描述", quartzJob.getDescription());
             map.put("创建日期", quartzJob.getCreateTime());
             list.add(map);

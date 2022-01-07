@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.validation.Update;
 import com.boot.admin.system.model.Menu;
 import com.boot.admin.system.model.vo.MenuVO;
@@ -117,7 +117,7 @@ public class MenuController {
             }
             return menuService.buildTree(menus);
         }
-        return menuService.listMenus(new MenuQuery(SystemConstant.TOP_ID));
+        return menuService.listMenus(new MenuQuery(CommonConstant.TOP_ID));
     }
 
     @ApiOperation(value = "导出菜单")

@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,7 +60,7 @@ public class UserDTO extends BaseDTO implements Serializable {
     private Integer enabled;
 
     @ApiModelProperty(value = "修改密码时间")
-    private Date pwdResetTime;
+    private LocalDateTime pwdResetTime;
 
 
     @ApiModelProperty(value = "角色")
@@ -169,11 +169,11 @@ public class UserDTO extends BaseDTO implements Serializable {
         this.enabled = enabled;
     }
 
-    public Date getPwdResetTime() {
+    public LocalDateTime getPwdResetTime() {
         return pwdResetTime;
     }
 
-    public void setPwdResetTime(Date pwdResetTime) {
+    public void setPwdResetTime(LocalDateTime  pwdResetTime) {
         this.pwdResetTime = pwdResetTime;
     }
 

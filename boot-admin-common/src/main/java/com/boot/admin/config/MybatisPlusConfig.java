@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
-import com.boot.admin.constant.PackageConstant;
+import com.boot.admin.constant.PackagePattern;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.annotation.MapperScan;
@@ -24,7 +24,7 @@ import javax.sql.DataSource;
  * @author Li Yanfeng
  */
 @Configuration
-@MapperScan(basePackages = {PackageConstant.MAPPER_PATH_STAR})
+@MapperScan(basePackages = {PackagePattern.MAPPER_PATH_STAR})
 public class MybatisPlusConfig {
 
     private final DataSource dataSource;
@@ -41,7 +41,7 @@ public class MybatisPlusConfig {
         sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath" +
             "*:mapper/**/*Mapper.xml"));
         // 实体扫描，多个package用逗号或者分号分隔
-        sqlSessionFactory.setTypeAliasesPackage(PackageConstant.MODEL_PATH_STAR);
+        sqlSessionFactory.setTypeAliasesPackage(PackagePattern.MODEL_PATH_STAR);
 
         MybatisConfiguration configuration = new MybatisConfiguration();
         // 是否开启自动驼峰命名规则映射,从数据库列名 A_COLUMN 到 Java 属性名 aColumn 的类似映射

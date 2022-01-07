@@ -27,7 +27,7 @@ public class Result extends HashMap<String, Object> implements Serializable {
     /**
      * 用户提示
      */
-    private static final String MSG_TAG = "msg";
+    private static final String MESSAGE_TAG = "message";
     /**
      * 返回数据
      */
@@ -96,7 +96,7 @@ public class Result extends HashMap<String, Object> implements Serializable {
 
     private Result(String code, String msg, Object data) {
         super.put(CODE_TAG, code);
-        super.put(MSG_TAG, msg);
+        super.put(MESSAGE_TAG, msg);
         // 处理数据
         if (ObjectUtil.isNotNull(data)) {
             if (data instanceof IPage) {

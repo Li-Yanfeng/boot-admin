@@ -34,8 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -387,13 +387,13 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
 
     private void backupApp(ExecuteShellUtils executeShellUtil, String ip, String fileSavePath, String appName,
                            String backupPath, Long id) {
-        String deployDate = DateUtil.format(new Date(), DatePattern.PURE_DATETIME_PATTERN);
+        String deployDate = DateUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_PATTERN);
         StringBuilder sb = new StringBuilder();
         backupPath += appName + FILE_SEPARATOR + deployDate + "\n";
         sb.append("mkdir -p ").append(backupPath);
         sb.append("mv -f ").append(fileSavePath);
         sb.append(appName).append(" ").append(backupPath);
-        logger.info("备份应用脚本:" + sb.toString());
+        logger.info("备份应用脚本:" + sb);
         executeShellUtil.execute(sb.toString());
         //还原信息入库
         DeployHistory deployHistory = new DeployHistory();

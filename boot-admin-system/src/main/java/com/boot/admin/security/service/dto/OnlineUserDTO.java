@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Li Yanfeng
@@ -35,7 +35,7 @@ public class OnlineUserDTO {
     private String key;
 
     @ApiModelProperty(value = "登录时间")
-    private Date loginTime;
+    private LocalDateTime loginTime;
 
 
     public String getUserName() {
@@ -94,11 +94,11 @@ public class OnlineUserDTO {
         this.key = key;
     }
 
-    public Date getLoginTime() {
+    public LocalDateTime getLoginTime() {
         return this.loginTime;
     }
 
-    public void setLoginTime(Date loginTime) {
+    public void setLoginTime(LocalDateTime  loginTime) {
         this.loginTime = loginTime;
     }
 
@@ -106,7 +106,7 @@ public class OnlineUserDTO {
     }
 
     public OnlineUserDTO(String userName, String nickName, String dept, String browser, String ip, String address,
-                         String key, Date loginTime) {
+                         String key, LocalDateTime loginTime) {
         this.userName = userName;
         this.nickName = nickName;
         this.dept = dept;

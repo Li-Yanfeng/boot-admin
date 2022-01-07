@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -147,23 +150,24 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
                                    boolean isEnableTransactionSupport) {
         redisTemplate.setConnectionFactory(lettuceConnectionFactory);
 
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer =
-            new Jackson2JsonRedisSerializer<>(Object.class);
+        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        // 序列化时日期格式
+        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        // 解决jdk1.8 LocalDateTime 时间反序列化的问题
+        om.registerModule(new JavaTimeModule());
         // 将类名称序列化到json串中，去掉会导致得出来的的是LinkedHashMap对象，直接转换实体对象会失败
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance , ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
         // 设置输入时忽略JSON字符串中存在而Java对象实际没有的属性
-        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        om.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         jackson2JsonRedisSerializer.setObjectMapper(om);
 
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-
         // key序列化
         redisTemplate.setKeySerializer(stringRedisSerializer);
         // Hash key序列化
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
-
         // value序列化
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         // Hash value序列化

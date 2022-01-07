@@ -1,9 +1,9 @@
 package com.boot.admin.util;
 
+import cn.hutool.core.date.DatePattern;
 import com.qiniu.storage.Region;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 七牛云存储工具类
@@ -45,8 +45,7 @@ public class QiNiuUtils {
      * @return String
      */
     public static String getKey(String file) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        Date date = new Date();
-        return FileUtils.getFileNameNoEx(file) + "-" + sdf.format(date) + "." + FileUtils.getExtensionName(file);
+        String dateStr = DateUtils.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_PATTERN);
+        return FileUtils.getFileNameNoEx(file) + "-" + dateStr + "." + FileUtils.getExtensionName(file);
     }
 }

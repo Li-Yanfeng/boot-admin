@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.boot.admin.constant.CacheKey;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.service.impl.ServiceImpl;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.system.mapper.DeptMapper;
@@ -129,8 +129,8 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     @Override
     public List<DeptDTO> listDeptsSuperior(DeptDTO resource, List<DeptDTO> results) {
         Long pid = resource.getPid();
-        if (SystemConstant.TOP_ID.equals(pid)) {
-            results.addAll(listDepts(new DeptQuery(SystemConstant.TOP_ID)));
+        if (CommonConstant.TOP_ID.equals(pid)) {
+            results.addAll(listDepts(new DeptQuery(CommonConstant.TOP_ID)));
             return results;
         }
         results.addAll(listDepts(new DeptQuery(pid)));
@@ -153,7 +153,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         Set<Long> ids = CollUtil.newHashSet();
         for (DeptDTO dept : resources) {
             // 添加到顶级列表
-            if (SystemConstant.TOP_ID.equals(dept.getPid())) {
+            if (CommonConstant.TOP_ID.equals(dept.getPid())) {
                 trees.add(dept);
             }
             // 如果是子节点
@@ -190,7 +190,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         exportData.forEach(dept -> {
             Map<String, Object> map = MapUtil.newHashMap(3, true);
             map.put("部门名称", dept.getName());
-            map.put("部门状态", SystemConstant.YES.equals(dept.getEnabled()) ? "启用" : "停用");
+            map.put("部门状态", CommonConstant.YES.equals(dept.getEnabled()) ? "启用" : "停用");
             map.put("创建日期", dept.getCreateTime());
             list.add(map);
         });

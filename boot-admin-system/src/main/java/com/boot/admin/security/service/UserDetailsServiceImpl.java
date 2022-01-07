@@ -1,6 +1,6 @@
 package com.boot.admin.security.service;
 
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.exception.EntityNotFoundException;
 import com.boot.admin.exception.enums.UserErrorCode;
@@ -73,7 +73,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             if (user == null) {
                 throw new UsernameNotFoundException("");
             } else {
-                if (SystemConstant.UN_ENABLE.equals(user.getEnabled())) {
+                if (CommonConstant.UN_ENABLE.equals(user.getEnabled())) {
                     throw new BadRequestException(UserErrorCode.USER_ACCOUNT_IS_FROZEN);
                 }
                 jwtUserDTO = new JwtUserDTO(

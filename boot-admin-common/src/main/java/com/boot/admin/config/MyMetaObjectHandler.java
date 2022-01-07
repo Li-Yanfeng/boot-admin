@@ -5,7 +5,7 @@ import com.boot.admin.util.SecurityUtils;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * MybatisPlus 公共字段填充
@@ -22,15 +22,16 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        Date currentTime = new Date();
+        LocalDateTime currentTime = LocalDateTime.now();
+        String username = getUsername();
         // 创建人
-        this.strictInsertFill(metaObject, "createBy", String.class, getUsername());
+        this.strictInsertFill(metaObject, "createBy", String.class, username);
         // 创建时间
-        this.strictInsertFill(metaObject, "createTime", Date.class, currentTime);
+        this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, currentTime);
         // 更新人
-        this.strictInsertFill(metaObject, "updateBy", String.class, getUsername());
+        this.strictInsertFill(metaObject, "updateBy", String.class, username);
         // 更新时间
-        this.strictInsertFill(metaObject, "updateTime", Date.class, currentTime);
+        this.strictInsertFill(metaObject, "updateTime", LocalDateTime.class, currentTime);
     }
 
     /**
@@ -40,11 +41,10 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        Date currentTime = new Date();
         // 更新人
-        this.strictUpdateFill(metaObject, "updateBy", String.class, getUsername());
+        this.strictInsertFill(metaObject, "updateBy", String.class, getUsername());
         // 更新时间
-        this.strictInsertFill(metaObject, "updateTime", Date.class, currentTime);
+        this.strictInsertFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
     }
 
     /**

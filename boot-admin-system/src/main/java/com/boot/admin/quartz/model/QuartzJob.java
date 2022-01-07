@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.model.BaseEntity;
 import com.boot.admin.core.validation.Update;
 import io.swagger.annotations.ApiModel;
@@ -47,7 +47,7 @@ public class QuartzJob extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "是否暂停")
     @TableField(value = "is_pause")
-    private Integer pause = SystemConstant.NO;
+    private Integer pause = CommonConstant.NO;
 
     @ApiModelProperty(value = "子任务ID")
     private String subTask;

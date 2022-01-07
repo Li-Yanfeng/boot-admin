@@ -3,7 +3,7 @@ package com.boot.admin.quartz.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.service.impl.ServiceImpl;
 import com.boot.admin.quartz.mapper.QuartzLogMapper;
 import com.boot.admin.quartz.model.QuartzLog;
@@ -76,7 +76,7 @@ public class QuartzLogServiceImpl extends ServiceImpl<QuartzLogMapper, QuartzLog
             map.put("表达式", quartzLog.getCronExpression());
             map.put("异常详情", quartzLog.getExceptionDetail());
             map.put("耗时/毫秒", quartzLog.getTime());
-            map.put("状态", SystemConstant.YES.equals(quartzLog.getSuccess()) ? "成功" : "失败");
+            map.put("状态", CommonConstant.YES.equals(quartzLog.getSuccess()) ? "成功" : "失败");
             map.put("创建日期", quartzLog.getCreateTime());
             list.add(map);
         });

@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Li Yanfeng
@@ -24,7 +24,7 @@ public class DeployHistoryDTO implements Serializable {
     private String appName;
 
     @ApiModelProperty(value = "部署日期")
-    private Date deployDate;
+    private LocalDateTime deployDate;
 
     @ApiModelProperty(value = "部署用户")
     private String deployUser;
@@ -52,11 +52,11 @@ public class DeployHistoryDTO implements Serializable {
         this.appName = appName;
     }
 
-    public Date getDeployDate() {
+    public LocalDateTime getDeployDate() {
         return deployDate;
     }
 
-    public void setDeployDate(Date deployDate) {
+    public void setDeployDate(LocalDateTime  deployDate) {
         this.deployDate = deployDate;
     }
 

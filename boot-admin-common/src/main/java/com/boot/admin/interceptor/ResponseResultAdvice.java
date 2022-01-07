@@ -1,7 +1,7 @@
 package com.boot.admin.interceptor;
 
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.constant.PackageConstant;
+import com.boot.admin.constant.PackagePattern;
 import com.boot.admin.core.model.Result;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @author Li Yanfeng
  * @link https://juejin.cn/post/6986800656950493214
  */
-@RestControllerAdvice(basePackages = PackageConstant.BASE_PATH)
+@RestControllerAdvice(basePackages = PackagePattern.BASE_PATH)
 public class ResponseResultAdvice implements ResponseBodyAdvice<Object> {
 
     /**
@@ -60,7 +60,6 @@ public class ResponseResultAdvice implements ResponseBodyAdvice<Object> {
         /*
           将类或方法上带有注解@ResponseResult的，使用统一返回结果
          */
-
         // 如果返回 Result,直接返回
         if (body instanceof Result) {
             return body;

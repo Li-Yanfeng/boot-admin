@@ -6,7 +6,7 @@ import cn.hutool.extra.template.TemplateConfig;
 import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
 import com.boot.admin.config.thread.ThreadPoolExecutorUtils;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.model.vo.EmailVO;
 import com.boot.admin.quartz.mapper.QuartzLogMapper;
 import com.boot.admin.quartz.model.QuartzJob;
@@ -72,7 +72,7 @@ public class ExecutionJob extends QuartzJobBean {
                 redisUtils.set(uuid, true);
             }
             // 任务状态
-            log.setSuccess(SystemConstant.YES);
+            log.setSuccess(CommonConstant.YES);
             System.out.println("任务执行完毕，任务名称：" + quartzJob.getJobName() + ", 执行时间：" + times + "毫秒");
             System.out.println("--------------------------------------------------------------");
             // 判断是否存在子任务
@@ -90,11 +90,11 @@ public class ExecutionJob extends QuartzJobBean {
             long times = System.currentTimeMillis() - startTime;
             log.setTime(times);
             // 任务状态 0：成功 1：失败
-            log.setSuccess(SystemConstant.NO);
+            log.setSuccess(CommonConstant.NO);
             log.setExceptionDetail(ThrowableUtils.getStackTrace(e));
             // 任务如果失败了则暂停
             if (quartzJob.getPauseAfterFailure() != null && quartzJob.getPauseAfterFailure()) {
-                quartzJob.setPause(SystemConstant.NO);
+                quartzJob.setPause(CommonConstant.NO);
                 //更新状态
                 quartzJobService.updateQuartzJobByIsPause(quartzJob);
             }

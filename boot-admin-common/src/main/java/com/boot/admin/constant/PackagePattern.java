@@ -5,7 +5,7 @@ package com.boot.admin.constant;
  *
  * @author Li Yanfeng
  */
-public class PackageConstant {
+public class PackagePattern {
 
     /**
      * base包路径

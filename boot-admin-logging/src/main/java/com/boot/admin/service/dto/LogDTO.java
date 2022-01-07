@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Li Yanfeng
@@ -50,7 +50,7 @@ public class LogDTO implements Serializable {
     private byte[] exceptionDetail;
 
     @ApiModelProperty(value = "创建时间")
-    private Date createTime;
+    private LocalDateTime createTime;
 
 
     public Long getLogId() {
@@ -141,11 +141,11 @@ public class LogDTO implements Serializable {
         this.exceptionDetail = exceptionDetail;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime  createTime) {
         this.createTime = createTime;
     }
 

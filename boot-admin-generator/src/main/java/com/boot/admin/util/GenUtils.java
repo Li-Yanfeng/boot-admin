@@ -2,7 +2,7 @@ package com.boot.admin.util;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.template.*;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.model.ColumnConfig;
 import com.boot.admin.model.GenConfig;
 import org.springframework.util.ObjectUtils;
@@ -137,7 +137,7 @@ public class GenUtils {
             assert filePath != null;
             File file = new File(filePath);
             // 如果非覆盖生成
-            if (SystemConstant.NO.equals(genConfig.getCover()) && FileUtils.exist(file)) {
+            if (CommonConstant.NO.equals(genConfig.getCover()) && FileUtils.exist(file)) {
                 continue;
             }
             // 生成代码
@@ -152,7 +152,7 @@ public class GenUtils {
             assert filePath != null;
             File file = new File(filePath);
             // 如果非覆盖生成
-            if (SystemConstant.YES.equals(genConfig.getCover()) && FileUtils.exist(file)) {
+            if (CommonConstant.YES.equals(genConfig.getCover()) && FileUtils.exist(file)) {
                 continue;
             }
             // 生成代码
@@ -181,7 +181,7 @@ public class GenUtils {
             assert filePath != null;
             File file = new File(filePath);
             // 如果非覆盖生成
-            if (SystemConstant.NO.equals(genConfig.getCover()) && FileUtils.exist(file)) {
+            if (CommonConstant.NO.equals(genConfig.getCover()) && FileUtils.exist(file)) {
                 continue;
             }
             // 生成代码
@@ -196,7 +196,7 @@ public class GenUtils {
             assert filePath != null;
             File file = new File(filePath);
             // 如果非覆盖生成
-            if (SystemConstant.NO.equals(genConfig.getCover()) && FileUtils.exist(file)) {
+            if (CommonConstant.NO.equals(genConfig.getCover()) && FileUtils.exist(file)) {
                 continue;
             }
             // 生成代码
@@ -315,7 +315,7 @@ public class GenUtils {
             // 存储字原始段名称
             listMap.put("columnName", column.getColumnName());
             // 不为空
-            listMap.put("isNotNull", SystemConstant.YES.equals(column.getNotNull()));
+            listMap.put("isNotNull", CommonConstant.YES.equals(column.getNotNull()));
             // 字段列表显示
             listMap.put("columnShow", column.getListShow());
             // 表单显示
@@ -329,7 +329,7 @@ public class GenUtils {
             // 字典名称
             listMap.put("dictName", column.getDictName());
             // 添加非空字段信息
-            if (SystemConstant.YES.equals(column.getNotNull())) {
+            if (CommonConstant.YES.equals(column.getNotNull())) {
                 isNotNullColumns.add(listMap);
             }
             // 判断是否有查询，如有则把查询的字段set进columnQuery

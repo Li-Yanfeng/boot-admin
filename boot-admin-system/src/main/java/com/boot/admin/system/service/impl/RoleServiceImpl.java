@@ -6,7 +6,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.constant.CacheKey;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.service.impl.ServiceImpl;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.exception.EntityExistException;
@@ -213,7 +213,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public List<GrantedAuthority> mapToGrantedAuthorities(UserDTO user) {
         Set<String> permissions = CollUtil.newHashSet();
         // 如果是管理员直接返回
-        if (SystemConstant.YES.equals(user.getAdmin())) {
+        if (CommonConstant.YES.equals(user.getAdmin())) {
             permissions.add("admin");
             return permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         }

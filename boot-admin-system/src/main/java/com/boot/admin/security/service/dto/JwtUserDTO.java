@@ -1,7 +1,7 @@
 package com.boot.admin.security.service.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.system.service.dto.UserDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -68,7 +68,7 @@ public class JwtUserDTO implements UserDetails {
     @JSONField(serialize = false)
     @Override
     public boolean isEnabled() {
-        return SystemConstant.ENABLE.equals(user.getEnabled());
+        return CommonConstant.ENABLE.equals(user.getEnabled());
     }
 
     public UserDTO getUser() {

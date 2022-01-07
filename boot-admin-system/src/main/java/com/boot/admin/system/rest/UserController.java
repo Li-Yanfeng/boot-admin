@@ -7,7 +7,7 @@ import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
 import com.boot.admin.config.RsaProperties;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.model.Result;
 import com.boot.admin.core.validation.Update;
 import com.boot.admin.exception.BadRequestException;
@@ -74,7 +74,7 @@ public class UserController {
         // 密码加密
         resource.setPassword(passwordEncoder.encode(StringUtils.isNotBlank(resource.getPassword())
             ? resource.getPassword()
-            : SystemConstant.USER_DEFAULT_PASSWORD)
+            : CommonConstant.USER_DEFAULT_PASSWORD)
         );
         userService.saveUser(resource);
     }

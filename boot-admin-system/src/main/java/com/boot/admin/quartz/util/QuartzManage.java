@@ -1,6 +1,6 @@
 package com.boot.admin.quartz.util;
 
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.quartz.model.QuartzJob;
 import org.quartz.*;
@@ -51,7 +51,7 @@ public class QuartzManage {
             scheduler.scheduleJob(jobDetail, cronTrigger);
 
             // 暂停任务
-            if (SystemConstant.YES.equals(quartzJob.getPause())) {
+            if (CommonConstant.YES.equals(quartzJob.getPause())) {
                 pauseJob(quartzJob);
             }
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class QuartzManage {
 
             scheduler.rescheduleJob(triggerKey, trigger);
             // 暂停任务
-            if (SystemConstant.YES.equals(quartzJob.getPause())) {
+            if (CommonConstant.YES.equals(quartzJob.getPause())) {
                 pauseJob(quartzJob);
             }
         } catch (Exception e) {

@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Li Yanfeng
@@ -40,10 +40,10 @@ public class TradeVO implements Serializable {
     private String state;
 
     @ApiModelProperty(value = "创建时间", hidden = true)
-    private Date createTime;
+    private LocalDateTime createTime;
 
     @ApiModelProperty(value = "作废时间", hidden = true)
-    private Date cancelTime;
+    private LocalDateTime cancelTime;
 
 
     public String getBody() {
@@ -94,19 +94,19 @@ public class TradeVO implements Serializable {
         this.state = state;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime  createTime) {
         this.createTime = createTime;
     }
 
-    public Date getCancelTime() {
+    public LocalDateTime getCancelTime() {
         return cancelTime;
     }
 
-    public void setCancelTime(Date cancelTime) {
+    public void setCancelTime(LocalDateTime  cancelTime) {
         this.cancelTime = cancelTime;
     }
 

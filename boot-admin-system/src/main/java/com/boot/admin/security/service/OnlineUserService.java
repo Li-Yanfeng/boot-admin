@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -49,7 +50,7 @@ public class OnlineUserService {
         OnlineUserDTO onlineUserDto = null;
         try {
             onlineUserDto = new OnlineUserDTO(jwtUserDto.getUsername(), jwtUserDto.getUser().getNickName(), dept,
-                browser, ip, address, EncryptUtils.desEncrypt(token), new Date());
+                browser, ip, address, EncryptUtils.desEncrypt(token), LocalDateTime.now());
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }

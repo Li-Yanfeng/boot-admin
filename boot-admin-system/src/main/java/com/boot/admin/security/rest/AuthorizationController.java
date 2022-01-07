@@ -7,7 +7,7 @@ import com.boot.admin.annotation.rest.AnonymousDeleteMapping;
 import com.boot.admin.annotation.rest.AnonymousGetMapping;
 import com.boot.admin.annotation.rest.AnonymousPostMapping;
 import com.boot.admin.config.RsaProperties;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.security.config.bean.LoginCodeEnum;
 import com.boot.admin.security.config.bean.LoginProperties;
@@ -121,7 +121,7 @@ public class AuthorizationController {
         if (!loginProperties.getLoginCode().getEnabled()) {
             // 验证码信息
             Map<String, Object> imgResult = new HashMap<String, Object>(2) {{
-                put("enabled", SystemConstant.NO);
+                put("enabled", CommonConstant.NO);
             }};
             return imgResult;
         }
@@ -137,7 +137,7 @@ public class AuthorizationController {
         redisUtils.set(uuid, captchaValue, loginProperties.getLoginCode().getExpiration(), TimeUnit.MINUTES);
         // 验证码信息
         Map<String, Object> imgResult = new HashMap<String, Object>(3) {{
-            put("enabled", SystemConstant.YES);
+            put("enabled", CommonConstant.YES);
             put("img", captcha.text());
             put("uuid", uuid);
         }};

@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Li Yanfeng
@@ -64,7 +64,7 @@ public class User extends BaseEntity implements Serializable {
     private Integer enabled;
 
     @ApiModelProperty(value = "修改密码时间")
-    private Date pwdResetTime;
+    private LocalDateTime pwdResetTime;
 
 
     public Long getUserId() {
@@ -163,11 +163,11 @@ public class User extends BaseEntity implements Serializable {
         this.enabled = enabled;
     }
 
-    public Date getPwdResetTime() {
+    public LocalDateTime getPwdResetTime() {
         return pwdResetTime;
     }
 
-    public void setPwdResetTime(Date pwdResetTime) {
+    public void setPwdResetTime(LocalDateTime  pwdResetTime) {
         this.pwdResetTime = pwdResetTime;
     }
 }

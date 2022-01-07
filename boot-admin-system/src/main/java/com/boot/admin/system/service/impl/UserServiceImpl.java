@@ -7,7 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.config.FileProperties;
 import com.boot.admin.constant.CacheKey;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.service.impl.ServiceImpl;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.exception.EntityExistException;
@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -156,7 +157,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             redisUtils.del(CacheKey.ROLE_AUTH + userId);
         }
         // 如果用户被禁用，则清除用户登录信息
-        if (SystemConstant.NO.equals(resource.getEnabled())) {
+        if (CommonConstant.NO.equals(resource.getEnabled())) {
             onlineUserService.kickOutForUsername(resource.getUsername());
         }
 
@@ -207,7 +208,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public void updatePassword(String username, String encryptPassword) {
         User user = new User();
         user.setPassword(encryptPassword);
-        user.setPwdResetTime(new Date());
+        user.setPwdResetTime(LocalDateTime.now());
         lambdaUpdate().eq(User::getUsername, username).update(user);
         // 清理缓存
         flushCache(username);
@@ -321,7 +322,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             map.put("部门", user.getDept().getName());
             map.put("岗位", user.getJobs().stream().map(JobSmallDTO::getName).collect(Collectors.toList()));
             map.put("邮箱", user.getEmail());
-            map.put("状态", SystemConstant.YES.equals(user.getEnabled()) ? "启用" : "禁用");
+            map.put("状态", CommonConstant.YES.equals(user.getEnabled()) ? "启用" : "禁用");
             map.put("手机号码", user.getPhone());
             map.put("修改密码的时间", user.getPwdResetTime());
             map.put("创建日期", user.getCreateTime());

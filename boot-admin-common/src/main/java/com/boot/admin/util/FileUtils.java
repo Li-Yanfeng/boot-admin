@@ -1,5 +1,7 @@
 package com.boot.admin.util;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
@@ -21,8 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -163,11 +164,9 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
      * 将文件名解析成文件的上传路径
      */
     public static File upload(MultipartFile file, String filePath) {
-        Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddhhmmssS");
         String name = getFileNameNoEx(file.getOriginalFilename());
         String suffix = getExtensionName(file.getOriginalFilename());
-        String nowStr = "-" + format.format(date);
+        String nowStr = "-" + DateUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_MS_PATTERN);
         try {
             String fileName = name + nowStr + "." + suffix;
             String path = filePath + fileName;

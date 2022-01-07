@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Li Yanfeng
@@ -32,7 +33,7 @@ public class DictDetailQuery implements Serializable {
     private String label;
 
     @ApiModelProperty(value = "排序字段")
-    private String sort;
+    private List<String> sort;
 
 
     public Long getDetailId() {
@@ -67,11 +68,11 @@ public class DictDetailQuery implements Serializable {
         this.label = label;
     }
 
-    public String getSort() {
+    public List<String> getSort() {
         return sort;
     }
 
-    public void setSort(String sort) {
+    public void setSort(List<String> sort) {
         this.sort = sort;
     }
 }

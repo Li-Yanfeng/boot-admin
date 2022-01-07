@@ -1,13 +1,14 @@
 package com.boot.admin.util;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.boot.admin.model.AlipayConfig;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,11 +26,8 @@ public class AlipayUtils {
      * @return String
      */
     public String getOrderCode() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         int a = (int) (Math.random() * 9000.0D) + 1000;
-        System.out.println(a);
-        Date date = new Date();
-        String str = sdf.format(date);
+        String str = DateUtil.format(LocalDateTime.now(), DatePattern.NORM_DATETIME_PATTERN);
         String[] split = str.split("-");
         String s = split[0] + split[1] + split[2];
         String[] split1 = s.split(" ");

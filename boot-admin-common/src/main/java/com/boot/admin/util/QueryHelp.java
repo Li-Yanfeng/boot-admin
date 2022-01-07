@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.enums.SqlKeyword;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.boot.admin.annotation.Query;
+import com.boot.admin.constant.SystemConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,26 +103,30 @@ public class QueryHelp {
      */
     private static <T, Q> void setOrder(QueryWrapper<T> queryWrapper, Q query, Field field) throws IllegalAccessException {
         // 获取排序字段
-        if ("sort".equals(field.getName())) {
-            String value = (String) field.get(query);
-            if (StrUtil.isNotBlank(value)) {
-                String[] elements = value.split("[,，]");
-                // 待排序的字段
-                String[] attributeNames = new String[elements.length - 1];
-                // 排序方式
-                String sort = null;
-                for (int i = 0, size = elements.length; i < size; i++) {
-                    if (i == elements.length - 1) {
-                        sort = elements[i];
-                    } else {
-                        attributeNames[i] = toUnderScoreCase(elements[i]).toLowerCase();
+        if (SystemConstant.SORT.equals(field.getName())) {
+            List<String> elements = (List<String>) field.get(query);
+            if (CollUtil.isNotEmpty(elements)) {
+                int lastIndex = elements.size() - 1;
+                String lastElement = elements.get(lastIndex);
+                // 是否升序
+                boolean isAsc = false;
+                boolean asc = StrUtil.endWithIgnoreCase(lastElement, SqlKeyword.ASC.name());
+                boolean desc = StrUtil.endWithIgnoreCase(lastElement, SqlKeyword.DESC.name());
+                // 是否排序
+                if (asc || desc) {
+                    // 排序字段中移除排序条件
+                    elements.remove(lastIndex);
+                    // 排序方式为升序
+                    if (asc) {
+                        isAsc = true;
                     }
                 }
-                // 是否排序
-                boolean isSort = StrUtil.endWithIgnoreCase(sort, SqlKeyword.ASC.name()) || StrUtil.endWithIgnoreCase(sort, SqlKeyword.DESC.name());
-                // 是否升序
-                boolean isAsc = StrUtil.equalsIgnoreCase(SqlKeyword.ASC.name(), sort);
-                queryWrapper.orderBy(isSort, isAsc, attributeNames);
+                // 待排序的字段
+                String[] attributeNames = new String[elements.size()];
+                for (int i = 0, size = elements.size(); i < size; i++) {
+                    attributeNames[i] = toUnderScoreCase(elements.get(i)).toLowerCase();
+                }
+                queryWrapper.orderBy(true, isAsc, attributeNames);
             }
         }
     }

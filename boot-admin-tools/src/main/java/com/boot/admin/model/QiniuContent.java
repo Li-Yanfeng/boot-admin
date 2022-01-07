@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Li Yanfeng
@@ -45,7 +45,7 @@ public class QiniuContent implements Serializable {
 
     @ApiModelProperty(value = "上传或同步的时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
 
     public Long getContentId() {
@@ -104,11 +104,11 @@ public class QiniuContent implements Serializable {
         this.suffix = suffix;
     }
 
-    public Date getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDateTime  updateTime) {
         this.updateTime = updateTime;
     }
 }

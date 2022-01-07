@@ -1,6 +1,7 @@
 package com.boot.admin.system.service.impl;
 
 import cn.hutool.core.date.BetweenFormater;
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import com.boot.admin.system.service.MonitorService;
 import com.boot.admin.util.FileUtils;
@@ -19,6 +20,7 @@ import oshi.util.Util;
 
 import java.lang.management.ManagementFactory;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -53,7 +55,7 @@ public class MonitorServiceImpl implements MonitorService {
             // 磁盘
             resultMap.put("disk", getDiskInfo(os));
             // 时间
-            resultMap.put("time", DateUtil.format(new Date(), "HH:mm:ss"));
+            resultMap.put("time", DateUtil.format(LocalDateTime.now(), DatePattern.NORM_TIME_PATTERN));
         } catch (Exception e) {
             e.printStackTrace();
         }

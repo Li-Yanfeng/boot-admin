@@ -12,7 +12,7 @@ import BaseDTO;
 import java.math.BigDecimal;
 </#if>
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 <#if hasTimestamp>
 import java.sql.Timestamp;
 </#if>

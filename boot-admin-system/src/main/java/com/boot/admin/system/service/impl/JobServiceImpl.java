@@ -5,7 +5,7 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.constant.CacheKey;
-import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.service.impl.ServiceImpl;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.exception.EntityExistException;
@@ -112,7 +112,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
         exportData.forEach(job -> {
             Map<String, Object> map = MapUtil.newHashMap(3, true);
             map.put("岗位名称", job.getName());
-            map.put("岗位状态", SystemConstant.ENABLE.equals(job.getEnabled()) ? "启用" : "停用");
+            map.put("岗位状态", CommonConstant.ENABLE.equals(job.getEnabled()) ? "启用" : "停用");
             map.put("创建日期", job.getCreateTime());
             list.add(map);
         });
