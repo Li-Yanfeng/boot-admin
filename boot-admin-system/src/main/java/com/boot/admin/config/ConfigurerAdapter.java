@@ -2,9 +2,11 @@ package com.boot.admin.config;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
+import com.boot.admin.resolver.RequestArgumentResolver;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
@@ -18,6 +20,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.*;
 
 import java.nio.charset.StandardCharsets;
@@ -62,6 +65,17 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
         // 注册CORS配置
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
+    }
+
+    /**
+     * 添加参数解析器
+     *
+     * @param resolvers 解析器
+     */
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new RequestArgumentResolver());
+        WebMvcConfigurer.super.addArgumentResolvers(resolvers);
     }
 
     /**
@@ -133,6 +147,8 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
         om.setDateFormat(new SimpleDateFormat(DatePattern.NORM_DATETIME_PATTERN));
         // 序列化时设置时区
         om.setTimeZone(TimeZone.getDefault());
+        // 统一返回数据的输出风格 (返回参数转为下划线) {link: https://adolphor.com/2019/11/16/spring-boot-under-lower-camel}
+        om.setPropertyNamingStrategy(new PropertyNamingStrategies.SnakeCaseStrategy());
         // 解决jdk1.8 LocalDateTime 时间反序列化的问题
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DatePattern.NORM_DATETIME_PATTERN)));

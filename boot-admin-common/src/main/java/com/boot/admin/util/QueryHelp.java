@@ -18,8 +18,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.boot.admin.util.StringUtils.toUnderScoreCase;
-
 /**
  * @author Li Yanfeng
  */
@@ -66,7 +64,7 @@ public class QueryHelp {
 
                     // 获取属性名
                     String attributeName = StrUtil.isBlank(propName) ? field.getName() : propName;
-                    attributeName = toUnderScoreCase(attributeName).toLowerCase();
+                    attributeName = StrUtil.toUnderlineCase(attributeName).toLowerCase();
                     Object value = field.get(query);
                     if (ObjectUtil.isNull(value) || "".equals(value)) {
                         continue;
@@ -78,7 +76,7 @@ public class QueryHelp {
                     // 模糊多字段
                     if (StrUtil.isNotBlank(q)) {
                         Stream.of(q.split(",")).forEach(column ->
-                            queryWrapper.or().like(toUnderScoreCase(column).toLowerCase(), value)
+                            queryWrapper.or().like(StrUtil.toUnderlineCase(column).toLowerCase(), value)
                         );
                         continue;
                     }
@@ -124,7 +122,7 @@ public class QueryHelp {
                 // 待排序的字段
                 String[] attributeNames = new String[elements.size()];
                 for (int i = 0, size = elements.size(); i < size; i++) {
-                    attributeNames[i] = toUnderScoreCase(elements.get(i)).toLowerCase();
+                    attributeNames[i] = StrUtil.toUnderlineCase(elements.get(i)).toLowerCase();
                 }
                 queryWrapper.orderBy(true, isAsc, attributeNames);
             }

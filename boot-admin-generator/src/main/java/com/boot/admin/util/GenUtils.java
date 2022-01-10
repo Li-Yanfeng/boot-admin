@@ -1,6 +1,5 @@
 package com.boot.admin.util;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.template.*;
 import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.model.ColumnConfig;
@@ -232,9 +231,9 @@ public class GenUtils {
         String changeClassName = StringUtils.toCamelCase(genConfig.getTableName());
         // 判断是否去除表前缀
         if (StringUtils.isNotEmpty(genConfig.getPrefix())) {
-            className = StringUtils.toCapitalizeCamelCase(StrUtil.removePrefix(genConfig.getTableName(),
+            className = StringUtils.toCapitalizeCamelCase(StringUtils.removePrefix(genConfig.getTableName(),
                 genConfig.getPrefix()));
-            changeClassName = StringUtils.toCamelCase(StrUtil.removePrefix(genConfig.getTableName(),
+            changeClassName = StringUtils.toCamelCase(StringUtils.removePrefix(genConfig.getTableName(),
                 genConfig.getPrefix()));
         }
         // 保存类名
