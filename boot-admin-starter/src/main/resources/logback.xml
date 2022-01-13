@@ -3,17 +3,13 @@
 
     <!--彩色日志依赖的渲染类-->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
-    <conversionRule conversionWord="wex"
-                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
-    <conversionRule conversionWord="wEx"
-                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
 
     <contextName>Admin</contextName>
     <property name="log.charset" value="utf-8"/>
-    <property name="log.pattern"
-              value="${CONSOLE_LOG_PATTERN:-%clr(%d{HH:mm:ss}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%10.10t]){faint} %clr(%-37.37logger{36}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-    <property name="file.pattern"
-              value="%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} --- [%10.10t] %-48.48logger{46} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+    <property name="log.pattern" value="${CONSOLE_LOG_PATTERN:-%clr(%d{HH:mm:ss}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%10.10t]){faint} %clr(%-37.37logger{36}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <property name="file.pattern" value="%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} --- [%10.10t] %-48.48logger{46} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
 
     <!--日志文件保留天数-->
     <property name="maxHistory" value="15"/>
@@ -49,7 +45,7 @@
     </appender>
 
 
-    <logger name="com.github.xiaoymin.knife4j.core.model.MarkdownFile" level="warn"/>
+    <logger name="com.github.xiaoymin.knife4j.core.model.MarkdownFile" level="warn" additivity="false"/>
 
 
     <!--将该包下的日志操作行为追加到文件-->

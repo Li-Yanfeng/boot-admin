@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerIntercep
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.boot.admin.constant.PackagePattern;
+import com.boot.admin.constant.SystemConstant;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.annotation.MapperScan;
@@ -62,8 +63,8 @@ public class MybatisPlusConfig {
         // 数据库大写下划线转换
         dbConfig.setCapitalMode(false);
         // 逻辑删除配置
-        dbConfig.setLogicDeleteValue("1");
-        dbConfig.setLogicNotDeleteValue("0");
+        dbConfig.setLogicDeleteValue(SystemConstant.LOGIC_DELETE);
+        dbConfig.setLogicNotDeleteValue(SystemConstant.LOGIC_NOT_DELETE);
 
         // 全局配置
         GlobalConfig globalConfig = new GlobalConfig();
