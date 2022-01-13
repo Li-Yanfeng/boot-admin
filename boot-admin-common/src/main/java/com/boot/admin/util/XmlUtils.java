@@ -31,7 +31,7 @@ public class XmlUtils {
             // 利用jdk中自带的转换类实现
             JAXBContext context = JAXBContext.newInstance(obj.getClass());
             Marshaller marshaller = context.createMarshaller();
-            //编码格式
+            // 编码格式
             marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
             // 格式化xml输出的格式
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -63,7 +63,7 @@ public class XmlUtils {
             // 利用jdk中自带的转换类实现
             JAXBContext context = JAXBContext.newInstance(obj.getClass());
             Marshaller marshaller = context.createMarshaller();
-            //编码格式
+            // 编码格式
             marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
             // 格式化xml输出的格式
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);

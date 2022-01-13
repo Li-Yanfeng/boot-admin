@@ -69,12 +69,11 @@ public class RequestArgumentResolver implements HandlerMethodArgumentResolver {
         Iterator<String> paramNames = webRequest.getParameterNames();
         while (paramNames.hasNext()) {
             String paramName = paramNames.next();
-            Object o = webRequest.getParameter(paramName);
+            String paramValue = webRequest.getParameter(paramName);
             try {
-                wrapper.setPropertyValue(StringUtils.toCamelCase(paramName), o);
+                wrapper.setPropertyValue(StringUtils.toCamelCase(paramName), StringUtils.trim(paramValue));
             } catch (BeansException e) {
-                assert o != null;
-                logger.warn("获取请求参数时出错，实体类 {} 中无对应属性：{}", o.getClass().getName(), paramName);
+                logger.warn("获取请求参数时出错， {} 中无对应属性：{}", obj.getClass().getSimpleName(), paramName);
             }
         }
         return obj;
