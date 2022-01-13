@@ -18,9 +18,8 @@ import java.util.Iterator;
 /**
  * 请求参数解析器
  * <p>
- *  接收前端传参（使用实体类接收）：
- *    POST请求：且使用RAW的json形式：自动转换，无需配置
- *    其他请求：包括POST请求的form表单提交形式，需要自己特殊处理
+ * POST请求:使用RAW的json形式：自动转换，无需配置;
+ * 其他请求：包括POST请求的form表单提交形式，需要自己特殊处理;
  * </p>
  *
  * @author Li Yanfeng
@@ -71,6 +70,7 @@ public class RequestArgumentResolver implements HandlerMethodArgumentResolver {
             String paramName = paramNames.next();
             String paramValue = webRequest.getParameter(paramName);
             try {
+                // 设置转换的属性名, 值去除前后空格
                 wrapper.setPropertyValue(StringUtils.toCamelCase(paramName), StringUtils.trim(paramValue));
             } catch (BeansException e) {
                 logger.warn("获取请求参数时出错， {} 中无对应属性：{}", obj.getClass().getSimpleName(), paramName);
