@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Api(tags = "系统：服务监控管理")
 @RestController
-@RequestMapping(value = "/v1/monitors")
+@RequestMapping(value = "/api/monitors")
 @ResultWrapper
 public class MonitorController {
 

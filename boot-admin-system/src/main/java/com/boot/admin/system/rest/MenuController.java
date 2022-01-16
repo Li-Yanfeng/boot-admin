@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  */
 @Api(tags = "系统：菜单管理")
 @RestController
-@RequestMapping(value = "/v1/menus")
+@RequestMapping(value = "/api/menus")
 @ResultWrapper
 public class MenuController {
 

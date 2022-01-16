@@ -37,7 +37,7 @@ public class DeployHistoryQuery implements Serializable {
         this.deployId = deployId;
     }
 
-    public List<LocalDateTime>getCreateTime() {
+    public List<LocalDateTime> getCreateTime() {
         return createTime;
     }
 

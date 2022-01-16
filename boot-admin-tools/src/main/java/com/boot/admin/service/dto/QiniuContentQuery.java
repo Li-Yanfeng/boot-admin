@@ -37,7 +37,7 @@ public class QiniuContentQuery implements Serializable {
         this.key = key;
     }
 
-    public List<LocalDateTime>getCreateTime() {
+    public List<LocalDateTime> getCreateTime() {
         return createTime;
     }
 

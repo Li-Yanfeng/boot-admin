@@ -22,7 +22,7 @@ import java.util.Set;
  */
 @Api(tags = "运维：部署历史管理")
 @RestController
-@RequestMapping(value = "/v1/deploy_histories")
+@RequestMapping(value = "/api/deploy_histories")
 @ResultWrapper
 public class DeployHistoryController {
 

@@ -26,7 +26,7 @@ import java.util.Set;
  */
 @Api(tags = "系统：字典管理")
 @RestController
-@RequestMapping(value = "/v1/dicts")
+@RequestMapping(value = "/api/dicts")
 @ResultWrapper
 public class DictController {
 

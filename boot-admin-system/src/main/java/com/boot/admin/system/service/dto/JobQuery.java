@@ -64,7 +64,7 @@ public class JobQuery implements Serializable {
         this.enabled = enabled;
     }
 
-    public List<LocalDateTime>getCreateTime() {
+    public List<LocalDateTime> getCreateTime() {
         return createTime;
     }
 

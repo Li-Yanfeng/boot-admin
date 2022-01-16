@@ -1,17 +1,8 @@
 package com.boot.admin.config;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DatePattern;
 import com.boot.admin.resolver.RequestArgumentResolver;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -24,13 +15,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.*;
 
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * 配置程序适配器
@@ -41,12 +26,11 @@ import java.util.TimeZone;
 @EnableWebMvc
 public class ConfigurerAdapter implements WebMvcConfigurer {
 
-    /**
-     * 文件配置
-     */
+    private final ObjectMapper objectMapper;
     private final FileProperties fileProperties;
 
-    public ConfigurerAdapter(FileProperties fileProperties) {
+    public ConfigurerAdapter(ObjectMapper objectMapper, FileProperties fileProperties) {
+        this.objectMapper = objectMapper;
         this.fileProperties = fileProperties;
     }
 
@@ -133,34 +117,10 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
         // 处理中文乱码问题
         List<MediaType> supportMediaTypeList = CollUtil.newArrayList(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN);
 
-        // 添加 jackson 配置信息
-        ObjectMapper om = new ObjectMapper();
-        // 反序列化时忽略json中存在但Java对象不存在的属性
-        om.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        // 序列化时忽略值为null的属性
-        om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        // 序列化时忽略值为默认值的属性
-        om.setDefaultPropertyInclusion(JsonInclude.Include.NON_DEFAULT);
-        // 序列化时日期格式，默认为yyyy-MM-dd'T'HH:mm:ss.SSSZ
-        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        // 序列化时自定义时间日期格式
-        om.setDateFormat(new SimpleDateFormat(DatePattern.NORM_DATETIME_PATTERN));
-        // 序列化时设置时区
-        om.setTimeZone(TimeZone.getDefault());
-        // 统一返回数据的输出风格 (返回参数转为下划线) {link: https://adolphor.com/2019/11/16/spring-boot-under-lower-camel}
-        om.setPropertyNamingStrategy(new PropertyNamingStrategies.SnakeCaseStrategy());
-        // 解决jdk1.8 LocalDateTime 时间反序列化的问题
-        JavaTimeModule javaTimeModule = new JavaTimeModule();
-        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DatePattern.NORM_DATETIME_PATTERN)));
-        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DatePattern.NORM_DATE_PATTERN)));
-        javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(DatePattern.NORM_TIME_PATTERN)));
-        om.registerModule(javaTimeModule);
-        // 处理接收RequestBody中JSON或XML对象参数
-        om.registerModule(new JsonParameterTrimModule());
-
         // 在 convert 中添加配置信息
         MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-        jackson2HttpMessageConverter.setObjectMapper(om);
+        // 添加 jackson 配置信息
+        jackson2HttpMessageConverter.setObjectMapper(objectMapper);
         jackson2HttpMessageConverter.setSupportedMediaTypes(supportMediaTypeList);
         jackson2HttpMessageConverter.setDefaultCharset(StandardCharsets.UTF_8);
         converters.add(jackson2HttpMessageConverter);

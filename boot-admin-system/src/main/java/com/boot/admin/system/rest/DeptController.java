@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  */
 @Api(tags = "系统：部门管理")
 @RestController
-@RequestMapping(value = "/v1/depts")
+@RequestMapping(value = "/api/depts")
 @ResultWrapper
 public class DeptController {
 

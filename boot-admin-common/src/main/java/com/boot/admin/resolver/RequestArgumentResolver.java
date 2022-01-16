@@ -52,7 +52,7 @@ public class RequestArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-        return handleParameterNames(parameter, webRequest);
+        return handleParameterNames(parameter, mavContainer, webRequest, binderFactory);
     }
 
     /**
@@ -62,18 +62,23 @@ public class RequestArgumentResolver implements HandlerMethodArgumentResolver {
      * @param webRequest 本次请求对象
      * @return /
      */
-    private Object handleParameterNames(MethodParameter parameter, NativeWebRequest webRequest) {
+    private Object handleParameterNames(MethodParameter parameter, ModelAndViewContainer mavContainer,
+                                        NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         Object obj = BeanUtils.instantiateClass(parameter.getParameterType());
         BeanWrapper wrapper = PropertyAccessorFactory.forBeanPropertyAccess(obj);
         Iterator<String> paramNames = webRequest.getParameterNames();
         while (paramNames.hasNext()) {
-            String paramName = paramNames.next();
-            String paramValue = webRequest.getParameter(paramName);
+            String fieldName = null;
+            String paramName = StringUtils.trim(paramNames.next());
+            String paramValue = StringUtils.trim(webRequest.getParameter(paramName));
             try {
-                // 设置转换的属性名, 值去除前后空格
-                wrapper.setPropertyValue(StringUtils.toCamelCase(paramName), StringUtils.trim(paramValue));
+                // 获取属性名
+                fieldName = StringUtils.toCamelCase(paramName);
+                wrapper.setPropertyValue(fieldName, paramValue);
             } catch (BeansException e) {
-                logger.warn("获取请求参数时出错， {} 中无对应属性：{}", obj.getClass().getSimpleName(), paramName);
+                logger.warn("获取请求参数时出错， {} 中无对应属性：{}", obj.getClass().getSimpleName(), fieldName);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return obj;

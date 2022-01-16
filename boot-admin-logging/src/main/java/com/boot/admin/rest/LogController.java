@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 @Api(tags = "系统：日志管理")
 @RestController
-@RequestMapping(value = "/v1/logs")
+@RequestMapping(value = "/api/logs")
 @ResultWrapper
 public class LogController {
 

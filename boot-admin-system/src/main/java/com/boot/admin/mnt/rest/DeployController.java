@@ -33,7 +33,7 @@ import java.util.Set;
  */
 @Api(tags = "运维：部署管理")
 @RestController
-@RequestMapping(value = "/v1/deploys")
+@RequestMapping(value = "/api/deploys")
 @ResultWrapper
 public class DeployController {
 

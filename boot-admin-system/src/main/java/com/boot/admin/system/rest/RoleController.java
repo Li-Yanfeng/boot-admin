@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  */
 @Api(tags = "系统：角色管理")
 @RestController
-@RequestMapping(value = "/v1/roles")
+@RequestMapping(value = "/api/roles")
 @ResultWrapper
 public class RoleController {
 

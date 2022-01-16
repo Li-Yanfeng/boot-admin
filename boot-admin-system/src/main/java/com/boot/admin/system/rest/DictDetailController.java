@@ -23,7 +23,7 @@ import java.util.Set;
  */
 @Api(tags = "系统：字典详情管理")
 @RestController
-@RequestMapping(value = "/v1/dict_details")
+@RequestMapping(value = "/api/dict_details")
 @ResultWrapper
 public class DictDetailController {
 

@@ -25,7 +25,7 @@ import java.util.Set;
  */
 @Api(tags = "系统：岗位管理")
 @RestController
-@RequestMapping(value = "/v1/jobs")
+@RequestMapping(value = "/api/jobs")
 @ResultWrapper
 public class JobController {
 

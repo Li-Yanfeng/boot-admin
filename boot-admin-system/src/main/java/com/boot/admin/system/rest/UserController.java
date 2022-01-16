@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
  */
 @Api(tags = "系统：用户管理")
 @RestController
-@RequestMapping(value = "/v1/users")
+@RequestMapping(value = "/api/users")
 @ResultWrapper
 public class UserController {
 

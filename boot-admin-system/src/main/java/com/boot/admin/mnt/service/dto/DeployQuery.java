@@ -37,7 +37,7 @@ public class DeployQuery implements Serializable {
         this.appName = appName;
     }
 
-    public List<LocalDateTime>getCreateTime() {
+    public List<LocalDateTime> getCreateTime() {
         return createTime;
     }
 

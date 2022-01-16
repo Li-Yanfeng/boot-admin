@@ -28,7 +28,7 @@ import java.util.Set;
  */
 @Api(tags = "工具：七牛云存储管理")
 @RestController
-@RequestMapping(value = "/v1/qiniu_contents")
+@RequestMapping(value = "/api/qiniu_contents")
 @ResultWrapper
 public class QiniuController {
 

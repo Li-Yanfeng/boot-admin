@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 @Api(tags = "系统：验证码管理")
 @RestController
-@RequestMapping(value = "/v1/codes")
+@RequestMapping(value = "/api/codes")
 @ResultWrapper
 public class VerifyController {
 

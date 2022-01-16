@@ -29,7 +29,7 @@ public class LocalStorageQuery implements Serializable {
     private String q;
 
 
-    public List<LocalDateTime>getCreateTime() {
+    public List<LocalDateTime> getCreateTime() {
         return createTime;
     }
 

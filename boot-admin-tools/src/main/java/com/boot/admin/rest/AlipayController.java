@@ -28,7 +28,7 @@ import java.nio.charset.StandardCharsets;
  */
 @Api(tags = "工具：支付宝管理")
 @RestController
-@RequestMapping(value = "/v1/ali_pays")
+@RequestMapping(value = "/api/ali_pays")
 @ResultWrapper
 public class AlipayController {
 

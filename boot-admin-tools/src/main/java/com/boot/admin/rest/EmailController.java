@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api(tags = "工具：邮件管理")
 @RestController
-@RequestMapping(value = "/v1/email_configs")
+@RequestMapping(value = "/api/email_configs")
 @ResultWrapper
 public class EmailController {
 

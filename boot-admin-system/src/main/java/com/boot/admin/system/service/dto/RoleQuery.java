@@ -53,7 +53,7 @@ public class RoleQuery implements Serializable {
         this.name = name;
     }
 
-    public List<LocalDateTime>getCreateTime() {
+    public List<LocalDateTime> getCreateTime() {
         return createTime;
     }
 
