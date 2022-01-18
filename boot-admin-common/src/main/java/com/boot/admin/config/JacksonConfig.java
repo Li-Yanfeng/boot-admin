@@ -50,7 +50,7 @@ public class JacksonConfig {
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         // 按字母顺序排序属性
         objectMapper.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-        // 统一返回数据的输出风格 {link: https://adolphor.com/2019/11/16/spring-boot-under-lower-camel}
+        // 统一返回数据的输出风格
         objectMapper.setPropertyNamingStrategy(new PropertyNamingStrategies.SnakeCaseStrategy());
 
         // 解决jdk1.8 LocalDateTime 时间序列化的问题
