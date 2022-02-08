@@ -41,7 +41,7 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
         // 设置允许凭据
         config.setAllowCredentials(true);
         // 添加允许的原点
-        config.addAllowedOrigin("*");
+        config.addAllowedOriginPattern("*");
         // 添加允许标题
         config.addAllowedHeader("*");
         // 添加允许的方法
