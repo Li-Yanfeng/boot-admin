@@ -1,6 +1,6 @@
 package com.boot.admin.annotation;
 
-import com.boot.admin.aspect.LimitType;
+import com.boot.admin.util.enums.LimitType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

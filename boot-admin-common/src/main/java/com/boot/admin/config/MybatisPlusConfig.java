@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import com.boot.admin.aspect.DataScopePermissionHandler;
 import com.boot.admin.constant.PackagePattern;
 import com.boot.admin.constant.SystemConstant;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -89,6 +91,10 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 添加数据权限插件
+        DataPermissionInterceptor dataPermissionInterceptor = new DataPermissionInterceptor();
+        dataPermissionInterceptor.setDataPermissionHandler(new DataScopePermissionHandler());
+        interceptor.addInnerInterceptor(dataPermissionInterceptor);
         // 添加分页插件
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         // 防止全表更新与删除插件

@@ -1,4 +1,4 @@
-package com.boot.admin.aspect;
+package com.boot.admin.util.enums;
 
 /**
  * 限流枚举

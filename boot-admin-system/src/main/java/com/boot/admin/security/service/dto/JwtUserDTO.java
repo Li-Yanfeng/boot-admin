@@ -2,6 +2,7 @@ package com.boot.admin.security.service.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.boot.admin.constant.CommonConstant;
+import com.boot.admin.system.service.dto.RoleSmallDTO;
 import com.boot.admin.system.service.dto.UserDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,6 +23,9 @@ public class JwtUserDTO implements UserDetails {
 
     @ApiModelProperty(value = "用户")
     private final UserDTO user;
+
+    @ApiModelProperty(value = "数据范围类型")
+    private final List<String> dataScopesTypes;
 
     @ApiModelProperty(value = "数据范围")
     private final List<Long> dataScopes;
@@ -75,6 +79,10 @@ public class JwtUserDTO implements UserDetails {
         return user;
     }
 
+    public List<String> getDataScopesTypes() {
+        return dataScopesTypes;
+    }
+
     public List<Long> getDataScopes() {
         return dataScopes;
     }
@@ -88,6 +96,7 @@ public class JwtUserDTO implements UserDetails {
         this.user = user;
         this.dataScopes = dataScopes;
         this.authorities = authorities;
+        this.dataScopesTypes = user.getRoles().stream().map(RoleSmallDTO::getDataScope).collect(Collectors.toList());
     }
 
     @Override

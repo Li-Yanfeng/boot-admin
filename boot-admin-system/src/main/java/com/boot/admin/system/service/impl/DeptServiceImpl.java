@@ -100,12 +100,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     @Cacheable(key = "'pid:' + #p0.pid", condition = "#p0.pid != null")
     @Override
     public List<DeptDTO> listDepts(DeptQuery query) {
-        List<DeptDTO> depts = ConvertUtils.convert(baseMapper.selectList(QueryHelp.queryWrapper(query)), DeptDTO.class);
-        // 如果为空，就代表为自定义权限或者本级权限，就需要去重，不理解可以注释掉，看查询结果
-        if (StringUtils.isBlank(SecurityUtils.getDataScopeType())) {
-            return deduplication(depts);
-        }
-        return depts;
+        return ConvertUtils.convert(baseMapper.selectList(QueryHelp.queryWrapper(query)), DeptDTO.class);
     }
 
     @Override

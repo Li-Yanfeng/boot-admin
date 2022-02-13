@@ -7,11 +7,15 @@ package com.boot.admin.util.enums;
  */
 public enum DataScopeEnum {
 
-    ALL("全部", "全部的数据权限"),
+    ALL("全部", "全部数据权限"),
 
-    THIS_LEVEL("本级", "自己部门的数据权限"),
+    ORG("本级", "本级数据权限"),
 
-    CUSTOMIZE("自定义", "自定义的数据权限");
+    ORG_AND_CHILD("本级及以下", "本级及以下数据权限"),
+
+    SELF("自己", "仅自己数据权限"),
+
+    CUSTOM("自定义", "自定义数据权限");
 
     /**
      * Value

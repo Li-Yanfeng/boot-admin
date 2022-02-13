@@ -6,6 +6,7 @@ import com.boot.admin.exception.enums.UserErrorCode;
 import com.boot.admin.util.IpUtils;
 import com.boot.admin.util.RequestHolder;
 import com.boot.admin.util.StringUtils;
+import com.boot.admin.util.enums.LimitType;
 import com.google.common.collect.ImmutableList;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

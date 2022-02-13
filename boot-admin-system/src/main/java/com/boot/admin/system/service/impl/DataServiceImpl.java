@@ -47,17 +47,35 @@ public class DataServiceImpl implements DataService {
         for (RoleSmallDTO role : roleSet) {
             DataScopeEnum dataScopeEnum = DataScopeEnum.find(role.getDataScope());
             switch (Objects.requireNonNull(dataScopeEnum)) {
-                case THIS_LEVEL:
+                case ORG:
                     deptIds.add(user.getDept().getDeptId());
                     break;
-                case CUSTOMIZE:
+                case ORG_AND_CHILD:
+                    deptIds.addAll(listDeptsChildren(user.getDept().getDeptId()));
+                    break;
+                case CUSTOM:
                     deptIds.addAll(getCustomize(deptIds, role));
                     break;
                 default:
-                    return CollUtil.newArrayList(deptIds);
+                    break;
             }
         }
         return CollUtil.newArrayList(deptIds);
+    }
+
+
+    /**
+     * 获取所有子节点 (包含当前节点)
+     *
+     * @param deptId 部门ID
+     * @return 数据权限ID
+     */
+    private Set<Long> listDeptsChildren(Long deptId) {
+        List<DeptDTO> depts = CollUtil.newArrayList();
+        List<DeptDTO> deptList = deptService.listDepts(new DeptQuery(deptId));
+        depts.add(deptService.getDeptById(deptId));
+        depts = deptService.listDeptsChildren(deptList, depts);
+        return depts.stream().map(DeptDTO::getDeptId).collect(Collectors.toSet());
     }
 
     /**
