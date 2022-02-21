@@ -2,7 +2,6 @@ package com.boot.admin.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
@@ -17,14 +16,14 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * 日志 服务实现类
@@ -50,7 +49,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, com.boot.admin.model.
         resource.setAddress(IpUtils.getCityInfo(resource.getRequestIp()));
         resource.setMethod(methodName);
         resource.setUsername(username);
-        resource.setParams(getParameter(method, joinPoint.getArgs()));
+        resource.setParams(JSONUtil.toJsonStr(joinPoint.getArgs()));
         resource.setBrowser(browser);
         if (resource.getLogId() != null) {
             baseMapper.updateById(resource);
@@ -109,35 +108,5 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, com.boot.admin.model.
             list.add(map);
         });
         FileUtils.downloadExcel(list, response);
-    }
-
-    /**
-     * 根据方法和传入的参数获取请求参数
-     */
-    private String getParameter(Method method, Object[] args) {
-        List<Object> argList = CollUtil.newArrayList();
-        Parameter[] parameters = method.getParameters();
-        for (int i = 0; i < parameters.length; i++) {
-            //将RequestBody注解修饰的参数作为请求参数
-            RequestBody requestBody = parameters[i].getAnnotation(RequestBody.class);
-            if (requestBody != null) {
-                argList.add(args[i]);
-            }
-            //将RequestParam注解修饰的参数作为请求参数
-            RequestParam requestParam = parameters[i].getAnnotation(RequestParam.class);
-            if (requestParam != null) {
-                Map<String, Object> map = new HashMap<>();
-                String key = parameters[i].getName();
-                if (!StrUtil.isEmpty(requestParam.value())) {
-                    key = requestParam.value();
-                }
-                map.put(key, args[i]);
-                argList.add(map);
-            }
-        }
-        if (argList.size() == 0) {
-            return "";
-        }
-        return argList.size() == 1 ? JSONUtil.toJsonStr(argList.get(0)) : JSONUtil.toJsonStr(argList);
     }
 }

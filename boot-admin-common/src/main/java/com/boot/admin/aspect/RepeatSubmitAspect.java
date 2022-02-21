@@ -1,7 +1,7 @@
 package com.boot.admin.aspect;
 
 import com.boot.admin.annotation.NoRepeatSubmit;
-import com.boot.admin.core.model.Result;
+import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.exception.enums.UserErrorCode;
 import com.boot.admin.util.IpUtils;
 import com.boot.admin.util.RequestHolder;
@@ -53,17 +53,15 @@ public class RepeatSubmitAspect {
         Method signatureMethod = signature.getMethod();
         NoRepeatSubmit noRepeatSubmit = signatureMethod.getAnnotation(NoRepeatSubmit.class);
         int time = noRepeatSubmit.time();
-        // 获取 IP地址、请求Url
-        String ip = IpUtils.getIp(request);
-        String uri = request.getRequestURI();
 
-        // 自定义 key,设置 key 的过期时间
-        String key = "request_form:" + ip + ":" + uri;
+        // 自定义 key (请求uri：请求参数), 设置 key 的过期时间
+        String requestSource = IpUtils.getIp(request) + request.getRequestURI();
+        String methodSign = RequestHolder.getMethodSign(signatureMethod, joinPoint.getArgs());
+        String key = String.format("request-form:%s:%s", requestSource , methodSign);
         if (Boolean.TRUE.equals(redisTemplate.hasKey(key))) {
-            return Result.failure(UserErrorCode.USER_REPEATED_REQUEST);
+            throw new BadRequestException(UserErrorCode.USER_REPEATED_REQUEST);
         } else {
-            redisTemplate.opsForValue().set(key, String.valueOf(System.currentTimeMillis()), time,
-                TimeUnit.MILLISECONDS);
+            redisTemplate.opsForValue().set(key, String.valueOf(System.currentTimeMillis()), time, TimeUnit.MILLISECONDS);
             return joinPoint.proceed();
         }
     }

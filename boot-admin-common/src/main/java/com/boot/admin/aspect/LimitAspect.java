@@ -65,7 +65,7 @@ public class LimitAspect {
         }
 
         // 自定义key
-        ImmutableList<Object> keys = ImmutableList.of("interface_limit:" + key + ":" + request.getRequestURI());
+        ImmutableList<Object> keys = ImmutableList.of("interface-limit:" + key + ":" + request.getRequestURI());
 
         // 构建脚本
         String luaScript = buildLuaScript();
