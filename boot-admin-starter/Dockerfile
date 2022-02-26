@@ -1,13 +1,14 @@
 FROM openjdk:8-jre-alpine
 
-ADD ./docker/wait-for.sh /wait-for.sh
+# 作者
+MAINTAINER Li Yanfeng <yanfeng413@163.com>
 
-# 作者MAINTAINER Wu Jize <wujize188@163.com>#指定阿里镜象
+# 指定阿里镜像
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 # 增加字体，解决验证码没有字体报空指针问题
 RUN set -xe \
-&& apk --no-cache add ttf-dejavu fontconfig
+    && apk --no-cache add ttf-dejavu fontconfig
 
 # 系统编码
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8

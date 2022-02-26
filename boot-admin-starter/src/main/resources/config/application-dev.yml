@@ -8,9 +8,9 @@ spring:
       strict: false
       datasource:
         master:
-          url: jdbc:p6spy:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:admin-master}?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false
-          username: ${DB_USER:root}
-          password: ${DB_PWD:root}
+          url: jdbc:p6spy:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_NAME:boot-admin-master}?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false
+          username: ${MYSQL_USER:root}
+          password: ${MYSQL_PWD:root}
           driver-class-name: com.p6spy.engine.spy.P6SpyDriver
           type: com.zaxxer.hikari.HikariDataSource
           # 配置则生效,自动初始化表结构
@@ -31,9 +31,9 @@ spring:
             # 连接超时时间,默认30秒
             connection-timeout: 30000
         # slave:
-          # url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:admin-slave}?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false
-          # username: ${DB_USER:root}
-          # password: ${DB_PWD:root}
+          # url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_NAME:admin-slave}?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false
+          # username: ${MYSQL_USER:root}
+          # password: ${MYSQL_PWD:root}
           # driver-class-name: com.mysql.cj.jdbc.Driver
           # type: com.zaxxer.hikari.HikariDataSource
           # 配置则生效,自动初始化表结构
@@ -42,6 +42,15 @@ spring:
           # data: db/data.sql
           # 默认true,初始化失败是否继续
           # continue-on-error: false
+
+  redis:
+    # 数据库索引
+    database: ${REDIS_DB:0}
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PWD:}
+    # 连接超时时间
+    timeout: 5000
 
 # 登录相关配置
 login:

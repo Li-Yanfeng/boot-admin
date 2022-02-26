@@ -2,17 +2,17 @@ JAVA_OPTS="-Dfile.encoding=utf-8"
 JAVA_WEB_SERVICE_OPTS="--spring.profiles.active=qa"
 
 # mysql
-export BOOT_ADMIN_DB_HOST=""
-export BOOT_ADMIN_DB_DATABASE=""
-export BOOT_ADMIN_DB_UNAME=""
-export BOOT_ADMIN_DB_PASSWORD=""
-export BOOT_ADMIN_DB_PORT="36010"
+export MYSQL_HOST=""
+export MYSQL_DATABASE=""
+export MYSQL_UNAME=""
+export MYSQL_PASSWORD=""
+export MYSQL_PORT="36010"
 
 # redis
-export BOOT_ADMIN_REDIS_DB=""
-export BOOT_ADMIN_REDIS_HOST=""
-export BOOT_ADMIN_REDIS_PORT="16379"
-export BOOT_ADMIN_REDIS_PASSWORD=""
+export REDIS_DB=""
+export REDIS_HOST=""
+export REDIS_PORT="16379"
+export REDIS_PASSWORD=""
 
 # sba
 export BOOT_ADMIN_SBA_PASSWORD=""
