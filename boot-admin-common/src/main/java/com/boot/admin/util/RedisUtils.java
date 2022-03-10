@@ -34,13 +34,13 @@ public class RedisUtils {
     /**
      * 指定缓存失效时间
      *
-     * @param key  键
-     * @param time 时间(秒)
+     * @param key     键
+     * @param timeout 时间(秒)
      */
-    public boolean expire(String key, long time) {
+    public boolean expire(String key, long timeout) {
         try {
-            if (time > 0) {
-                redisTemplate.expire(key, time, TimeUnit.SECONDS);
+            if (timeout > 0) {
+                redisTemplate.expire(key, timeout, TimeUnit.SECONDS);
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -52,14 +52,14 @@ public class RedisUtils {
     /**
      * 指定缓存失效时间
      *
-     * @param key      键
-     * @param time     时间(秒)
-     * @param timeUnit 单位
+     * @param key     键
+     * @param timeout 时间
+     * @param unit    时间单位
      */
-    public boolean expire(String key, long time, TimeUnit timeUnit) {
+    public boolean expire(String key, long timeout, TimeUnit unit) {
         try {
-            if (time > 0) {
-                redisTemplate.expire(key, time, timeUnit);
+            if (timeout > 0) {
+                redisTemplate.expire(key, timeout, unit);
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -72,14 +72,14 @@ public class RedisUtils {
      * 根据 key 获取过期时间
      *
      * @param key 键 不能为null
-     * @return 时间(秒) 返回0代表为永久有效
+     * @return 时间(秒) 返回 0 为永久有效
      */
-    public long getExpire(Object key) {
+    public long getExpire(String key) {
         return redisTemplate.getExpire(key, TimeUnit.SECONDS);
     }
 
     /**
-     * 查找匹配key
+     * 查找匹配 key
      *
      * @param pattern key
      * @return /
@@ -140,7 +140,7 @@ public class RedisUtils {
     }
 
     /**
-     * 判断key是否存在
+     * 判断 key 是否存在
      *
      * @param key 键
      * @return true 存在 false不存在
@@ -195,10 +195,10 @@ public class RedisUtils {
     /**
      * 批量获取
      *
-     * @param keys
-     * @return
+     * @param keys 多个键
+     * @return 值
      */
-    public List<Object> multiGet(List<String> keys) {
+    public List<Object> get(List<String> keys) {
         List list = redisTemplate.opsForValue().multiGet(Sets.newHashSet(keys));
         List resultList = Lists.newArrayList();
         Optional.ofNullable(list).ifPresent(e -> list.forEach(ele -> Optional.ofNullable(ele).ifPresent(resultList::add)));
@@ -247,16 +247,16 @@ public class RedisUtils {
     /**
      * 普通缓存放入并设置时间
      *
-     * @param key      键
-     * @param value    值
-     * @param time     时间
-     * @param timeUnit 类型
+     * @param key     键
+     * @param value   值
+     * @param timeout 时间
+     * @param unit    类型
      * @return true成功 false 失败
      */
-    public boolean set(String key, Object value, long time, TimeUnit timeUnit) {
+    public boolean set(String key, Object value, long timeout, TimeUnit unit) {
         try {
-            if (time > 0) {
-                redisTemplate.opsForValue().set(key, value, time, timeUnit);
+            if (timeout > 0) {
+                redisTemplate.opsForValue().set(key, value, timeout, unit);
             } else {
                 set(key, value);
             }
@@ -281,12 +281,12 @@ public class RedisUtils {
     }
 
     /**
-     * 获取hashKey对应的所有键值
+     * 获取 hashKey 对应的所有键值
      *
      * @param key 键
      * @return 对应的多个键值
      */
-    public Map<Object, Object> hmget(String key) {
+    public Map<Object, Object> hget(String key) {
         return redisTemplate.opsForHash().entries(key);
 
     }
@@ -298,7 +298,7 @@ public class RedisUtils {
      * @param map 对应多个键值
      * @return true 成功 false 失败
      */
-    public boolean hmset(String key, Map<String, Object> map) {
+    public boolean hset(String key, Map<String, Object> map) {
         try {
             redisTemplate.opsForHash().putAll(key, map);
             return true;
@@ -311,16 +311,16 @@ public class RedisUtils {
     /**
      * HashSet 并设置时间
      *
-     * @param key  键
-     * @param map  对应多个键值
-     * @param time 时间(秒)
+     * @param key     键
+     * @param map     对应多个键值
+     * @param timeout 时间(秒)
      * @return true成功 false失败
      */
-    public boolean hmset(String key, Map<String, Object> map, long time) {
+    public boolean hset(String key, Map<String, Object> map, long timeout) {
         try {
             redisTemplate.opsForHash().putAll(key, map);
-            if (time > 0) {
-                expire(key, time);
+            if (timeout > 0) {
+                expire(key, timeout);
             }
             return true;
         } catch (Exception e) {
@@ -350,17 +350,17 @@ public class RedisUtils {
     /**
      * 向一张hash表中放入数据,如果不存在将创建
      *
-     * @param key   键
-     * @param item  项
-     * @param value 值
-     * @param time  时间(秒) 注意:如果已存在的hash表有时间,这里将会替换原有的时间
+     * @param key     键
+     * @param item    项
+     * @param value   值
+     * @param timeout 时间(秒) 注意:如果已存在的hash表有时间,这里将会替换原有的时间
      * @return true 成功 false失败
      */
-    public boolean hset(String key, String item, Object value, long time) {
+    public boolean hset(String key, String item, Object value, long timeout) {
         try {
             redisTemplate.opsForHash().put(key, item, value);
-            if (time > 0) {
-                expire(key, time);
+            if (timeout > 0) {
+                expire(key, timeout);
             }
             return true;
         } catch (Exception e) {

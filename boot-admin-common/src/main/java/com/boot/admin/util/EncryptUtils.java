@@ -25,8 +25,7 @@ public class EncryptUtils {
             return null;
         }
         cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
-        String strKey = "Passw0rd";
-        return new DESKeySpec(strKey.getBytes(StandardCharsets.UTF_8));
+        return new DESKeySpec(STR_PARAM.getBytes(StandardCharsets.UTF_8));
     }
 
     /**
@@ -53,6 +52,9 @@ public class EncryptUtils {
         return new String(retByte);
     }
 
+    /**
+     * 字节 转 16进制
+     */
     private static String byte2hex(byte[] inStr) {
         String stmp;
         StringBuilder out = new StringBuilder(inStr.length * 2);
@@ -68,6 +70,9 @@ public class EncryptUtils {
         return out.toString();
     }
 
+    /**
+     * 16进制 转 字节
+     */
     private static byte[] hex2byte(byte[] b) {
         int size = 2;
         if ((b.length % size) != 0) {
