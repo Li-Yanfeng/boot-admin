@@ -3,7 +3,7 @@
 <mapper namespace="com.boot.admin.system.mapper.RoleMapper">
 
     <!--通用查询映射结果-->
-    <resultMap id="BaseResultMap" type="com.boot.admin.system.model.Role">
+    <resultMap id="RoleResultMap" type="com.boot.admin.system.model.Role">
         <id column="role_id" property="roleId"/>
         <result column="name" property="name"/>
         <result column="level" property="level"/>
@@ -16,11 +16,11 @@
     </resultMap>
 
     <!--通用查询结果列-->
-    <sql id="BaseColumnList">
+    <sql id="RoleColumnList">
         role_id, name, level, description, data_scope, create_by, update_by, create_time, update_time
     </sql>
 
-    <select id="selectRoleListByMenuId" resultMap="BaseResultMap">
+    <select id="selectRoleListByMenuId" resultMap="RoleResultMap">
         SELECT r.*
         FROM sys_role r,
              sys_role_menu rm
@@ -31,7 +31,7 @@
         </foreach>
     </select>
 
-    <select id="selectRoleListByUserId" resultMap="BaseResultMap">
+    <select id="selectRoleListByUserId" resultMap="RoleResultMap">
         SELECT r.*
         FROM sys_role r,
              sys_user_role ur

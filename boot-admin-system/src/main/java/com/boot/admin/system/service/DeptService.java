@@ -1,5 +1,6 @@
 package com.boot.admin.system.service;
 
+import cn.hutool.core.lang.tree.Tree;
 import com.boot.admin.core.service.Service;
 import com.boot.admin.system.model.Dept;
 import com.boot.admin.system.service.dto.DeptDTO;
@@ -58,20 +59,29 @@ public interface DeptService extends Service<Dept> {
     /**
      * 获取所有子节点 (包含当前节点)
      *
-     * @param childrenList 子节点列表
-     * @param depts        节点列表
+     * @param id 主键ID
      * @return 列表查询结果
      */
-    List<DeptDTO> listDeptsChildren(List<DeptDTO> childrenList, List<DeptDTO> depts);
+    default List<DeptDTO> listDeptsChildren(Long id) {
+        return listDeptsChildren(id, true);
+    }
 
     /**
-     * 根据 ID 获取同级与上级数据
+     * 获取所有子节点
      *
-     * @param resource 实体对象
-     * @param results  已获取子节点列表
+     * @param id             主键ID
+     * @param containsItself 包含自己
      * @return 列表查询结果
      */
-    List<DeptDTO> listDeptsSuperior(DeptDTO resource, List<DeptDTO> results);
+    List<DeptDTO> listDeptsChildren(Long id, boolean containsItself);
+
+    /**
+     * 根据 ID 获取上级数据
+     *
+     * @param id 主键ID
+     * @return 列表查询结果
+     */
+    List<DeptDTO> listDeptsSuperior(Long id);
 
     /**
      * 根据 ID 查询
@@ -87,7 +97,7 @@ public interface DeptService extends Service<Dept> {
      * @param resources 数据传输对象列表
      * @return 操作结果
      */
-    List<DeptDTO> buildTree(List<DeptDTO> resources);
+    List<Tree<Long>> buildTree(Collection<DeptDTO> resources);
 
     /**
      * 验证是否被关联

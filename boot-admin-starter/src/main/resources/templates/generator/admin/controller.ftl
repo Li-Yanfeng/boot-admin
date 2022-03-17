@@ -68,6 +68,13 @@ public class ${className}Controller {
         return ${changeClassName}Service.list${className}s(query, page);
     }
 
+    @ApiOperation(value = "查询单个${apiAlias!}")
+    @PreAuthorize(value = "@authorize.check('${changeClassName}s:list')")
+    @GetMapping(value = "/{id}")
+    public ${className}DTO info(@PathVariable Long id) {
+        return ${changeClassName}Service.get${className}ById(id);
+    }
+
     @ApiOperation(value = "导出${apiAlias!}")
     @Log(value = "导出${apiAlias!}")
     @PreAuthorize(value = "@authorize.check('${changeClassName}s:list')")

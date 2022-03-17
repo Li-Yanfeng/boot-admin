@@ -3,7 +3,7 @@
 <mapper namespace="${package}.mapper.${className}Mapper">
 
     <!--通用查询映射结果-->
-    <resultMap id="BaseResultMap" type="${package}.model.${className}">
+    <resultMap id="${className}ResultMap" type="${package}.model.${className}">
 <#list columns as column>
     <#if column.columnKey = 'PRI'><#--生成主键排在第一位-->
         <id column="${column.columnName}" property="${column.changeColumnName}"/>
@@ -22,7 +22,7 @@
     </resultMap>
 
     <!--通用查询结果列-->
-    <sql id="BaseColumnList">
+    <sql id="${className}ColumnList">
         <#list columns as column>${column.columnName}<#sep>, </#sep></#list><#if extendsSuperEntity>, <#list commonColumns as column>${column.columnName}<#sep>, </#sep></#list></#if>
     </sql>
 </mapper>

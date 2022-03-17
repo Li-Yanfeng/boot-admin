@@ -62,7 +62,11 @@ public class RepeatSubmitAspect {
             throw new BadRequestException(UserErrorCode.USER_REPEATED_REQUEST);
         } else {
             redisTemplate.opsForValue().set(key, String.valueOf(System.currentTimeMillis()), time, TimeUnit.MILLISECONDS);
-            return joinPoint.proceed();
+            try {
+                return joinPoint.proceed();
+            } finally {
+                redisTemplate.delete(key);
+            }
         }
     }
 }

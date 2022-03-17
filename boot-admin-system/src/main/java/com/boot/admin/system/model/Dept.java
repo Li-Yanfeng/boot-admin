@@ -28,13 +28,14 @@ public class Dept extends BaseEntity implements Serializable {
     private Long deptId;
 
     @ApiModelProperty(value = "上级部门")
+    @NotNull
     private Long pid;
+
+    @ApiModelProperty(value = "祖级列表")
+    private String ancestors;
 
     @ApiModelProperty(value = "名称")
     private String name;
-
-    @ApiModelProperty(value = "子部门数目")
-    private Integer subCount;
 
     @ApiModelProperty(value = "是否启用")
     @TableField(value = "is_enabled")
@@ -60,20 +61,20 @@ public class Dept extends BaseEntity implements Serializable {
         this.pid = pid;
     }
 
+    public String getAncestors() {
+        return ancestors;
+    }
+
+    public void setAncestors(String ancestors) {
+        this.ancestors = ancestors;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getSubCount() {
-        return subCount;
-    }
-
-    public void setSubCount(Integer subCount) {
-        this.subCount = subCount;
     }
 
     public Integer getEnabled() {

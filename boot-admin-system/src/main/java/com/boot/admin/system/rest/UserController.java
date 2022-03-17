@@ -1,6 +1,5 @@
 package com.boot.admin.system.rest;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
@@ -15,7 +14,10 @@ import com.boot.admin.exception.enums.UserErrorCode;
 import com.boot.admin.system.model.User;
 import com.boot.admin.system.model.vo.UserPassVO;
 import com.boot.admin.system.service.*;
-import com.boot.admin.system.service.dto.*;
+import com.boot.admin.system.service.dto.DeptDTO;
+import com.boot.admin.system.service.dto.RoleSmallDTO;
+import com.boot.admin.system.service.dto.UserDTO;
+import com.boot.admin.system.service.dto.UserQuery;
 import com.boot.admin.util.RsaUtils;
 import com.boot.admin.util.SecurityUtils;
 import com.boot.admin.util.StringUtils;
@@ -160,13 +162,8 @@ public class UserController {
     @GetMapping
     public Page<UserDTO> list(UserQuery query, Page<User> page) {
         if (ObjectUtil.isNotEmpty(query.getDeptId())) {
-            List<DeptDTO> depts = deptService.listDeptsChildren(
-                deptService.listDepts(new DeptQuery(query.getDeptId())),
-                CollUtil.newArrayList(deptService.getDeptById(query.getDeptId()))
-            );
-            query.getDeptIds().add(query.getDeptId());
+            List<DeptDTO> depts = deptService.listDeptsChildren(query.getDeptId());
             query.getDeptIds().addAll(depts.stream().map(DeptDTO::getDeptId).collect(Collectors.toList()));
-
         }
         // 数据权限
         List<Long> dataScopes =

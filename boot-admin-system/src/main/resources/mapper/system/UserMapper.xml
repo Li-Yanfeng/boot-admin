@@ -3,7 +3,7 @@
 <mapper namespace="com.boot.admin.system.mapper.UserMapper">
 
     <!--通用查询映射结果-->
-    <resultMap id="BaseResultMap" type="com.boot.admin.system.model.User">
+    <resultMap id="UserResultMap" type="com.boot.admin.system.model.User">
         <id column="user_id" property="userId"/>
         <result column="dept_id" property="deptId"/>
         <result column="username" property="username"/>
@@ -24,11 +24,11 @@
     </resultMap>
 
     <!--通用查询结果列-->
-    <sql id="BaseColumnList">
+    <sql id="UserColumnList">
         user_id, dept_id, username, nick_name, gender, phone, email, avatar_name, avatar_path, password, is_admin, is_enabled, pwd_reset_time, create_by, update_by, create_time, update_time
     </sql>
 
-    <select id="selectUserListByMenuId" resultMap="BaseResultMap">
+    <select id="selectUserListByMenuId" resultMap="UserResultMap">
         SELECT u.*
         FROM sys_user u,
              sys_user_role ur,
@@ -39,7 +39,7 @@
         GROUP BY u.user_id
     </select>
 
-    <select id="selectUserListByRoleId" resultMap="BaseResultMap">
+    <select id="selectUserListByRoleId" resultMap="UserResultMap">
         SELECT u.*
         FROM sys_user u,
              sys_user_role ur
@@ -47,7 +47,7 @@
           AND ur.role_id = #{roleId}
     </select>
 
-    <select id="selectUserListByDeptId" resultMap="BaseResultMap">
+    <select id="selectUserListByDeptId" resultMap="UserResultMap">
         SELECT u.*
         FROM sys_user u,
              sys_user_role ur,
@@ -62,7 +62,7 @@
         SELECT count(1)
         FROM sys_user u
         WHERE u.dept_id IN
-        <foreach item='item' index='index' collection='ids' open='(' separator=',' close=')'>
+        <foreach item='item' index='index' collection='deptIds' open='(' separator=',' close=')'>
             #{item}
         </foreach>
     </select>

@@ -1,12 +1,17 @@
 package com.boot.admin.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeNodeConfig;
+import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.boot.admin.constant.CacheKey;
 import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.service.impl.ServiceImpl;
 import com.boot.admin.exception.BadRequestException;
+import com.boot.admin.exception.enums.UserErrorCode;
 import com.boot.admin.system.mapper.DeptMapper;
 import com.boot.admin.system.mapper.UserMapper;
 import com.boot.admin.system.model.Dept;
@@ -26,8 +31,8 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 部门 服务实现类
@@ -53,11 +58,19 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveDept(Dept resource) {
-        // 计算子节点数目
-        resource.setSubCount(0);
+        Long pid = resource.getPid();
+        Dept superiorDept = baseMapper.selectById(pid);
+        // 如果父节点处于停用状态,则不允许新增子节点
+        if (ObjectUtil.isNotNull(superiorDept) && CommonConstant.UN_ENABLE.equals(superiorDept.getEnabled())) {
+            throw new BadRequestException(UserErrorCode.SUPERIOR_NODE_DEACTIVATED_NOT_ALLOWED_TO_ADD);
+        }
+        // 填充属性
+        String ancestors = ObjectUtil.isNull(superiorDept)
+            ? pid.toString()
+            : superiorDept.getAncestors() + StrUtil.COMMA + pid;
+        resource.setAncestors(ancestors);
+
         baseMapper.insert(resource);
-        // 更新节点
-        updateSubCnt(resource.getPid());
         // 清理缓存
         delCaches(null, null, resource.getPid());
     }
@@ -70,8 +83,6 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
             delCaches(resource.getDeptId(), resource.getPid(), null);
             // 删除当前节点
             baseMapper.deleteById(resource.getDeptId());
-            // 更新节点
-            updateSubCnt(resource.getPid());
         }
     }
 
@@ -86,13 +97,24 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         Long oldPid = dept.getPid();
         // 新部门
         Long newPid = resource.getPid();
-        if (ObjectUtil.isNotNull(newPid) && deptId.equals(newPid)) {
+        if (deptId.equals(newPid)) {
             throw new BadRequestException("上级不能为自己");
         }
+
+        Dept superiorDept = baseMapper.selectById(newPid);
+        // 填充属性
+        String ancestors = ObjectUtil.isNull(superiorDept)
+            ? newPid.toString()
+            : superiorDept.getAncestors() + StrUtil.COMMA + newPid;
+        resource.setAncestors(ancestors);
         baseMapper.updateById(resource);
-        // 更新父节点中子节点数目
-        updateSubCnt(oldPid);
-        updateSubCnt(newPid);
+
+        // 如果该部门是启用状态，则启用该部门的所有上级部门
+        if (CommonConstant.ENABLE.equals(resource.getEnabled()) && !CommonConstant.TOP_ID.toString().equals(ancestors)) {
+            List<Long> superiorIds = listDeptsSuperiorIds(ancestors);
+            lambdaUpdate().set(Dept::getEnabled, CommonConstant.ENABLE).in(Dept::getDeptId, superiorIds).update();
+        }
+
         // 清理缓存
         delCaches(deptId, oldPid, newPid);
     }
@@ -105,31 +127,22 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
 
     @Override
     public List<DeptDTO> listDeptsByRoleId(Long roleId) {
-        List<Dept> depts = baseMapper.selectDeptListByRoleId(roleId);
-        return depts.stream().map(dept -> ConvertUtils.convert(dept, DeptDTO.class)).collect(Collectors.toList());
+        return ConvertUtils.convert(baseMapper.selectDeptListByRoleId(roleId), DeptDTO.class);
     }
 
     @Override
-    public List<DeptDTO> listDeptsChildren(List<DeptDTO> childrenList, List<DeptDTO> depts) {
-        for (DeptDTO dept : childrenList) {
-            depts.add(dept);
-            List<DeptDTO> deptList = listDepts(new DeptQuery(dept.getDeptId()));
-            if (CollUtil.isNotEmpty(deptList)) {
-                listDeptsChildren(deptList, depts);
-            }
-        }
-        return depts;
+    public List<DeptDTO> listDeptsChildren(Long id, boolean containsItself) {
+        String applySql = "FIND_IN_SET({0}, ancestors)";
+        List<Dept> depts = lambdaQuery().eq(containsItself, Dept::getDeptId, id).or().apply(applySql, id).list();
+        return ConvertUtils.convert(depts, DeptDTO.class);
     }
 
     @Override
-    public List<DeptDTO> listDeptsSuperior(DeptDTO resource, List<DeptDTO> results) {
-        Long pid = resource.getPid();
-        if (CommonConstant.TOP_ID.equals(pid)) {
-            results.addAll(listDepts(new DeptQuery(CommonConstant.TOP_ID)));
-            return results;
-        }
-        results.addAll(listDepts(new DeptQuery(pid)));
-        return listDeptsSuperior(getDeptById(pid), results);
+    public List<DeptDTO> listDeptsSuperior(Long id) {
+        Dept dept = baseMapper.selectById(id);
+        ValidationUtils.notNull(dept, "Dept", "deptId", id);
+        List<Long> superiorDeptIds = listDeptsSuperiorIds(dept.getAncestors());
+        return ConvertUtils.convert(baseMapper.selectBatchIds(superiorDeptIds), DeptDTO.class);
     }
 
     @Cacheable(key = "'id:' + #p0")
@@ -141,32 +154,25 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     }
 
     @Override
-    public List<DeptDTO> buildTree(List<DeptDTO> resources) {
-        // 顶级数据
-        List<DeptDTO> trees = CollUtil.newArrayList();
-        // 子级ID
-        Set<Long> ids = CollUtil.newHashSet();
-        for (DeptDTO dept : resources) {
-            // 添加到顶级列表
-            if (CommonConstant.TOP_ID.equals(dept.getPid())) {
-                trees.add(dept);
-            }
-            // 如果是子节点
-            for (DeptDTO dept1 : resources) {
-                if (dept.getDeptId().equals(dept1.getPid())) {
-                    if (ObjectUtil.isNull(dept.getChildren())) {
-                        dept.setChildren(CollUtil.newArrayList());
-                    }
-                    dept.getChildren().add(dept1);
-                    ids.add(dept1.getDeptId());
-                }
-            }
-        }
-        // 过滤无效数据
-        if (CollUtil.isEmpty(trees)) {
-            trees = resources.stream().filter(s -> !ids.contains(s.getDeptId())).collect(Collectors.toList());
-        }
-        return trees;
+    public List<Tree<Long>> buildTree(Collection<DeptDTO> resources) {
+        // 移除重复数据
+        List<DeptDTO> list = resources.stream().distinct().collect(Collectors.toList());
+        // 最顶层ID
+        Long pid = list.stream().map(DeptDTO::getPid).min(Long::compareTo).orElseGet(() -> CommonConstant.TOP_ID);
+        // 属性名配置字段
+        TreeNodeConfig treeNodeConfig = new TreeNodeConfig()
+            .setIdKey("deptId")
+            .setParentIdKey("pid")
+            .setWeightKey("deptSort")
+            .setNameKey("name")
+            .setChildrenKey("children");
+        // 转换器
+        return TreeUtil.build(list, pid, treeNodeConfig, (treeNode, tree) -> {
+            tree.setId(treeNode.getDeptId());
+            tree.setParentId(treeNode.getPid());
+            tree.setWeight(treeNode.getDeptSort());
+            tree.setName(treeNode.getName());
+        });
     }
 
     @Override
@@ -193,38 +199,13 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     }
 
     /**
-     * 更新子节点
+     * 根据 ancestors 获取上级节点列表
      *
-     * @param deptId 部门Id
+     * @param ancestors 组级列表
+     * @return 上级节点列表（不包含自己）
      */
-    private void updateSubCnt(Long deptId) {
-        if (deptId != null) {
-            int count = lambdaQuery().eq(Dept::getPid, deptId).count();
-            lambdaUpdate().eq(Dept::getDeptId, deptId).set(Dept::getSubCount, count).update();
-        }
-    }
-
-    /**
-     * 重复数据删除
-     *
-     * @param deptList 部门集合
-     * @return 操作结果
-     */
-    private List<DeptDTO> deduplication(List<DeptDTO> deptList) {
-        List<DeptDTO> depts = CollUtil.newArrayList();
-        for (DeptDTO dept : deptList) {
-            boolean flag = true;
-            for (DeptDTO dept1 : deptList) {
-                if (dept1.getDeptId().equals(dept.getPid())) {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag) {
-                depts.add(dept);
-            }
-        }
-        return depts;
+    private List<Long> listDeptsSuperiorIds(String ancestors) {
+        return Stream.of(ancestors.split(StrUtil.COMMA)).map(Long::parseLong).collect(Collectors.toList());
     }
 
     /**
@@ -239,11 +220,25 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
             redisUtils.delByKeys(CacheKey.DATA_USER, users.stream().map(User::getDeptId).collect(Collectors.toSet()));
             redisUtils.del(CacheKey.DEPT_ID + deptId);
         }
+        // 清理上级缓存
         if (oldPid != null) {
-            redisUtils.del(CacheKey.DEPT_PID + oldPid);
+            delSuperiorCaches(oldPid);
         }
         if (newPid != null) {
-            redisUtils.del(CacheKey.DEPT_PID + newPid);
+            delSuperiorCaches(newPid);
+        }
+    }
+
+    /**
+     * 清理上级缓存
+     *
+     * @param pid 上级部门Id
+     */
+    private void delSuperiorCaches(Long pid) {
+        redisUtils.del(CacheKey.DEPT_PID + pid);
+        Dept dept = lambdaQuery().eq(Dept::getDeptId, pid).one();
+        if (ObjectUtil.isNotNull(dept)) {
+            delSuperiorCaches(dept.getPid());
         }
     }
 }

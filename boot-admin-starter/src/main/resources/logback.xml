@@ -12,7 +12,7 @@
     <property name="file.pattern" value="%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} --- [%10.10t] %-48.48logger{46} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
 
     <!--日志文件保留天数-->
-    <property name="maxHistory" value="15"/>
+    <property name="maxHistory" value="30"/>
     <!--日志文件最大大小-->
     <property name="maxFileSize" value="10MB"/>
 
@@ -45,13 +45,14 @@
     </appender>
 
 
+    <!--Spring 日志级别控制-->
+    <logger name="org.springframework" level="warn" additivity="false"/>
+    <!--Mybatis-Plus 日志级别控制-->
+    <logger name="com.baomidou.mybatisplus" level="error" additivity="false"/>
+    <!--Knife4j 日志级别控制-->
     <logger name="com.github.xiaoymin.knife4j.core.model.MarkdownFile" level="warn" additivity="false"/>
-
-
-    <!--将该包下的日志操作行为追加到文件-->
-    <logger name="com.boot.admin.**.service" level="error" additivity="false">
-        <appender-ref ref="file"/>
-    </logger>
+    <!--系统 日志级别控制-->
+    <logger name="com.boot.admin" level="info" additivity="false"/>
 
 
     <!--dev 环境-->

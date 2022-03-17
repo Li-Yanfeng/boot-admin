@@ -5,7 +5,6 @@ import com.boot.admin.system.service.DataService;
 import com.boot.admin.system.service.DeptService;
 import com.boot.admin.system.service.RoleService;
 import com.boot.admin.system.service.dto.DeptDTO;
-import com.boot.admin.system.service.dto.DeptQuery;
 import com.boot.admin.system.service.dto.RoleSmallDTO;
 import com.boot.admin.system.service.dto.UserDTO;
 import com.boot.admin.util.enums.DataScopeEnum;
@@ -71,10 +70,7 @@ public class DataServiceImpl implements DataService {
      * @return 数据权限ID
      */
     private Set<Long> listDeptsChildren(Long deptId) {
-        List<DeptDTO> depts = CollUtil.newArrayList();
-        List<DeptDTO> deptList = deptService.listDepts(new DeptQuery(deptId));
-        depts.add(deptService.getDeptById(deptId));
-        depts = deptService.listDeptsChildren(deptList, depts);
+        List<DeptDTO> depts = deptService.listDeptsChildren(deptId);
         return depts.stream().map(DeptDTO::getDeptId).collect(Collectors.toSet());
     }
 
@@ -88,12 +84,8 @@ public class DataServiceImpl implements DataService {
     public Set<Long> getCustomize(Set<Long> deptIds, RoleSmallDTO role) {
         List<DeptDTO> depts = deptService.listDeptsByRoleId(role.getRoleId());
         for (DeptDTO dept : depts) {
-            deptIds.add(dept.getDeptId());
-            List<DeptDTO> deptChildren = deptService.listDepts(new DeptQuery(dept.getDeptId()));
-            if (CollUtil.isNotEmpty(deptChildren)) {
-                List<DeptDTO> deptDTOS = deptService.listDeptsChildren(CollUtil.newArrayList(dept), deptChildren);
-                deptIds.addAll(deptDTOS.stream().map(DeptDTO::getDeptId).collect(Collectors.toList()));
-            }
+            List<DeptDTO> deptDTOS = deptService.listDeptsChildren(dept.getDeptId());
+            deptIds.addAll(deptDTOS.stream().map(DeptDTO::getDeptId).collect(Collectors.toList()));
         }
         return deptIds;
     }

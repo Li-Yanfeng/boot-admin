@@ -2,10 +2,8 @@ package com.boot.admin.config;
 
 import cn.hutool.log.StaticLog;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,13 +40,13 @@ import java.time.Duration;
 @EnableCaching
 @ConditionalOnClass(RedisOperations.class)
 @EnableConfigurationProperties(RedisProperties.class)
-public class RedisCacheConfig extends CachingConfigurerSupport {
+public class RedisConfig extends CachingConfigurerSupport {
 
-    private static final Logger logger = LoggerFactory.getLogger(RedisCacheConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(RedisConfig.class);
 
     private final LettuceConnectionFactory lettuceConnectionFactory;
 
-    public RedisCacheConfig(LettuceConnectionFactory lettuceConnectionFactory) {
+    public RedisConfig(LettuceConnectionFactory lettuceConnectionFactory) {
         this.lettuceConnectionFactory = lettuceConnectionFactory;
     }
 
@@ -155,7 +153,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         // 指定要序列化的域，field,get和set,以及修饰符范围，ANY是都有包括private和public
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         // 将类名称序列化到json串中，去掉会导致得出来的的是LinkedHashMap对象，直接转换实体对象会失败
-        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
+        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         // 解决jdk1.8 LocalDateTime 时间序列化的问题
         objectMapper.registerModule(new JavaTimeModule());
         jackson2JsonRedisSerializer.setObjectMapper(objectMapper);

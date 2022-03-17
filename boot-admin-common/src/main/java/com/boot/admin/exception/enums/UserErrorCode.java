@@ -142,8 +142,11 @@ public enum UserErrorCode implements ErrorCode {
     USER_MICROPHONE_IS_ABNORMAL("A1002", "用户麦克风异常"),
     THE_USER_EARPIECE_IS_ABNORMAL("A1003", "用户听筒异常"),
     USER_SPEAKER_IS_ABNORMAL("A1004", "用户扬声器异常"),
-    USER_GPS_POSITIONING_IS_ABNORMAL("A1005", "用户 GPS 定位异常");
+    USER_GPS_POSITIONING_IS_ABNORMAL("A1005", "用户 GPS 定位异常"),
 
+
+    // 业务相关
+    SUPERIOR_NODE_DEACTIVATED_NOT_ALLOWED_TO_ADD("A2001", "上级节点停用，不允许添加");
 
     /**
      * 业务状态码

@@ -41,10 +41,7 @@ public class MybatisPlusConfig {
         MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
         // 配置多数据源
         sqlSessionFactory.setDataSource(dataSource);
-        sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath" +
-            "*:mapper/**/*Mapper.xml"));
-        // 实体扫描，多个package用逗号或者分号分隔
-        sqlSessionFactory.setTypeAliasesPackage(PackagePattern.MODEL_PATH_STAR);
+        sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/**/*Mapper.xml"));
 
         MybatisConfiguration configuration = new MybatisConfiguration();
         // 是否开启自动驼峰命名规则映射,从数据库列名 A_COLUMN 到 Java 属性名 aColumn 的类似映射

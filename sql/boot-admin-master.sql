@@ -203,8 +203,8 @@ CREATE TABLE `sys_dept`
 (
     `dept_id`     bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
     `pid`         bigint(20) NULL DEFAULT NULL COMMENT '上级部门',
+    `ancestors`   varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '祖级列表',
     `name`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
-    `sub_count`   tinyint(4) UNSIGNED NULL DEFAULT 0 COMMENT '子部门数目',
     `is_enabled`  tinyint(1) UNSIGNED NOT NULL COMMENT '是否启用',
     `dept_sort`   smallint(5) UNSIGNED NULL DEFAULT 999 COMMENT '排序',
     `create_by`   varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
@@ -220,15 +220,15 @@ CREATE TABLE `sys_dept`
 -- Records of sys_dept
 -- ----------------------------
 INSERT INTO `sys_dept`
-VALUES (1, NULL, '华南分部', 2, 0, 999, 'admin', 'admin', '2019-03-25 11:04:50', '2020-06-08 12:08:56');
+VALUES (1, 0, '0', '华南分部', 0, 999, 'admin', 'admin', '2019-03-25 11:04:50', '2020-06-08 12:08:56');
 INSERT INTO `sys_dept`
-VALUES (2, NULL, '华北分部', 2, 0, 999, 'admin', 'admin', '2019-03-25 11:04:53', '2020-05-14 12:54:00');
+VALUES (2, 0, '0', '华北分部', 0, 999, 'admin', 'admin', '2019-03-25 11:04:53', '2020-05-14 12:54:00');
 INSERT INTO `sys_dept`
-VALUES (3, 1, '研发部', 1, 0, 999, 'admin', 'admin', '2019-03-25 09:15:32', '2020-08-02 14:48:47');
+VALUES (3, 1, '0,1', '研发部', 0, 999, 'admin', 'admin', '2019-03-25 09:15:32', '2020-08-02 14:48:47');
 INSERT INTO `sys_dept`
-VALUES (4, 1, '运维部', 0, 0, 999, 'admin', 'admin', '2019-03-25 09:20:44', '2020-05-17 14:27:27');
+VALUES (4, 1, '0,1', '运维部', 0, 999, 'admin', 'admin', '2019-03-25 09:20:44', '2020-05-17 14:27:27');
 INSERT INTO `sys_dept`
-VALUES (5, 2, '测试部', 0, 0, 999, 'admin', 'admin', '2019-03-25 09:52:18', '2020-06-08 11:59:21');
+VALUES (5, 2, '0,2', '测试部', 0, 999, 'admin', 'admin', '2019-03-25 09:52:18', '2020-06-08 11:59:21');
 
 -- ----------------------------
 -- Table structure for sys_dict

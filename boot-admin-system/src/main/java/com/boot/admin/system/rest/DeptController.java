@@ -1,6 +1,7 @@
 package com.boot.admin.system.rest;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.tree.Tree;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
@@ -51,11 +52,9 @@ public class DeptController {
     @PreAuthorize(value = "@authorize.check('depts:del')")
     @DeleteMapping
     public void delete(@RequestBody Set<Long> ids) {
-        List<DeptDTO> depts = CollUtil.newArrayList();
+        Set<DeptDTO> depts = CollUtil.newHashSet();
         for (Long id : ids) {
-            List<DeptDTO> deptList = deptService.listDepts(new DeptQuery(id));
-            depts.add(deptService.getDeptById(id));
-            depts = deptService.listDeptsChildren(deptList, depts);
+            depts.addAll(deptService.listDeptsChildren(id));
         }
         // 验证是否被关联
         Set<Long> deptIds = depts.stream().map(DeptDTO::getDeptId).collect(Collectors.toSet());
@@ -75,18 +74,18 @@ public class DeptController {
     @ApiOperation(value = "查询部门")
     @PreAuthorize(value = "@authorize.check('users:list','depts:list')")
     @GetMapping
-    public List<DeptDTO> list(DeptQuery query) {
+    public List<Tree<Long>> list(DeptQuery query) {
         return deptService.buildTree(deptService.listDepts(query));
     }
 
     @ApiOperation(value = "查询部门:根据ID获取同级与上级数据")
     @PreAuthorize(value = "@authorize.check('users:list','depts:list')")
     @GetMapping(value = "/superiors")
-    public List<DeptDTO> getSuperior(@RequestBody List<Long> ids) {
-        List<DeptDTO> depts = CollUtil.newArrayList();
+    public List<Tree<Long>> getSuperior(@RequestBody List<Long> ids) {
+        Set<DeptDTO> depts = CollUtil.newHashSet();
         for (Long id : ids) {
-            DeptDTO dept = deptService.getDeptById(id);
-            depts.addAll(deptService.listDeptsSuperior(dept, CollUtil.newArrayList()));
+            depts.add(deptService.getDeptById(id));
+            depts.addAll(deptService.listDeptsSuperior(id));
         }
         return deptService.buildTree(depts);
     }

@@ -29,9 +29,6 @@ public class DeptDTO extends BaseDTO implements Serializable {
     @ApiModelProperty(value = "名称")
     private String name;
 
-    @ApiModelProperty(value = "子部门数目")
-    private Integer subCount;
-
     @ApiModelProperty(value = "是否启用")
     private Integer enabled;
 
@@ -65,14 +62,6 @@ public class DeptDTO extends BaseDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getSubCount() {
-        return subCount;
-    }
-
-    public void setSubCount(Integer subCount) {
-        this.subCount = subCount;
     }
 
     public Integer getEnabled() {
@@ -117,5 +106,17 @@ public class DeptDTO extends BaseDTO implements Serializable {
     @Override
     public String toString() {
         return getClass().getSimpleName() + ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
+    }
+
+
+    public DeptDTO() {
+    }
+
+    public DeptDTO(Long deptId, Long pid, String name, Integer enabled, Integer deptSort) {
+        this.deptId = deptId;
+        this.pid = pid;
+        this.name = name;
+        this.enabled = enabled;
+        this.deptSort = deptSort;
     }
 }

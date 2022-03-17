@@ -18,6 +18,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -39,9 +40,9 @@ public class JacksonConfig {
     @Bean
     @Primary
     @ConditionalOnMissingBean(ObjectMapper.class)
-    public ObjectMapper objectMapper() {
+    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
         // 添加 jackson 配置信息
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = builder.createXmlMapper(false).build();
         // 属性为Null的不进行序列化，只对pojo起作用，对map和list不起作用
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         // 遇到未知属性是否抛出异常, 默认抛出异常

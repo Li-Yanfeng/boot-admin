@@ -3,11 +3,11 @@
 <mapper namespace="com.boot.admin.system.mapper.DeptMapper">
 
     <!--通用查询映射结果-->
-    <resultMap id="BaseResultMap" type="com.boot.admin.system.model.Dept">
+    <resultMap id="DeptResultMap" type="com.boot.admin.system.model.Dept">
         <id column="dept_id" property="deptId"/>
         <result column="pid" property="pid"/>
+        <result column="ancestors" property="ancestors"/>
         <result column="name" property="name"/>
-        <result column="sub_count" property="subCount"/>
         <result column="is_enabled" property="enabled"/>
         <result column="dept_sort" property="deptSort"/>
         <result column="create_by" property="createBy"/>
@@ -17,11 +17,11 @@
     </resultMap>
 
     <!--通用查询结果列-->
-    <sql id="BaseColumnList">
-        dept_id, pid, name, sub_count, is_enabled, dept_sort, create_by, update_by, create_time, update_time
+    <sql id="DeptColumnList">
+        dept_id, pid, ancestors, name, is_enabled, dept_sort, create_by, update_by, create_time, update_time
     </sql>
 
-    <select id="selectDeptListByRoleId" resultMap="BaseResultMap">
+    <select id="selectDeptListByRoleId" resultMap="DeptResultMap">
         SELECT d.*
         FROM sys_dept d
         LEFT JOIN sys_role_dept rd ON d.dept_id = rd.dept_id
