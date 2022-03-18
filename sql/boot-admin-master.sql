@@ -367,7 +367,7 @@ CREATE TABLE `sys_menu`
     `path`           varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '链接地址',
     `is_cache`       tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '是否缓存',
     `is_hidden`      tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '是否隐藏',
-    `menu_sort`           smallint(5) UNSIGNED NULL DEFAULT NULL COMMENT '排序',
+    `menu_sort`      smallint(5) UNSIGNED NULL DEFAULT NULL COMMENT '排序',
     `sub_count`      tinyint(4) UNSIGNED NULL DEFAULT 0 COMMENT '子菜单数目',
     `create_by`      varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
     `update_by`      varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
@@ -805,17 +805,19 @@ CREATE TABLE `tool_email_config`
 DROP TABLE IF EXISTS `tool_local_storage`;
 CREATE TABLE `tool_local_storage`
 (
-    `storage_id`  bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-    `real_name`   varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件真实名',
-    `name`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件名',
-    `suffix`      varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '后缀',
-    `path`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '路径',
-    `type`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类型',
-    `size`        varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '大小',
-    `create_by`   varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
-    `update_by`   varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-    `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
-    `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+    `storage_id`       bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+    `real_name`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件真实名',
+    `name`             varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件名',
+    `suffix`           varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '后缀',
+    `path`             varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '路径',
+    `compression_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '压缩后路径',
+    `type`             varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类型',
+    `size`             varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '大小',
+    `create_by`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
+    `update_by`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
+    `create_time`      datetime NULL DEFAULT NULL COMMENT '创建日期',
+    `update_time`      datetime NULL DEFAULT NULL COMMENT '更新时间',
+    `is_delete`        tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除',
     PRIMARY KEY (`storage_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '本地存储' ROW_FORMAT = COMPACT;
 

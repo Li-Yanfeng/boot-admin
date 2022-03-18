@@ -66,9 +66,7 @@ public class TokenProvider implements InitializingBean {
      * @return /
      */
     public String createToken(Authentication authentication) {
-        /*
-         * 获取权限列表
-         */
+        // 获取权限列表
         String authorities = authentication.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(","));

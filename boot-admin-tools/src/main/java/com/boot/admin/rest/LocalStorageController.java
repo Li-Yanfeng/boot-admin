@@ -41,20 +41,20 @@ public class LocalStorageController {
     @ApiOperation(value = "上传文件")
     @NoRepeatSubmit
     @PostMapping
-    public void uploadFile(String filename, @RequestParam("file") MultipartFile file) {
-        localStorageService.uploadLocalStorage(filename, file);
+    public LocalStorage uploadFile(@RequestParam("file") MultipartFile file) {
+        return localStorageService.uploadLocalStorage(file);
     }
 
     @ApiOperation(value = "上传图片")
     @NoRepeatSubmit
     @PostMapping(value = "/pictures")
-    public void uploadPicture(@RequestParam("file") MultipartFile file) {
+    public LocalStorage uploadPicture(@RequestParam("file") MultipartFile file) {
         // 判断文件是否为图片
         String suffix = FileUtils.getExtensionName(file.getOriginalFilename());
         if (!FileUtils.IMAGE.equals(FileUtils.getFileType(suffix))) {
             throw new BadRequestException(UserErrorCode.USER_UPLOAD_FILE_TYPE_DOES_NOT_MATCH);
         }
-        localStorageService.uploadLocalStorage(null, file);
+        return localStorageService.uploadLocalStorage(file, true);
     }
 
     @ApiOperation(value = "删除文件")

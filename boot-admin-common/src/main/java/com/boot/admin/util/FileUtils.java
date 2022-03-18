@@ -2,12 +2,14 @@ package com.boot.admin.util;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.exception.enums.UserErrorCode;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.streaming.SXSSFCell;
@@ -67,11 +69,14 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
      */
     private static final DecimalFormat DF = new DecimalFormat("0.00");
 
-    public static final String IMAGE = "图片";
-    public static final String TXT = "文档";
-    public static final String MUSIC = "音乐";
-    public static final String VIDEO = "视频";
-    public static final String OTHER = "其他";
+    public static final String IMAGE = "picture";
+    public static final String TXT = "document";
+    public static final String MUSIC = "music";
+    public static final String VIDEO = "video";
+    public static final String OTHER = "other";
+
+    public static final String IMAGE_ORIGINAL = "original";
+    public static final String IMAGE_COMPRESSED = "compressed";
 
 
     /**
@@ -101,7 +106,7 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
         if ((filename != null) && (filename.length() > 0)) {
             int dot = filename.lastIndexOf('.');
             if ((dot > -1) && (dot < (filename.length() - 1))) {
-                return filename.substring(dot + 1);
+                return filename.substring(dot + 1).toLowerCase();
             }
         }
         return filename;
@@ -127,15 +132,15 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
         String resultSize;
         if (size / GB >= 1) {
             //如果当前Byte的值大于等于1GB
-            resultSize = DF.format(size / (float) GB) + "GB   ";
+            resultSize = DF.format(size / (float) GB) + "GB";
         } else if (size / MB >= 1) {
             //如果当前Byte的值大于等于1MB
-            resultSize = DF.format(size / (float) MB) + "MB   ";
+            resultSize = DF.format(size / (float) MB) + "MB";
         } else if (size / KB >= 1) {
             //如果当前Byte的值大于等于1KB
-            resultSize = DF.format(size / (float) KB) + "KB   ";
+            resultSize = DF.format(size / (float) KB) + "KB";
         } else {
-            resultSize = size + "B   ";
+            resultSize = size + "B";
         }
         return resultSize;
     }
@@ -162,29 +167,75 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
 
     /**
      * 将文件名解析成文件的上传路径
+     *
+     * @param file     上传的文件
+     * @param filePath 文件路径
      */
     public static File upload(MultipartFile file, String filePath) {
-        String name = getFileNameNoEx(file.getOriginalFilename());
+        return upload(file, filePath, false);
+    }
+
+    /**
+     * 将文件名解析成文件的上传路径
+     *
+     * @param file       上传的文件
+     * @param filePath   文件路径
+     * @param isCompress 是否压缩
+     */
+    public static File upload(MultipartFile file, String filePath, boolean isCompress) {
+        String nowStr = DateUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_MS_PATTERN);
         String suffix = getExtensionName(file.getOriginalFilename());
-        String nowStr = "-" + DateUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_MS_PATTERN);
+        String filename = nowStr + "." + suffix;
+        String type = FileUtils.getFileType(suffix);
+        filePath += File.separator + (isCompress ? IMAGE_COMPRESSED : IMAGE_ORIGINAL);
+        // 创建目标文件
+        File dest = FileUtil.touch(filePath, filename);
+        // 写入到文件
+        write2File(file, dest, isCompress, type);
+        return dest;
+    }
+
+    /**
+     * 写入到文件
+     *
+     * @param file       上传的文件
+     * @param dest       目标文件
+     * @param isCompress 是否压缩
+     * @param type       文件类型
+     */
+    private static void write2File(MultipartFile file, File dest, boolean isCompress, String type) {
         try {
-            String fileName = name + nowStr + "." + suffix;
-            String path = filePath + fileName;
-            // getCanonicalFile 可解析正确各种路径
-            File dest = new File(path).getCanonicalFile();
-            // 检测是否存在目录
-            if (!dest.getParentFile().exists()) {
-                if (!dest.getParentFile().mkdirs()) {
-                    System.out.println("was not successful.");
+            if (isCompress) {
+                // 图片
+                if (IMAGE.equals(type)) {
+                    compressImage(file, dest);
                 }
+            } else {
+                file.transferTo(dest);
             }
-            // 文件写入
-            file.transferTo(dest);
-            return dest;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-        return null;
+    }
+
+    /**
+     * 压缩图片
+     *
+     * @param file 上传的文件
+     * @param dest 目标文件
+     */
+    private static void compressImage(MultipartFile file, File dest) throws IOException {
+        InputStream is = file.getInputStream();
+        Thumbnails
+            // 原始图像文件
+            .of(is)
+            // 指定图片的大小，值在 0-1 之间，1F就是原图大小，0.5F就是原图的一半大小
+            .scale(0.4F)
+            // 指定图片的质量，值也 0-1 之间，越接近于1F质量越好，越接近于0F质量越差
+            .outputQuality(0.4F)
+            // 压缩图像文件
+            .toFile(dest);
+        IoUtil.close(is);
     }
 
     public static String getFileType(String type) {

@@ -3,7 +3,6 @@ package com.boot.admin.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.config.FileProperties;
 import com.boot.admin.core.service.impl.ServiceImpl;
@@ -13,7 +12,6 @@ import com.boot.admin.mapper.LocalStorageMapper;
 import com.boot.admin.model.LocalStorage;
 import com.boot.admin.service.LocalStorageService;
 import com.boot.admin.service.dto.LocalStorageQuery;
-import com.boot.admin.util.ConvertUtils;
 import com.boot.admin.util.FileUtils;
 import com.boot.admin.util.QueryHelp;
 import com.boot.admin.util.ValidationUtils;
@@ -44,27 +42,40 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
     }
 
     @Override
-    public void uploadLocalStorage(String filename, MultipartFile file) {
+    public LocalStorage uploadLocalStorage(MultipartFile file, boolean isCompress) {
         FileUtils.checkSize(fileProperties.getMaxSize(), file.getSize());
         String suffix = FileUtils.getExtensionName(file.getOriginalFilename());
         String type = FileUtils.getFileType(suffix);
-        File uploadFile = FileUtils.upload(file, fileProperties.getPath().getPath() + type + File.separator);
-        if (ObjectUtil.isNull(uploadFile)) {
+        String filePath = fileProperties.getPath().getPath() + type;
+        // 压缩文件
+        File compressedFile = null;
+        if (isCompress) {
+            compressedFile = FileUtils.upload(file, filePath, true);
+        }
+        // 原始文件
+        File originalFile = FileUtils.upload(file, filePath);
+        if (ObjectUtil.isNull(originalFile)) {
             throw new BadRequestException(UserErrorCode.USER_UPLOAD_FILE_IS_ABNORMAL);
         }
         try {
-            filename = StrUtil.isBlank(filename) ? FileUtils.getFileNameNoEx(file.getOriginalFilename()) : filename;
             LocalStorage localStorage = new LocalStorage(
-                uploadFile.getName(),
-                filename,
+                originalFile.getName(),
+                FileUtils.getFileNameNoEx(file.getOriginalFilename()),
                 suffix,
-                uploadFile.getPath(),
+                originalFile.getPath(),
                 type,
                 FileUtils.getSize(file.getSize())
             );
+            if (ObjectUtil.isNotNull(compressedFile)) {
+                localStorage.setCompressionPath(compressedFile.getPath());
+            }
             baseMapper.insert(localStorage);
+            return localStorage;
         } catch (Exception e) {
-            FileUtils.del(uploadFile);
+            FileUtils.del(originalFile);
+            if (ObjectUtil.isNotNull(compressedFile)) {
+                FileUtils.del(compressedFile);
+            }
             throw e;
         }
     }
@@ -88,12 +99,12 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
 
     @Override
     public List<LocalStorage> listLocalStorages(LocalStorageQuery query) {
-        return ConvertUtils.convert(baseMapper.selectList(QueryHelp.queryWrapper(query)), LocalStorage.class);
+        return baseMapper.selectList(QueryHelp.queryWrapper(query));
     }
 
     @Override
     public Page<LocalStorage> listLocalStorages(LocalStorageQuery query, Page<LocalStorage> page) {
-        return ConvertUtils.convert(baseMapper.selectPage(page, QueryHelp.queryWrapper(query)), LocalStorage.class);
+        return baseMapper.selectPage(page, QueryHelp.queryWrapper(query));
     }
 
     @Override

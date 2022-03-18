@@ -1,8 +1,6 @@
 package com.boot.admin.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.boot.admin.core.model.BaseEntity;
 import com.boot.admin.core.validation.Update;
 import io.swagger.annotations.ApiModel;
@@ -38,11 +36,19 @@ public class LocalStorage extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "路径")
     private String path;
 
+    @ApiModelProperty(value = "压缩后路径")
+    private String compressionPath;
+
     @ApiModelProperty(value = "类型")
     private String type;
 
     @ApiModelProperty(value = "大小")
     private String size;
+
+    @ApiModelProperty(value = "是否删除")
+    @TableField(value = "is_delete")
+    @TableLogic
+    private Integer delete;
 
 
     public Long getStorageId() {
@@ -85,6 +91,14 @@ public class LocalStorage extends BaseEntity implements Serializable {
         this.path = path;
     }
 
+    public String getCompressionPath() {
+        return compressionPath;
+    }
+
+    public void setCompressionPath(String compressionPath) {
+        this.compressionPath = compressionPath;
+    }
+
     public String getType() {
         return type;
     }
@@ -99,6 +113,14 @@ public class LocalStorage extends BaseEntity implements Serializable {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public Integer getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Integer delete) {
+        this.delete = delete;
     }
 
     public LocalStorage() {
