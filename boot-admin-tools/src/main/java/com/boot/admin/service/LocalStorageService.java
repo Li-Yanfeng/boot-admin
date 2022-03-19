@@ -22,19 +22,9 @@ public interface LocalStorageService extends Service<LocalStorage> {
     /**
      * 上传文件
      *
-     * @param file 要上传的文件
+     * @param file 待上传的文件
      */
-    default LocalStorage uploadLocalStorage(MultipartFile file) {
-        return uploadLocalStorage(file, false);
-    }
-
-    /**
-     * 上传文件
-     *
-     * @param file       要上传的文件
-     * @param isCompress 是否压缩
-     */
-    LocalStorage uploadLocalStorage(MultipartFile file, boolean isCompress);
+    LocalStorage uploadLocalStorage(MultipartFile file);
 
     /**
      * 根据 ID 批量删除

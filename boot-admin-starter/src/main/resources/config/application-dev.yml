@@ -126,5 +126,8 @@ file:
     path: C:\admin\file\
     avatar: C:\admin\avatar\
   # 文件大小 /M
-  max-size: 100
+  max-size: 20
   avatar-max-size: 5
+  # 压缩图片
+  compress-image: true
+

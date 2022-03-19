@@ -54,7 +54,7 @@ public class LocalStorageController {
         if (!FileUtils.IMAGE.equals(FileUtils.getFileType(suffix))) {
             throw new BadRequestException(UserErrorCode.USER_UPLOAD_FILE_TYPE_DOES_NOT_MATCH);
         }
-        return localStorageService.uploadLocalStorage(file, true);
+        return localStorageService.uploadLocalStorage(file);
     }
 
     @ApiOperation(value = "删除文件")

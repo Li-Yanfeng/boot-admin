@@ -50,12 +50,12 @@ public class QiniuConfig implements Serializable {
     @NotBlank
     private String zone;
 
-    @ApiModelProperty(value = "外链域名，可自定义，需在七牛云绑定")
+    @ApiModelProperty(value = "域名，需在七牛云绑定")
     @NotBlank
-    private String host;
+    private String domain;
 
-    @ApiModelProperty(value = "空间类型：公开/私有")
-    private String type = "公开";
+    @ApiModelProperty(value = "空间类型：私有或公开")
+    private String spaceType;
 
 
     public Long getConfigId() {
@@ -98,19 +98,19 @@ public class QiniuConfig implements Serializable {
         this.zone = zone;
     }
 
-    public String getHost() {
-        return host;
+    public String getDomain() {
+        return domain;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 
-    public String getType() {
-        return type;
+    public String getSpaceType() {
+        return spaceType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setSpaceType(String spaceType) {
+        this.spaceType = spaceType;
     }
 }

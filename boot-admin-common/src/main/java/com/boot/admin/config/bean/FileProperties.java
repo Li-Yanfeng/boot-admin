@@ -1,16 +1,12 @@
-package com.boot.admin.config;
+package com.boot.admin.config.bean;
 
 import com.boot.admin.constant.OsConstant;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 文件属性配置
  *
  * @author Li Yanfeng
  */
-@Configuration
-@ConfigurationProperties(prefix = "file")
 public class FileProperties {
 
     /**
@@ -21,12 +17,17 @@ public class FileProperties {
      * 头像大小限制
      */
     private Long avatarMaxSize;
+    /**
+     * 压缩图片
+     */
+    private boolean compressImage;
 
     private AdminPath mac;
 
     private AdminPath linux;
 
     private AdminPath windows;
+
 
     public AdminPath getPath() {
         String os = System.getProperty("os.name");
@@ -37,6 +38,7 @@ public class FileProperties {
         }
         return linux;
     }
+
 
     public static class AdminPath {
 
@@ -77,6 +79,14 @@ public class FileProperties {
 
     public void setAvatarMaxSize(Long avatarMaxSize) {
         this.avatarMaxSize = avatarMaxSize;
+    }
+
+    public boolean isCompressImage() {
+        return compressImage;
+    }
+
+    public void setCompressImage(boolean compressImage) {
+        this.compressImage = compressImage;
     }
 
     public AdminPath getMac() {

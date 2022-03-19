@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.boot.admin.config.bean.QiniuProperties;
 import com.boot.admin.core.service.impl.ServiceImpl;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.mapper.QiniuContentMapper;
@@ -19,12 +20,12 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
@@ -39,8 +40,11 @@ import java.util.Map;
 @Service
 public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, QiniuContent> implements QiniuContentService {
 
-    @Value("${qiniu.max-size}")
-    private Long maxSize;
+    private final QiniuProperties qiniuProperties;
+
+    public QiniuContentServiceImpl(QiniuProperties qiniuProperties) {
+        this.qiniuProperties = qiniuProperties;
+    }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -52,7 +56,7 @@ public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, Qin
             Auth auth = Auth.create(config.getAccessKey(), config.getSecretKey());
             BucketManager bucketManager = new BucketManager(auth, cfg);
             try {
-                bucketManager.delete(content.getBucket(), content.getKey() + "." + content.getSuffix());
+                bucketManager.delete(content.getBucket(), content.getName() + "." + content.getSuffix());
                 baseMapper.deleteById(content);
             } catch (QiniuException ex) {
                 baseMapper.deleteById(content);
@@ -80,7 +84,10 @@ public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, Qin
     @Transactional(rollbackFor = Exception.class)
     @Override
     public QiniuContent uploadContent(MultipartFile file, QiniuConfig config) {
-        FileUtils.checkSize(maxSize, file.getSize());
+        FileUtils.checkSize(qiniuProperties.getMaxSize(), file.getSize());
+        String suffix = FileUtils.getExtensionName(file.getOriginalFilename());
+        String type = FileUtils.getFileType(suffix);
+        String fileDir = qiniuProperties.getPath() + type + StringUtils.SLASH;
         if (config.getConfigId() == null) {
             throw new BadRequestException("请先添加相应配置，再操作");
         }
@@ -90,27 +97,38 @@ public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, Qin
         Auth auth = Auth.create(config.getAccessKey(), config.getSecretKey());
         String upToken = auth.uploadToken(config.getBucket());
         try {
-            String key = file.getOriginalFilename();
-            if (baseMapper.selectByKey(key) != null) {
-                key = QiNiuUtils.getKey(key);
+            String filename = QiNiuUtils.getKey(file.getOriginalFilename());
+            // 原始文件
+            Response uploadFileResponse = uploadManager.put(file.getBytes(), fileDir + filename, upToken);
+            // 解析上传成功的结果
+            DefaultPutRet uploadFilePutRet = JSON.parseObject(uploadFileResponse.bodyString(), DefaultPutRet.class);
+            DefaultPutRet compressFilePutRet = null;
+            // 如果需要压缩图片
+            if (FileUtils.IMAGE.equals(type) && qiniuProperties.isCompressImage()) {
+                String compressFilePath = fileDir + FileUtils.IMAGE_COMPRESS + StringUtils.SLASH + filename;
+                File compressFile = FileUtils.compressImage(file, compressFilePath);
+                if (compressFile != null) {
+                    // 压缩文件
+                    Response compressFileResponse = uploadManager.put(compressFile, compressFilePath, upToken);
+                    compressFilePutRet = JSON.parseObject(compressFileResponse.bodyString(), DefaultPutRet.class);
+                }
             }
-            Response response = uploadManager.put(file.getBytes(), key, upToken);
-            //解析上传成功的结果
-            DefaultPutRet putRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);
-            QiniuContent content = baseMapper.selectByKey(FileUtils.getFileNameNoEx(putRet.key));
-            if (content == null) {
-                //存入数据库
-                QiniuContent qiniuContent = new QiniuContent();
-                qiniuContent.setSuffix(FileUtils.getExtensionName(putRet.key));
-                qiniuContent.setBucket(config.getBucket());
-                qiniuContent.setType(config.getType());
-                qiniuContent.setKey(FileUtils.getFileNameNoEx(putRet.key));
-                qiniuContent.setUrl(config.getHost() + "/" + putRet.key);
-                qiniuContent.setSize(FileUtils.getSize(Integer.parseInt(file.getSize() + "")));
-                baseMapper.insert(qiniuContent);
-                return qiniuContent;
+
+            // 存入数据库
+            QiniuContent qiniuContent = new QiniuContent();
+            qiniuContent.setBucket(config.getBucket());
+            qiniuContent.setSpaceType(config.getSpaceType());
+            qiniuContent.setName(FileUtils.getFileNameNoEx(uploadFilePutRet.key));
+            qiniuContent.setSuffix(suffix);
+            qiniuContent.setType(FileUtils.getFileType(suffix));
+            qiniuContent.setSize(FileUtils.getSize(file.getSize()));
+            qiniuContent.setUrl(config.getDomain() + StringUtils.SLASH + uploadFilePutRet.key);
+            if (compressFilePutRet != null) {
+                qiniuContent.setCompressUrl(config.getDomain() + StringUtils.SLASH + compressFilePutRet.key);
             }
-            return content;
+
+            baseMapper.insert(qiniuContent);
+            return qiniuContent;
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
@@ -136,12 +154,12 @@ public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, Qin
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(content -> {
             Map<String, Object> map = MapUtil.newHashMap(6, true);
-            map.put("文件名", content.getKey());
-            map.put("文件类型", content.getSuffix());
             map.put("空间名称", content.getBucket());
+            map.put("文件名称", content.getName());
+            map.put("文件后缀", content.getSuffix());
+            map.put("文件类型", content.getType());
             map.put("文件大小", content.getSize());
-            map.put("空间类型", content.getType());
-            map.put("创建日期", content.getUpdateTime());
+            map.put("创建日期", content.getCreateBy());
             list.add(map);
         });
         FileUtils.downloadExcel(list, response);

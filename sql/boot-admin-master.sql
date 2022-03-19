@@ -385,8 +385,7 @@ CREATE TABLE `sys_menu`
 INSERT INTO `sys_menu`
 VALUES (1, NULL, 0, '系统管理', NULL, NULL, 'system', NULL, NULL, 'system', 0, 0, 1, 7, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (2, 1, 1, '用户管理', 'system/user/index', 'User', 'peoples', 'users:list', NULL, 'user', 0, 0, 1, 3, NULL, NULL,
-        NULL, NULL);
+VALUES (2, 1, 1, '用户管理', 'system/user/index', 'User', 'peoples', 'users:list', NULL, 'user', 0, 0, 1, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (3, 2, 2, '用户新增', '', NULL, '', 'users:add', NULL, '', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
@@ -394,8 +393,7 @@ VALUES (4, 2, 2, '用户删除', '', NULL, '', 'users:del', NULL, '', 0, 0, 2, 0
 INSERT INTO `sys_menu`
 VALUES (5, 2, 2, '用户编辑', '', NULL, '', 'users:edit', NULL, '', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (6, 1, 1, '角色管理', 'system/role/index', 'Role', 'role', 'roles:list', NULL, 'role', 0, 0, 2, 3, NULL, NULL, NULL,
-        NULL);
+VALUES (6, 1, 1, '角色管理', 'system/role/index', 'Role', 'role', 'roles:list', NULL, 'role', 0, 0, 2, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (7, 6, 2, '角色新增', '', NULL, '', 'roles:add', NULL, '', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
@@ -403,8 +401,7 @@ VALUES (8, 6, 2, '角色删除', '', NULL, '', 'roles:del', NULL, '', 0, 0, 2, 0
 INSERT INTO `sys_menu`
 VALUES (9, 6, 2, '角色修改', '', NULL, '', 'roles:edit', NULL, '', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (10, 1, 1, '菜单管理', 'system/menu/index', 'Menu', 'menu', 'menus:list', NULL, 'menu', 0, 0, 3, 3, NULL, NULL, NULL,
-        NULL);
+VALUES (10, 1, 1, '菜单管理', 'system/menu/index', 'Menu', 'menu', 'menus:list', NULL, 'menu', 0, 0, 3, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (11, 10, 2, '菜单新增', '', NULL, '', 'menus:add', NULL, '', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
@@ -412,8 +409,7 @@ VALUES (12, 10, 2, '菜单删除', '', NULL, '', 'menus:del', NULL, '', 0, 0, 2,
 INSERT INTO `sys_menu`
 VALUES (13, 10, 2, '菜单编辑', '', NULL, '', 'menus:edit', NULL, '', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (14, 1, 1, '部门管理', 'system/dept/index', 'Dept', 'dept', 'depts:list', NULL, 'dept', 0, 0, 4, 3, NULL, NULL, NULL,
-        NULL);
+VALUES (14, 1, 1, '部门管理', 'system/dept/index', 'Dept', 'dept', 'depts:list', NULL, 'dept', 0, 0, 4, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (15, 14, 2, '部门新增', '', NULL, '', 'depts:add', NULL, '', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
@@ -421,8 +417,7 @@ VALUES (16, 14, 2, '部门删除', '', NULL, '', 'depts:del', NULL, '', 0, 0, 2,
 INSERT INTO `sys_menu`
 VALUES (17, 14, 2, '部门编辑', '', NULL, '', 'depts:edit', NULL, '', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (18, 1, 1, '岗位管理', 'system/job/index', 'Job', 'Steve-Jobs', 'jobs:list', NULL, 'job', 0, 0, 5, 3, NULL, NULL,
-        NULL, NULL);
+VALUES (18, 1, 1, '岗位管理', 'system/job/index', 'Job', 'Steve-Jobs', 'jobs:list', NULL, 'job', 0, 0, 5, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (19, 18, 2, '岗位新增', '', NULL, '', 'jobs:add', NULL, '', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
@@ -430,8 +425,7 @@ VALUES (20, 18, 2, '岗位删除', '', NULL, '', 'jobs:del', NULL, '', 0, 0, 2, 
 INSERT INTO `sys_menu`
 VALUES (21, 18, 2, '岗位编辑', '', NULL, '', 'jobs:edit', NULL, '', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (22, 1, 1, '字典管理', 'system/dict/index', 'Dict', 'dictionary', 'dicts:list', NULL, 'dict', 0, 0, 6, 3, NULL, NULL,
-        NULL, NULL);
+VALUES (22, 1, 1, '字典管理', 'system/dict/index', 'Dict', 'dictionary', 'dicts:list', NULL, 'dict', 0, 0, 6, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (23, 22, 2, '字典新增', '', NULL, '', 'dicts:add', NULL, '', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
@@ -439,8 +433,7 @@ VALUES (24, 22, 2, '字典删除', '', NULL, '', 'dicts:del', NULL, '', 0, 0, 2,
 INSERT INTO `sys_menu`
 VALUES (25, 22, 2, '字典编辑', '', NULL, '', 'dicts:edit', NULL, '', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (26, 1, 1, '任务调度', 'system/timing/index', 'Timing', 'timing', 'timings:list', NULL, 'timing', 0, 0, 7, 3, NULL,
-        NULL, NULL, NULL);
+VALUES (26, 1, 1, '任务调度', 'system/timing/index', 'Timing', 'timing', 'timings:list', NULL, 'timing', 0, 0, 7, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (27, 26, 2, '任务新增', '', NULL, '', 'timings:add', NULL, '', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
@@ -450,21 +443,17 @@ VALUES (29, 26, 2, '任务编辑', '', NULL, '', 'timings:edit', NULL, '', 0, 0,
 INSERT INTO `sys_menu`
 VALUES (30, NULL, 0, '系统监控', NULL, NULL, 'monitor', NULL, NULL, 'monitor', 0, 0, 2, 5, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (31, 30, 1, '在线用户', 'monitor/online/index', 'OnlineUser', 'Steve-Jobs', NULL, NULL, 'online', 0, 0, 1, 0, NULL,
-        NULL, NULL, NULL);
+VALUES (31, 30, 1, '在线用户', 'monitor/online/index', 'OnlineUser', 'Steve-Jobs', NULL, NULL, 'online', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (32, 30, 1, '操作日志', 'monitor/log/index', 'Log', 'log', NULL, NULL, 'logs', 0, 0, 2, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (33, 30, 1, '异常日志', 'monitor/log/errorLog', 'ErrorLog', 'error', NULL, NULL, 'errorLog', 0, 0, 3, 0, NULL, NULL,
-        NULL, NULL);
+VALUES (33, 30, 1, '异常日志', 'monitor/log/errorLog', 'ErrorLog', 'error', NULL, NULL, 'errorLog', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (34, 30, 1, '服务监控', 'monitor/server/index', 'ServerMonitor', 'codeConsole', 'monitors:list', NULL, 'server', 0,
-        0, 4, 0, NULL, NULL, NULL, NULL);
+VALUES (34, 30, 1, '服务监控', 'monitor/server/index', 'ServerMonitor', 'codeConsole', 'monitors:list', NULL, 'server', 0, 0, 4, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (35, NULL, 1, '运维管理', '', 'Mnt', 'mnt', NULL, NULL, 'mnt', 0, 0, 3, 5, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (36, 35, 1, '服务器', 'mnt/server/index', 'Server', 'server', 'servers:list', NULL, 'mnt/server', 0, 0, 1, 3, NULL,
-        NULL, NULL, NULL);
+VALUES (36, 35, 1, '服务器', 'mnt/server/index', 'Server', 'server', 'servers:list', NULL, 'mnt/server', 0, 0, 1, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (37, 36, 2, '服务器新增', '', NULL, '', 'servers:add', NULL, '', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
@@ -472,8 +461,7 @@ VALUES (38, 36, 2, '服务器删除', '', NULL, '', 'servers:del', NULL, '', 0, 
 INSERT INTO `sys_menu`
 VALUES (39, 36, 2, '服务器编辑', '', NULL, '', 'servers:edit', NULL, '', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (40, 35, 1, '应用管理', 'mnt/app/index', 'App', 'app', 'apps:list', NULL, 'mnt/app', 0, 0, 2, 3, NULL, NULL, NULL,
-        NULL);
+VALUES (40, 35, 1, '应用管理', 'mnt/app/index', 'App', 'app', 'apps:list', NULL, 'mnt/app', 0, 0, 2, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (41, 40, 2, '应用新增', '', NULL, '', 'apps:add', NULL, '', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
@@ -481,8 +469,7 @@ VALUES (42, 40, 2, '应用删除', '', NULL, '', 'apps:del', NULL, '', 0, 0, 2, 
 INSERT INTO `sys_menu`
 VALUES (43, 40, 2, '应用编辑', '', NULL, '', 'apps:edit', NULL, '', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (44, 35, 1, '部署管理', 'mnt/deploy/index', 'Deploy', 'deploy', 'deploys:list', NULL, 'mnt/deploy', 0, 0, 3, 3, NULL,
-        NULL, NULL, NULL);
+VALUES (44, 35, 1, '部署管理', 'mnt/deploy/index', 'Deploy', 'deploy', 'deploys:list', NULL, 'mnt/deploy', 0, 0, 3, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (45, 44, 2, '部署新增', '', NULL, '', 'deploys:add', NULL, '', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
@@ -490,11 +477,9 @@ VALUES (46, 44, 2, '部署删除', '', NULL, '', 'deploys:del', NULL, '', 0, 0, 
 INSERT INTO `sys_menu`
 VALUES (47, 44, 2, '部署编辑', '', NULL, '', 'deploys:edit', NULL, '', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (48, 35, 1, '部署备份', 'mnt/deployHistory/index', 'DeployHistory', 'backup', 'deployHistories:list', NULL,
-        'mnt/deployHistory', 0, 0, 4, 1, NULL, NULL, NULL, NULL);
+VALUES (48, 35, 1, '部署备份', 'mnt/deployHistory/index', 'DeployHistory', 'backup', 'deployHistories:list', NULL, 'mnt/deployHistory', 0, 0, 4, 1, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (49, 35, 1, '数据库管理', 'm nt/database/index', 'Database', 'database', 'databases:list', NULL, 'mnt/database', 0, 0,
-        5, 3, NULL, NULL, NULL, NULL);
+VALUES (49, 35, 1, '数据库管理', 'm nt/database/index', 'Database', 'database', 'databases:list', NULL, 'mnt/database', 0, 0, 5, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (50, 49, 2, '数据库新增', '', NULL, '', 'databases:add', NULL, '', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
@@ -504,20 +489,15 @@ VALUES (52, 49, 2, '数据库编辑', '', NULL, '', 'databases:edit', NULL, '', 
 INSERT INTO `sys_menu`
 VALUES (53, NULL, 0, '系统工具', '', NULL, 'sys-tools', NULL, NULL, 'sys-tools', 0, 0, 4, 7, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (54, 53, 1, '接口文档', 'tools/swagger/index', 'Swagger', 'swagger', NULL, NULL, 'swagger2', 0, 0, 1, 0, NULL, NULL,
-        NULL, NULL);
+VALUES (54, 53, 1, '接口文档', 'tools/swagger/index', 'Swagger', 'swagger', NULL, NULL, 'swagger2', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (55, 54, 1, '代码生成', 'generator/index', 'GeneratorIndex', 'dev', NULL, NULL, 'generator', 0, 0, 2, 0, NULL, NULL,
-        NULL, NULL);
+VALUES (55, 54, 1, '代码生成', 'generator/index', 'GeneratorIndex', 'dev', NULL, NULL, 'generator', 0, 0, 2, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (56, 55, 2, '生成配置', 'generator/config', 'GeneratorConfig', 'dev', '', NULL, 'generator/config/s:tableName', 0, 0,
-        1, 0, NULL, NULL, NULL, NULL);
+VALUES (56, 55, 2, '生成配置', 'generator/config', 'GeneratorConfig', 'dev', '', NULL, 'generator/config/s:tableName', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (57, 55, 2, '生成预览', 'generator/preview', 'Preview', 'java', NULL, NULL, 'generator/preview/s:tableName', 0, 0, 2,
-        0, NULL, NULL, NULL, NULL);
+VALUES (57, 55, 2, '生成预览', 'generator/preview', 'Preview', 'java', NULL, NULL, 'generator/preview/s:tableName', 0, 0, 2, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (58, 54, 1, '存储管理', 'tools/storage/index', 'Storage', 'qiniu', 'storages:list', NULL, 'storage', 0, 0, 3, 3,
-        NULL, NULL, NULL, NULL);
+VALUES (58, 54, 1, '存储管理', 'tools/storage/index', 'Storage', 'qiniu', 'storages:list', NULL, 'storage', 0, 0, 3, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (59, 58, 2, '上传文件', '', NULL, '', 'storages:add', NULL, '', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
@@ -525,42 +505,31 @@ VALUES (60, 58, 2, '文件编辑', '', NULL, '', 'storages:edit', NULL, '', 0, 0
 INSERT INTO `sys_menu`
 VALUES (61, 58, 2, '文件删除', '', NULL, '', 'storages:del', NULL, '', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (62, 54, 1, '邮件工具', 'tools/email/index', 'Email', 'email', NULL, NULL, 'email', 0, 0, 4, 0, NULL, NULL, NULL,
-        NULL);
+VALUES (62, 54, 1, '邮件工具', 'tools/email/index', 'Email', 'email', NULL, NULL, 'email', 0, 0, 4, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (63, 62, 1, '支付宝工具', 'tools/aliPay/index', 'AliPay', 'alipay', NULL, NULL, 'aliPay', 0, 0, 5, 0, NULL, NULL,
-        NULL, NULL);
+VALUES (63, 62, 1, '支付宝工具', 'tools/aliPay/index', 'AliPay', 'alipay', NULL, NULL, 'aliPay', 0, 0, 5, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (64, NULL, 0, '组件管理', NULL, NULL, 'zujian', NULL, NULL, 'components', 0, 0, 5, 5, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (65, 64, 1, '图表库', 'components/Echarts', 'Echarts', 'chart', '', NULL, 'echarts', 0, 0, 1, 0, NULL, NULL, NULL,
-        NULL);
+VALUES (65, 64, 1, '图表库', 'components/Echarts', 'Echarts', 'chart', '', NULL, 'echarts', 0, 0, 1, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (66, 64, 1, '图标库', 'components/icons/index', 'Icons', 'icon', NULL, NULL, 'icon', 0, 0, 2, 0, NULL, NULL, NULL,
-        NULL);
+VALUES (66, 64, 1, '图标库', 'components/icons/index', 'Icons', 'icon', NULL, NULL, 'icon', 0, 0, 2, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (67, 64, 1, '富文本', 'components/Editor', 'Editor', 'fwb', NULL, NULL, 'tinymce', 0, 0, 3, 0, NULL, NULL, NULL,
-        NULL);
+VALUES (67, 64, 1, '富文本', 'components/Editor', 'Editor', 'fwb', NULL, NULL, 'tinymce', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (68, 64, 1, 'Markdown', 'components/MarkDown', 'Markdown', 'markdown', NULL, NULL, 'markdown', 0, 0, 4, 0, NULL,
-        NULL, NULL, NULL);
+VALUES (68, 64, 1, 'Markdown', 'components/MarkDown', 'Markdown', 'markdown', NULL, NULL, 'markdown', 0, 0, 4, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (69, 64, 1, 'Yaml编辑器', 'components/YamlEdit', 'YamlEdit', 'dev', NULL, NULL, 'yaml', 0, 0, 5, 0, NULL, NULL,
-        NULL, NULL);
+VALUES (69, 64, 1, 'Yaml编辑器', 'components/YamlEdit', 'YamlEdit', 'dev', NULL, NULL, 'yaml', 0, 0, 5, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
 VALUES (70, NULL, 0, '多级菜单', '', NULL, 'menu', NULL, NULL, 'nested', 0, 0, 6, 2, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (71, 70, 1, '二级菜单1', 'nested/menu1/index', NULL, 'menu', NULL, NULL, 'menu1', 0, 0, 1, 2, NULL, NULL, NULL,
-        NULL);
+VALUES (71, 70, 1, '二级菜单1', 'nested/menu1/index', NULL, 'menu', NULL, NULL, 'menu1', 0, 0, 1, 2, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (72, 70, 1, '三级菜单1', 'nested/menu1/menu1-1', NULL, 'menu', NULL, NULL, 'menu1-1', 0, 0, 2, 0, NULL, NULL, NULL,
-        NULL);
+VALUES (72, 70, 1, '三级菜单1', 'nested/menu1/menu1-1', NULL, 'menu', NULL, NULL, 'menu1-1', 0, 0, 2, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (73, 70, 1, '三级菜单2', 'nested/menu1/menu1-2', NULL, 'menu', NULL, NULL, 'menu1-2', 0, 0, 3, 0, NULL, NULL, NULL,
-        NULL);
+VALUES (73, 70, 1, '三级菜单2', 'nested/menu1/menu1-2', NULL, 'menu', NULL, NULL, 'menu1-2', 0, 0, 3, 0, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_menu`
-VALUES (74, 70, 1, '二级菜单2', 'nested/menu2/index', NULL, 'menu', NULL, NULL, 'menu2', 0, 0, 4, 0, NULL, NULL, NULL,
-        NULL);
+VALUES (74, 70, 1, '二级菜单2', 'nested/menu2/index', NULL, 'menu', NULL, NULL, 'menu2', 0, 0, 4, 0, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_quartz_job
@@ -710,14 +679,9 @@ CREATE TABLE `sys_user`
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user`
-VALUES (1, 2, 'admin', '管理员', '男', '18888888888', '201507802@qq.com', 'avatar-20200806032259161.png',
-        '/Users/jie/Documents/work/me/admin/eladmin/~/avatar/avatar-20200806032259161.png',
-        '$2a$10$tbRn5S0HPF0vz3PubX4j1.cjo2nsZ/tvEWGu85g14Ur90v8MWGlnG', 1, 1, '2020-05-03 16:38:31', 'admin', 'admin',
-        '2018-08-23 09:11:56', '2020-05-03 16:38:31');
+VALUES (1, 2, 'admin', '管理员', '男', '18888888888', '201507802@qq.com', 'avatar-20200806032259161.png', '/Users/jie/Documents/work/me/admin/eladmin/~/avatar/avatar-20200806032259161.png', '$2a$10$tbRn5S0HPF0vz3PubX4j1.cjo2nsZ/tvEWGu85g14Ur90v8MWGlnG', 1, 1, '2020-05-03 16:38:31', 'admin', 'admin', '2018-08-23 09:11:56', '2020-05-03 16:38:31');
 INSERT INTO `sys_user`
-VALUES (2, 2, 'test', '测试', '男', '19999999999', '231@qq.com', NULL, NULL,
-        '$2a$10$tbRn5S0HPF0vz3PubX4j1.cjo2nsZ/tvEWGu85g14Ur90v8MWGlnG', 0, 1, NULL, 'admin', 'admin',
-        '2020-05-05 11:15:49', NULL);
+VALUES (2, 2, 'test', '测试', '男', '19999999999', '231@qq.com', NULL, NULL, '$2a$10$tbRn5S0HPF0vz3PubX4j1.cjo2nsZ/tvEWGu85g14Ur90v8MWGlnG', 0, 1, NULL, 'admin', 'admin', '2020-05-05 11:15:49', NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_job
@@ -805,19 +769,19 @@ CREATE TABLE `tool_email_config`
 DROP TABLE IF EXISTS `tool_local_storage`;
 CREATE TABLE `tool_local_storage`
 (
-    `storage_id`       bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-    `real_name`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件真实名',
-    `name`             varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件名',
-    `suffix`           varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '后缀',
-    `path`             varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '路径',
-    `compression_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '压缩后路径',
-    `type`             varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类型',
-    `size`             varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '大小',
-    `create_by`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
-    `update_by`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-    `create_time`      datetime NULL DEFAULT NULL COMMENT '创建日期',
-    `update_time`      datetime NULL DEFAULT NULL COMMENT '更新时间',
-    `is_delete`        tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除',
+    `storage_id`    bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+    `real_name`     varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件真实名',
+    `name`          varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件名称',
+    `suffix`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件后缀',
+    `type`          varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件类型',
+    `size`          varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件大小',
+    `path`          varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '访问路径',
+    `compress_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '压缩后访问路径',
+    `create_by`     varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
+    `update_by`     varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
+    `create_time`   datetime NULL DEFAULT NULL COMMENT '创建日期',
+    `update_time`   datetime NULL DEFAULT NULL COMMENT '更新时间',
+    `is_deleted`    tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除',
     PRIMARY KEY (`storage_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '本地存储' ROW_FORMAT = COMPACT;
 
@@ -836,14 +800,16 @@ CREATE TABLE `tool_qiniu_config`
     `secret_key` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'secretKey',
     `bucket`     varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '存储空间名称作为唯一的 Bucket 识别符',
     `zone`       varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '机房',
-    `host`       varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '外链域名',
-    `type`       varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '空间类型',
+    `domain`     varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '域名',
+    `space_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '空间类型：私有或公开',
     PRIMARY KEY (`config_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '七牛云配置' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tool_qiniu_config
 -- ----------------------------
+INSERT INTO `tool_qiniu_config`
+VALUES (1, '4gr0AzyZozKJfh-qMtrkfql-iZ_gOTcW1awCPwc9', 'UH_w_Yri58MqkX1HkQntzYgjBmNuColNRCdke-_y', 'boot-admin', '华南', 'http://r8xxnkj0f.hn-bkt.clouddn.com', '公开');
 
 -- ----------------------------
 -- Table structure for tool_qiniu_content
@@ -851,14 +817,18 @@ CREATE TABLE `tool_qiniu_config`
 DROP TABLE IF EXISTS `tool_qiniu_content`;
 CREATE TABLE `tool_qiniu_content`
 (
-    `content_id`  bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-    `bucket`      varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Bucket 识别符',
-    `name`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件名称',
-    `size`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件大小',
-    `type`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件类型：私有或公开',
-    `url`         varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件url',
-    `suffix`      varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件后缀',
-    `update_time` datetime NULL DEFAULT NULL COMMENT '上传或同步的时间',
+    `content_id`   bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+    `bucket`       varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Bucket 识别符',
+    `space_type`   varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '空间类型：私有或公开',
+    `name`         varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件名称',
+    `suffix`       varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件后缀',
+    `type`         varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件类型',
+    `size`         varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件大小',
+    `url`          varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '访问地址',
+    `compress_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '压缩后访问地址',
+    `create_by`    varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
+    `create_time`  datetime NULL DEFAULT NULL COMMENT '创建日期',
+    `is_deleted`   tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除',
     PRIMARY KEY (`content_id`) USING BTREE,
     UNIQUE INDEX `uk_name`(`name`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '七牛云文件存储' ROW_FORMAT = COMPACT;

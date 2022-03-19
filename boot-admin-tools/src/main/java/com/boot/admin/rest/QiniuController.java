@@ -28,7 +28,7 @@ import java.util.Set;
  */
 @Api(tags = "工具：七牛云存储管理")
 @RestController
-@RequestMapping(value = "/api/qiniu_contents")
+@RequestMapping(value = "/api/qiniu")
 @ResultWrapper
 public class QiniuController {
 
@@ -64,16 +64,10 @@ public class QiniuController {
 
 
     @ApiOperation(value = "上传文件")
-    @Log(value = "上传文件")
     @NoRepeatSubmit
     @PostMapping
-    public Map<String, Object> uploadFile(@RequestParam MultipartFile file) {
-        QiniuContent qiniuContent = qiniuContentService.uploadContent(file, qiniuConfigService.getQiniuConfig());
-        Map<String, Object> map = new HashMap<>(3);
-        map.put("id", qiniuContent.getContentId());
-        map.put("errno", 0);
-        map.put("data", new String[]{qiniuContent.getUrl()});
-        return map;
+    public QiniuContent uploadFile(@RequestParam MultipartFile file) {
+        return qiniuContentService.uploadContent(file, qiniuConfigService.getQiniuConfig());
     }
 
     @ApiOperation(value = "删除文件")
@@ -100,10 +94,10 @@ public class QiniuController {
     @Log(value = "下载文件")
     @GetMapping(value = "/downloads/{id}")
     public Map<String, Object> download(@PathVariable Long id) {
-        Map<String, Object> map = new HashMap<>(1);
-        map.put("url", qiniuContentService.downloadContent(qiniuContentService.getQiniuContentById(id),
-            qiniuConfigService.getQiniuConfig()));
-        return map;
+        return new HashMap<String, Object>(1) {{
+            put("url", qiniuContentService.downloadContent(qiniuContentService.getQiniuContentById(id),
+                qiniuConfigService.getQiniuConfig()));
+        }};
     }
 
     @ApiOperation(value = "导出数据")

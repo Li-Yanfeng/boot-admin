@@ -62,9 +62,9 @@ public class ${className} implements Serializable {
         </#if>
         <#if !extendsSuperEntity>
             <#if column.changeColumnName?starts_with('create')>
-    @TableField(fill= FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT)
             <#elseif column.changeColumnName?starts_with('update')>
-    @TableField(fill= FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
             </#if>
         </#if>
         <#if column.changeColumnName = 'delFlag'>

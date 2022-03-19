@@ -1,6 +1,7 @@
 package com.boot.admin.config;
 
 import cn.hutool.core.collection.CollUtil;
+import com.boot.admin.config.bean.FileProperties;
 import com.boot.admin.resolver.PropertyNamingStrategyParameterResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;

@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.boot.admin.exception.BadRequestException;
@@ -75,8 +76,7 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
     public static final String VIDEO = "video";
     public static final String OTHER = "other";
 
-    public static final String IMAGE_ORIGINAL = "original";
-    public static final String IMAGE_COMPRESSED = "compressed";
+    public static final String IMAGE_COMPRESS = "compress";
 
 
     /**
@@ -167,75 +167,73 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
 
     /**
      * 将文件名解析成文件的上传路径
-     *
-     * @param file     上传的文件
-     * @param filePath 文件路径
      */
     public static File upload(MultipartFile file, String filePath) {
-        return upload(file, filePath, false);
-    }
-
-    /**
-     * 将文件名解析成文件的上传路径
-     *
-     * @param file       上传的文件
-     * @param filePath   文件路径
-     * @param isCompress 是否压缩
-     */
-    public static File upload(MultipartFile file, String filePath, boolean isCompress) {
-        String nowStr = DateUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_MS_PATTERN);
+        String dateStr = DateUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_MS_PATTERN);
         String suffix = getExtensionName(file.getOriginalFilename());
-        String filename = nowStr + "." + suffix;
-        String type = FileUtils.getFileType(suffix);
-        filePath += File.separator + (isCompress ? IMAGE_COMPRESSED : IMAGE_ORIGINAL);
-        // 创建目标文件
-        File dest = FileUtil.touch(filePath, filename);
-        // 写入到文件
-        write2File(file, dest, isCompress, type);
-        return dest;
-    }
-
-    /**
-     * 写入到文件
-     *
-     * @param file       上传的文件
-     * @param dest       目标文件
-     * @param isCompress 是否压缩
-     * @param type       文件类型
-     */
-    private static void write2File(MultipartFile file, File dest, boolean isCompress, String type) {
+        String filename = dateStr + "." + suffix;
         try {
-            if (isCompress) {
-                // 图片
-                if (IMAGE.equals(type)) {
-                    compressImage(file, dest);
-                }
-            } else {
-                file.transferTo(dest);
-            }
+            // 创建目标文件
+            File dest = FileUtil.touch(filePath, filename);
+            // 写入到文件
+            file.transferTo(dest);
+            return dest;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
+        return null;
     }
 
     /**
      * 压缩图片
      *
-     * @param file 上传的文件
-     * @param dest 目标文件
+     * @param sourceFile 源文件
      */
-    private static void compressImage(MultipartFile file, File dest) throws IOException {
-        InputStream is = file.getInputStream();
-        Thumbnails
-            // 原始图像文件
-            .of(is)
-            // 指定图片的大小，值在 0-1 之间，1F就是原图大小，0.5F就是原图的一半大小
-            .scale(0.4F)
-            // 指定图片的质量，值也 0-1 之间，越接近于1F质量越好，越接近于0F质量越差
-            .outputQuality(0.4F)
-            // 压缩图像文件
-            .toFile(dest);
-        IoUtil.close(is);
+    public static File compressImage(File sourceFile) {
+        String filename = getName(sourceFile);
+        // 判断文件是否为图片
+        String suffix = getExtensionName(filename);
+        if (ObjectUtil.notEqual(FileUtils.IMAGE, FileUtils.getFileType(suffix))) {
+            throw new BadRequestException(UserErrorCode.USER_UPLOAD_FILE_TYPE_DOES_NOT_MATCH);
+        }
+        // 目录路径
+        String compressPath = sourceFile.getParent() + File.separator + IMAGE_COMPRESS;
+        try {
+            // 目标文件
+            File dest = FileUtil.touch(compressPath, filename);
+            Thumbnails.of(sourceFile).scale(0.4F).outputQuality(0.4F).toFile(dest);
+            return dest;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /**
+     * 压缩图片
+     *
+     * @param destPath 目标文件
+     */
+    public static File compressImage(MultipartFile file, String destPath) {
+        // 判断文件是否为图片
+        String suffix = getExtensionName(destPath);
+        if (ObjectUtil.notEqual(FileUtils.IMAGE, FileUtils.getFileType(suffix))) {
+            throw new BadRequestException(UserErrorCode.USER_UPLOAD_FILE_TYPE_DOES_NOT_MATCH);
+        }
+
+        InputStream is = null;
+        try {
+            // 目标文件
+            File dest = FileUtil.touch(destPath);
+            is = file.getInputStream();
+            Thumbnails.of(is).scale(0.4F).outputQuality(0.4F).toFile(dest);
+            return dest;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        } finally {
+            IoUtil.close(is);
+        }
+        return null;
     }
 
     public static String getFileType(String type) {

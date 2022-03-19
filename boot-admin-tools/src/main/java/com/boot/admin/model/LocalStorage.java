@@ -27,28 +27,28 @@ public class LocalStorage extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "文件真实名称")
     private String realName;
 
-    @ApiModelProperty(value = "文件名")
+    @ApiModelProperty(value = "文件名称")
     private String name;
 
-    @ApiModelProperty(value = "后缀")
+    @ApiModelProperty(value = "文件后缀")
     private String suffix;
 
-    @ApiModelProperty(value = "路径")
-    private String path;
-
-    @ApiModelProperty(value = "压缩后路径")
-    private String compressionPath;
-
-    @ApiModelProperty(value = "类型")
+    @ApiModelProperty(value = "文件类型")
     private String type;
 
-    @ApiModelProperty(value = "大小")
+    @ApiModelProperty(value = "文件大小")
     private String size;
 
+    @ApiModelProperty(value = "访问路径")
+    private String path;
+
+    @ApiModelProperty(value = "压缩后访问路径")
+    private String compressPath;
+
     @ApiModelProperty(value = "是否删除")
-    @TableField(value = "is_delete")
+    @TableField(value = "is_deleted")
     @TableLogic
-    private Integer delete;
+    private Integer deleted;
 
 
     public Long getStorageId() {
@@ -83,22 +83,6 @@ public class LocalStorage extends BaseEntity implements Serializable {
         this.suffix = suffix;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getCompressionPath() {
-        return compressionPath;
-    }
-
-    public void setCompressionPath(String compressionPath) {
-        this.compressionPath = compressionPath;
-    }
-
     public String getType() {
         return type;
     }
@@ -115,23 +99,39 @@ public class LocalStorage extends BaseEntity implements Serializable {
         this.size = size;
     }
 
-    public Integer getDelete() {
-        return delete;
+    public String getPath() {
+        return path;
     }
 
-    public void setDelete(Integer delete) {
-        this.delete = delete;
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getCompressPath() {
+        return compressPath;
+    }
+
+    public void setCompressPath(String compressPath) {
+        this.compressPath = compressPath;
+    }
+
+    public Integer getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
     }
 
     public LocalStorage() {
     }
 
-    public LocalStorage(String realName, String name, String suffix, String path, String type, String size) {
+    public LocalStorage(String realName, String name, String suffix, String type, String size, String path) {
         this.realName = realName;
         this.name = name;
         this.suffix = suffix;
-        this.path = path;
         this.type = type;
         this.size = size;
+        this.path = path;
     }
 }

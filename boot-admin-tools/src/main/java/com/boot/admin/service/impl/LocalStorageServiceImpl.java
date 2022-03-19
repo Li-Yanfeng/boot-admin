@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.boot.admin.config.FileProperties;
+import com.boot.admin.config.bean.FileProperties;
 import com.boot.admin.core.service.impl.ServiceImpl;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.exception.enums.UserErrorCode;
@@ -42,39 +42,39 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
     }
 
     @Override
-    public LocalStorage uploadLocalStorage(MultipartFile file, boolean isCompress) {
+    public LocalStorage uploadLocalStorage(MultipartFile file) {
         FileUtils.checkSize(fileProperties.getMaxSize(), file.getSize());
         String suffix = FileUtils.getExtensionName(file.getOriginalFilename());
         String type = FileUtils.getFileType(suffix);
         String filePath = fileProperties.getPath().getPath() + type;
-        // 压缩文件
-        File compressedFile = null;
-        if (isCompress) {
-            compressedFile = FileUtils.upload(file, filePath, true);
-        }
-        // 原始文件
-        File originalFile = FileUtils.upload(file, filePath);
-        if (ObjectUtil.isNull(originalFile)) {
+        // 上传文件
+        File uploadFile = FileUtils.upload(file, filePath);
+        if (ObjectUtil.isNull(uploadFile)) {
             throw new BadRequestException(UserErrorCode.USER_UPLOAD_FILE_IS_ABNORMAL);
+        }
+        // 压缩文件
+        File compressFile = null;
+        if (FileUtils.IMAGE.equals(type) && fileProperties.isCompressImage()) {
+            compressFile = FileUtils.compressImage(uploadFile);
         }
         try {
             LocalStorage localStorage = new LocalStorage(
-                originalFile.getName(),
+                uploadFile.getName(),
                 FileUtils.getFileNameNoEx(file.getOriginalFilename()),
                 suffix,
-                originalFile.getPath(),
                 type,
-                FileUtils.getSize(file.getSize())
+                FileUtils.getSize(file.getSize()),
+                uploadFile.getPath()
             );
-            if (ObjectUtil.isNotNull(compressedFile)) {
-                localStorage.setCompressionPath(compressedFile.getPath());
+            if (compressFile != null) {
+                localStorage.setCompressPath(compressFile.getPath());
             }
             baseMapper.insert(localStorage);
             return localStorage;
         } catch (Exception e) {
-            FileUtils.del(originalFile);
-            if (ObjectUtil.isNotNull(compressedFile)) {
-                FileUtils.del(compressedFile);
+            FileUtils.del(uploadFile);
+            if (compressFile != null) {
+                FileUtils.del(compressFile);
             }
             throw e;
         }

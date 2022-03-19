@@ -27,25 +27,39 @@ public class QiniuContent implements Serializable {
     @ApiModelProperty(value = "Bucket 识别符")
     private String bucket;
 
+    @ApiModelProperty(value = "空间类型：私有或公开")
+    private String spaceType;
+
     @ApiModelProperty(value = "文件名称")
-    @TableField(value = "name")
-    private String key;
-
-    @ApiModelProperty(value = "文件大小")
-    private String size;
-
-    @ApiModelProperty(value = "文件类型：私有或公开")
-    private String type = "公开";
-
-    @ApiModelProperty(value = "文件url")
-    private String url;
+    private String name;
 
     @ApiModelProperty(value = "文件后缀")
     private String suffix;
 
-    @ApiModelProperty(value = "上传或同步的时间")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
+    @ApiModelProperty(value = "文件类型")
+    private String type;
+
+    @ApiModelProperty(value = "文件大小")
+    private String size;
+
+    @ApiModelProperty(value = "访问地址")
+    private String url;
+
+    @ApiModelProperty(value = "压缩后访问地址")
+    private String compressUrl;
+
+    @ApiModelProperty(value = "创建者")
+    @TableField(fill = FieldFill.INSERT)
+    private String createBy;
+
+    @ApiModelProperty(value = "创建日期")
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+    @ApiModelProperty(value = "是否删除")
+    @TableField(value = "is_deleted")
+    @TableLogic
+    private Integer deleted;
 
 
     public Long getContentId() {
@@ -64,36 +78,20 @@ public class QiniuContent implements Serializable {
         this.bucket = bucket;
     }
 
-    public String getKey() {
-        return key;
+    public String getSpaceType() {
+        return spaceType;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setSpaceType(String spaceType) {
+        this.spaceType = spaceType;
     }
 
-    public String getSize() {
-        return size;
+    public String getName() {
+        return name;
     }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSuffix() {
@@ -104,11 +102,59 @@ public class QiniuContent implements Serializable {
         this.suffix = suffix;
     }
 
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
+    public String getType() {
+        return type;
     }
 
-    public void setUpdateTime(LocalDateTime  updateTime) {
-        this.updateTime = updateTime;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getCompressUrl() {
+        return compressUrl;
+    }
+
+    public void setCompressUrl(String compressUrl) {
+        this.compressUrl = compressUrl;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
     }
 }

@@ -27,8 +27,13 @@ task:
 
 # 七牛云
 qiniu:
+  path: file/
+  avatar: avatar/
   # 文件大小 /M
-  max-size: 15
+  max-size: 20
+  avatar-max-size: 5
+  # 压缩图片
+  compress-image: true
 
 # 邮箱验证码有效时间/秒
 code:

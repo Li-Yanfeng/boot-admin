@@ -32,7 +32,6 @@ public class QiNiuUtils {
             return Region.huanan();
         } else if (BEIM.equals(zone)) {
             return Region.beimei();
-            // 否则就是东南亚
         } else {
             return Region.qvmHuadong();
         }
@@ -41,11 +40,12 @@ public class QiNiuUtils {
     /**
      * 默认不指定key的情况下，以文件内容的hash值作为文件名
      *
-     * @param file 文件名
+     * @param filename 文件名称
      * @return String
      */
-    public static String getKey(String file) {
-        String dateStr = DateUtils.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_PATTERN);
-        return FileUtils.getFileNameNoEx(file) + "-" + dateStr + "." + FileUtils.getExtensionName(file);
+    public static String getKey(String filename) {
+        String dateStr = DateUtils.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_MS_PATTERN);
+        String suffix = FileUtils.getExtensionName(filename);
+        return dateStr + "." + suffix;
     }
 }
