@@ -1,5 +1,6 @@
 package com.boot.admin.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.boot.admin.constant.CacheKey;
 import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.service.impl.ServiceImpl;
@@ -87,11 +88,19 @@ public class QiniuConfigServiceImpl extends ServiceImpl<QiniuConfigMapper, Qiniu
                 if (item.fsize < 1) {
                     continue;
                 }
-                // 如果文件存在则跳过
+                // 如果文件存在则跳过。注意：如果是图片，可能会存在压缩文件
                 String name = FileUtils.getFileNameNoEx(item.key);
+                String suffix = FileUtils.getExtensionName(item.key);
+                String type = FileUtils.getFileType(suffix);
                 qiniuContent = qiniuContentMapper.lambdaQuery().eq(QiniuContent::getName, name.replace(compressDir, StringUtils.EMPTY)).one();
-                if (qiniuContent != null && StringUtils.isNotBlank(qiniuContent.getUrl()) && StringUtils.isNotBlank(qiniuContent.getCompressUrl())) {
-                    continue;
+                if (qiniuContent != null && StringUtils.isNotBlank(qiniuContent.getUrl())) {
+                    if (FileUtils.IMAGE.equals(type)) {
+                        if (StringUtils.isNotBlank(qiniuContent.getCompressUrl())) {
+                            continue;
+                        }
+                    } else {
+                        continue;
+                    }
                 }
 
                 if (qiniuContent == null) {
@@ -101,21 +110,18 @@ public class QiniuConfigServiceImpl extends ServiceImpl<QiniuConfigMapper, Qiniu
                 if (item.key.contains(compressDir + StringUtils.SLASH)) {
                     qiniuContent.setCompressUrl(config.getDomain() + StringUtils.SLASH + item.key);
                 } else {
-                    String suffix = FileUtils.getExtensionName(item.key);
                     qiniuContent.setBucket(config.getBucket());
                     qiniuContent.setSpaceType(config.getSpaceType());
                     qiniuContent.setName(name);
                     qiniuContent.setSuffix(suffix);
-                    qiniuContent.setType(FileUtils.getFileType(suffix));
+                    qiniuContent.setType(type);
                     qiniuContent.setSize(FileUtils.getSize(item.fsize));
                     qiniuContent.setUrl(config.getDomain() + StringUtils.SLASH + item.key);
+                    qiniuContent.setCreateTime(
+                        DateUtil.toLocalDateTime(DateUtil.date(Long.parseLong((item.putTime + "").substring(0, 13))))
+                    );
                 }
                 qiniuContentMapper.insertOrUpdate(qiniuContent);
-//                if (qiniuContent.getContentId() != null) {
-//                    qiniuContentMapper.updateById(qiniuContent);
-//                } else {
-//                    qiniuContentMapper.insert(qiniuContent);
-//                }
             }
         }
     }
