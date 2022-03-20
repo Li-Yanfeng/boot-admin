@@ -52,7 +52,7 @@
     <!--Knife4j 日志级别控制-->
     <logger name="com.github.xiaoymin.knife4j.core.model.MarkdownFile" level="warn" additivity="false"/>
     <!--系统 日志级别控制-->
-    <logger name="com.boot.admin" level="info" additivity="false"/>
+    <logger name="com.boot.admin" level="info"/>
 
 
     <!--dev 环境-->

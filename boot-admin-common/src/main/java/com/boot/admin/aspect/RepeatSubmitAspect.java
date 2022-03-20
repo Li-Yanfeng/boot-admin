@@ -47,7 +47,7 @@ public class RepeatSubmitAspect {
      * @return Object
      */
     @Around("pointcut()")
-    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method signatureMethod = signature.getMethod();
