@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.config.RsaProperties;
+import com.boot.admin.config.bean.RsaProperties;
 import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.model.Result;
 import com.boot.admin.core.validation.Update;

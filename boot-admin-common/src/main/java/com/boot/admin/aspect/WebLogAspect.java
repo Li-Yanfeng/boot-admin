@@ -72,8 +72,8 @@ public class WebLogAspect {
 
         // 打印响应参数
         logger.info("Response Args  : {}", JSONUtil.toJsonStr(resultWrapper ? Result.success(result) : result));
-        logger.info("Time-Consuming : {} ms", System.currentTimeMillis() - startTime);
-        logger.info("=========================================== End ===========================================" + System.lineSeparator());
+        logger.info("Time Consuming : {} ms", System.currentTimeMillis() - startTime);
+        logger.info("=========================================== End ===========================================\n");
         return result;
     }
 

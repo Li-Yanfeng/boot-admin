@@ -6,7 +6,7 @@ import com.boot.admin.annotation.ResultWrapper;
 import com.boot.admin.annotation.rest.AnonymousDeleteMapping;
 import com.boot.admin.annotation.rest.AnonymousGetMapping;
 import com.boot.admin.annotation.rest.AnonymousPostMapping;
-import com.boot.admin.config.RsaProperties;
+import com.boot.admin.config.bean.RsaProperties;
 import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.security.config.bean.LoginCodeEnum;

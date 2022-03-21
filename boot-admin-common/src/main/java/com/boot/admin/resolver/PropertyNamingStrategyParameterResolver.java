@@ -109,8 +109,8 @@ public class PropertyNamingStrategyParameterResolver implements HandlerMethodArg
                 String[] parameterValues = parameterMap.get(parameterName);
                 try {
                     result.put(fieldName, getParameterValues(obj, fieldName, parameterValues));
-                } catch (NoSuchFieldException e) {
-                    logger.warn("获取请求参数时出错， {} 中无对应属性：{}", obj.getClass().getSimpleName(), fieldName);
+                } catch (NoSuchFieldException ignored) {
+
                 }
             });
         }
