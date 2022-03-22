@@ -35,7 +35,7 @@ services:
   boot-admin:
     # 从阿里云镜像拉取
     # image: ${REGISTRY_URL}/${PROJECT_NAME}:latest
-    image: ${PROJECT_NAME}:1.0
+    image: ${PROJECT_NAME}:2.0
     container_name: ${PROJECT_NAME}
 #    restart: always
     env_file: .env
@@ -45,7 +45,8 @@ services:
       - mysql
       - redis
     volumes:
-      - "./wait-for.sh:/wait-for.sh"
+      - ./volumes/${PROJECT_NAME}/conf:/config
+      - ./wait-for.sh:/wait-for.sh
     entrypoint: "sh /wait-for.sh boot-admin-mysql:3306 -- sh /wait-for.sh boot-admin-redis:6379 -- ${RUN_JAR}"
     environment:
       TZ: ${TZ}

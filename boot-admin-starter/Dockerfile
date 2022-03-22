@@ -1,5 +1,8 @@
 FROM openjdk:8-jre-alpine
 
+# 项目名称
+ARG PROJECT_NAME="boot-admin"
+
 # 作者
 MAINTAINER Li Yanfeng <yanfeng413@163.com>
 
@@ -14,7 +17,7 @@ RUN set -xe \
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
 ARG JAR_FILE
-ADD target/${JAR_FILE} /opt/app.jar
+ADD target/${JAR_FILE} /opt/${PROJECT_NAME}.jar
 
 ARG TZ="Asia/Shanghai"
 
@@ -26,4 +29,4 @@ RUN apk upgrade --update \
     && echo ${TZ} > /etc/timezone \
     && rm -rf /var/cache/apk/*
 
-ENTRYPOINT java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -Duser.timezone=${TZ} -Dfile.encoding=UTF-8 -jar /opt/app.jar ${JAVA_WEB_SERVICE_OPTS}
+ENTRYPOINT java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -Duser.timezone=${TZ} -Dfile.encoding=UTF-8 -jar /opt/${PROJECT_NAME}.jar ${JAVA_WEB_SERVICE_OPTS}
