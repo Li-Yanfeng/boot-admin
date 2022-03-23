@@ -7,10 +7,10 @@ services:
     restart: always
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
     volumes:
-      - ./volumes/${MYSQL_HOST}/data:/var/lib/mysql
       - ./volumes/${MYSQL_HOST}/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./volumes/${MYSQL_HOST}/data:/var/lib/mysql
       # 数据库还原目录 可将需要还原的sql文件放在这里
-      - ./volumes/${MYSQL_HOST}/source:/docker-entrypoint-initdb.d
+      - ./volumes/${MYSQL_HOST}/init:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -22,10 +22,11 @@ services:
     image: redis:6.2.0-alpine
     container_name: ${REDIS_HOST}
     restart: always
-#    command: --requirepass ${REDIS_PASSWORD}
+    # 启动指定配置文件
+    command: redis-server /etc/redis/redis.conf
     volumes:
+      - ./volumes/${REDIS_HOST}/conf/redis.conf:/etc/redis/redis.conf
       - ./volumes/${REDIS_HOST}/data:/data
-      - ./volumes/${REDIS_HOST}/conf/redis.conf:/usr/local/etc/redis/redis.conf
       - ./volumes/${REDIS_HOST}/logs:/logs
     environment:
       TZ: ${TZ}
@@ -35,9 +36,10 @@ services:
   boot-admin:
     # 从阿里云镜像拉取
     # image: ${REGISTRY_URL}/${PROJECT_NAME}:latest
-    image: ${PROJECT_NAME}:2.0
+    image: ${PROJECT_NAME}:1.0
     container_name: ${PROJECT_NAME}
-#    restart: always
+    privileged: true
+    restart: always
     env_file: .env
     ports:
       - ${PROJECT_PORT}:${PROJECT_PORT}
@@ -45,9 +47,9 @@ services:
       - mysql
       - redis
     volumes:
-      - ./volumes/${PROJECT_NAME}/conf:/config
+      - ./volumes/${PROJECT_NAME}/conf:/opt/config
       - ./wait-for.sh:/wait-for.sh
-    entrypoint: "sh /wait-for.sh boot-admin-mysql:3306 -- sh /wait-for.sh boot-admin-redis:6379 -- ${RUN_JAR}"
+    entrypoint: sh /wait-for.sh ${MYSQL_HOST}:${MYSQL_PORT_OUT} -- sh /wait-for.sh ${REDIS_HOST}:${REDIS_PORT_OUT} -- ${RUN_JAR}
     environment:
       TZ: ${TZ}
 
