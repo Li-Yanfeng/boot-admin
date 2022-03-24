@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppRun {
 
     public static void main(String[] args) {
-        System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(AppRun.class, args);
     }
 

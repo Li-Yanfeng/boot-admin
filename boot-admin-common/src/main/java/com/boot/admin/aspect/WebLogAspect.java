@@ -6,6 +6,7 @@ import com.boot.admin.core.model.Result;
 import com.boot.admin.util.IpUtils;
 import com.boot.admin.util.RequestHolder;
 import com.boot.admin.util.StringUtils;
+import com.boot.admin.constant.Environment;
 import io.swagger.annotations.ApiOperation;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -27,7 +28,7 @@ import java.lang.reflect.Method;
  *
  * @author Li Yanfeng
  */
-@Profile(value = {"dev"})
+@Profile(value = {Environment.DEV})
 @Aspect
 @Component
 public class WebLogAspect {

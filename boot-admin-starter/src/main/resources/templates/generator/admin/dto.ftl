@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-<#if extendsSuperEntity>
+<#if extendSuperEntity>
 import BaseDTO;
 </#if>
 
@@ -22,7 +22,7 @@ import java.sql.Timestamp;
  * @since ${date}
  */
 @ApiModel(description = "${apiAlias!} 数据传输对象")
-<#if extendsSuperEntity>
+<#if extendSuperEntity>
 public class ${className}DTO extends BaseDTO implements Serializable {
 <#else>
 public class ${className}DTO implements Serializable {

@@ -1,5 +1,6 @@
 package com.boot.admin.util;
 
+import cn.hutool.core.collection.CollUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -53,6 +54,21 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
     public static <T> T getBean(Class<T> requiredType) {
         assertContextInjected();
         return applicationContext.getBean(requiredType);
+    }
+
+    /**
+     * 当前环境
+     */
+    public static List<String> getCurrentEnv() {
+        Environment environment = getBean(Environment.class);
+        return CollUtil.toList(environment.getActiveProfiles());
+    }
+
+    /**
+     * 是否为指定环境
+     */
+    public static boolean isSpecifyEnv(String env) {
+        return CollUtil.contains(getCurrentEnv(), env);
     }
 
     /**

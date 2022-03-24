@@ -243,7 +243,9 @@ public class GenUtils {
         // 保存缓存Key
         genMap.put("cacheKey", StringUtils.toUnderlineCase(className).toUpperCase());
         // 继承实体父类
-        genMap.put("extendsSuperEntity", false);
+        genMap.put("extendSuperEntity", false);
+        // 继承逻辑删除实体父类
+        genMap.put("extendLogicDeleteSuperEntity", false);
         // 存在 Timestamp 字段
         genMap.put("hasTimestamp", false);
         // 查询类中存在 Timestamp 字段
@@ -262,6 +264,8 @@ public class GenUtils {
         List<Map<String, Object>> columns = new ArrayList<>();
         // 保存公共字段信息
         List<Map<String, Object>> commonColumns = new ArrayList<>();
+        // 保存逻辑删除信息
+        List<Map<String, Object>> logicDeleteColumns = new ArrayList<>();
         // 保存查询字段的信息
         List<Map<String, Object>> queryColumns = new ArrayList<>();
         // 存储字典信息
@@ -355,6 +359,9 @@ public class GenUtils {
             // 添加到通用字段列表中
             if (changeColumnName.startsWith("create") || changeColumnName.startsWith("update")) {
                 commonColumns.add(listMap);
+            } else if ("deleted".equals(changeColumnName)) {
+                // 添加到逻辑删除列表中
+                logicDeleteColumns.add(listMap);
             } else {
                 columns.add(listMap);
             }
@@ -363,7 +370,13 @@ public class GenUtils {
         if (commonColumns.size() < 4) {
             columns.addAll(commonColumns);
         } else {
-            genMap.put("extendsSuperEntity", true);
+            genMap.put("extendSuperEntity", true);
+            // 如果存在逻辑删除注解
+            if (logicDeleteColumns.size() > 0) {
+                genMap.put("extendLogicDeleteSuperEntity", true);
+            } else {
+                columns.addAll(logicDeleteColumns);
+            }
         }
         // 保存字段列表
         genMap.put("columns", columns);

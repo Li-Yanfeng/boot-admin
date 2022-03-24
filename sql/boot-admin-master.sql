@@ -781,7 +781,7 @@ CREATE TABLE `tool_local_storage`
     `update_by`     varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
     `create_time`   datetime NULL DEFAULT NULL COMMENT '创建日期',
     `update_time`   datetime NULL DEFAULT NULL COMMENT '更新时间',
-    `is_deleted`    tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除',
+    `is_deleted`    tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除',
     PRIMARY KEY (`storage_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '本地存储' ROW_FORMAT = COMPACT;
 
@@ -828,7 +828,7 @@ CREATE TABLE `tool_qiniu_content`
     `compress_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '压缩后访问地址',
     `create_by`    varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
     `create_time`  datetime NULL DEFAULT NULL COMMENT '创建日期',
-    `is_deleted`   tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除',
+    `is_deleted`   tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除',
     PRIMARY KEY (`content_id`) USING BTREE,
     UNIQUE INDEX `uk_name`(`name`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '七牛云文件存储' ROW_FORMAT = COMPACT;

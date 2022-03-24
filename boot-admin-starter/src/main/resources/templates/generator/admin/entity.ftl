@@ -3,10 +3,16 @@ package ${package}.model;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-<#if extendsSuperEntity>
-import BaseEntity;
+<#if extendSuperEntity>
 </#if>
-import Update;
+<#if extendSuperEntity>
+    <#if extendLogicDeleteSuperEntity>
+import com.boot.admin.core.model.BaseEntityLogicDelete;
+    <#else>
+import com.boot.admin.core.model.BaseEntity;
+    </#if>
+</#if>
+import com.boot.admin.core.validation.Update;
 
 import javax.validation.constraints.*;
 <#if hasBigDecimal>
@@ -24,8 +30,12 @@ import java.sql.Timestamp;
  */
 @ApiModel(description = "${apiAlias!}")
 @TableName(value = "${tableName}")
-<#if extendsSuperEntity>
+<#if extendSuperEntity>
+    <#if extendLogicDeleteSuperEntity>
+public class ${className} extends BaseEntityLogicDelete implements Serializable {
+    <#else>
 public class ${className} extends BaseEntity implements Serializable {
+    </#if>
 <#else>
 public class ${className} implements Serializable {
 </#if>
@@ -60,18 +70,17 @@ public class ${className} implements Serializable {
     @NotNull
             </#if>
         </#if>
-        <#if !extendsSuperEntity>
+        <#if !extendSuperEntity>
             <#if column.changeColumnName?starts_with('create')>
     @TableField(fill = FieldFill.INSERT)
             <#elseif column.changeColumnName?starts_with('update')>
     @TableField(fill = FieldFill.INSERT_UPDATE)
             </#if>
         </#if>
-        <#if column.changeColumnName = 'delFlag'>
+        <#if column.changeColumnName = 'deleted'>
     @TableLogic
-        <#else>
-    private ${column.columnType} ${column.changeColumnName};
         </#if>
+    private ${column.columnType} ${column.changeColumnName};
     </#list>
 </#if>
 <#------------  END 字段循环遍历  ---------->

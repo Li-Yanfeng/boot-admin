@@ -7,14 +7,18 @@ import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.IllegalSQLInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.boot.admin.aspect.DataScopePermissionHandler;
+import com.boot.admin.constant.Environment;
 import com.boot.admin.constant.PackagePattern;
 import com.boot.admin.constant.SystemConstant;
+import com.boot.admin.util.SpringContextHolder;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -31,6 +35,9 @@ import javax.sql.DataSource;
 public class MybatisPlusConfig {
 
     private final DataSource dataSource;
+
+    @Value(value = "${mybatis-plus.illegal-sql-inner-interceptor.enabled}")
+    private Boolean enableIllegalSqlInnerInterceptor;
 
     public MybatisPlusConfig(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -94,6 +101,10 @@ public class MybatisPlusConfig {
         interceptor.addInnerInterceptor(dataPermissionInterceptor);
         // 添加分页插件
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        // Sql性能规范插件
+        if (SpringContextHolder.isSpecifyEnv(Environment.DEV) && Boolean.TRUE.equals(enableIllegalSqlInnerInterceptor)) {
+            interceptor.addInnerInterceptor(new IllegalSQLInnerInterceptor());
+        }
         // 防止全表更新与删除插件
         interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         return interceptor;

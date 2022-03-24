@@ -14,7 +14,7 @@
         <result column="${column.columnName}" property="${column.changeColumnName}"/>
     </#if>
 </#list>
-<#if extendsSuperEntity>
+<#if extendSuperEntity>
     <#list commonColumns as column><#--生成公共字段-->
         <result column="${column.columnName}" property="${column.changeColumnName}"/>
     </#list>
@@ -23,6 +23,6 @@
 
     <!--通用查询结果列-->
     <sql id="${className}ColumnList">
-        <#list columns as column>${column.columnName}<#sep>, </#sep></#list><#if extendsSuperEntity>, <#list commonColumns as column>${column.columnName}<#sep>, </#sep></#list></#if>
+        <#list columns as column>${column.columnName}<#sep>, </#sep></#list><#if extendSuperEntity>, <#list commonColumns as column>${column.columnName}<#sep>, </#sep></#list></#if>
     </sql>
 </mapper>
