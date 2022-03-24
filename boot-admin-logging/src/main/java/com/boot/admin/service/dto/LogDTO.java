@@ -1,5 +1,7 @@
 package com.boot.admin.service.dto;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -34,9 +36,6 @@ public class LogDTO implements Serializable {
     @ApiModelProperty(value = "请求耗时")
     private Long time;
 
-    @ApiModelProperty(value = "操作用户")
-    private String username;
-
     @ApiModelProperty(value = "地址")
     private String address;
 
@@ -49,7 +48,16 @@ public class LogDTO implements Serializable {
     @ApiModelProperty(value = "异常详细")
     private byte[] exceptionDetail;
 
+    @ApiModelProperty(value = "创建人")
+    @TableField(fill = FieldFill.INSERT)
+    private Long createBy;
+
+    @ApiModelProperty(value = "创建人名称")
+    @TableField(fill = FieldFill.INSERT)
+    private String createByName;
+
     @ApiModelProperty(value = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
 
@@ -101,14 +109,6 @@ public class LogDTO implements Serializable {
         this.time = time;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -141,11 +141,27 @@ public class LogDTO implements Serializable {
         this.exceptionDetail = exceptionDetail;
     }
 
+    public Long getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Long createBy) {
+        this.createBy = createBy;
+    }
+
+    public String getCreateByName() {
+        return createByName;
+    }
+
+    public void setCreateByName(String createByName) {
+        this.createByName = createByName;
+    }
+
     public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime  createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 

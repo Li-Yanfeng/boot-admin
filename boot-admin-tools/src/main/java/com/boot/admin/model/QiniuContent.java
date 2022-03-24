@@ -48,13 +48,17 @@ public class QiniuContent implements Serializable {
     @ApiModelProperty(value = "压缩后访问地址")
     private String compressUrl;
 
-    @ApiModelProperty(value = "创建者")
+    @ApiModelProperty(value = "创建人")
     @TableField(fill = FieldFill.INSERT)
-    private String createBy;
+    protected Long createBy;
 
-    @ApiModelProperty(value = "创建日期")
+    @ApiModelProperty(value = "创建人名称")
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    protected String createByName;
+
+    @ApiModelProperty(value = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
+    protected LocalDateTime createTime;
 
     @ApiModelProperty(value = "是否删除")
     @TableField(value = "is_deleted")
@@ -134,12 +138,20 @@ public class QiniuContent implements Serializable {
         this.compressUrl = compressUrl;
     }
 
-    public String getCreateBy() {
+    public Long getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(String createBy) {
+    public void setCreateBy(Long createBy) {
         this.createBy = createBy;
+    }
+
+    public String getCreateByName() {
+        return createByName;
+    }
+
+    public void setCreateByName(String createByName) {
+        this.createByName = createByName;
     }
 
     public LocalDateTime getCreateTime() {

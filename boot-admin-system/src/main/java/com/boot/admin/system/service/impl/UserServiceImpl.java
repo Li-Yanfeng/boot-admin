@@ -249,7 +249,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (fileType != null && !image.contains(fileType)) {
             throw new BadRequestException("文件格式错误！, 仅支持 " + image + " 格式");
         }
-        User user = getUserByUsername(SecurityUtils.getCurrentUsername());
+        Long userId = SecurityUtils.getCurrentUserId();
+        User user = baseMapper.selectById(userId);
+        ValidationUtils.notNull(user, "User", "userId", userId);
+
         String oldPath = user.getAvatarPath();
         File uploadFile = FileUtils.upload(file, fileProperties.getPath().getAvatar());
         user.setAvatarName(uploadFile.getName());

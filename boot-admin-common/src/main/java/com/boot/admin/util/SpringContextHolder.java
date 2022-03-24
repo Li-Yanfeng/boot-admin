@@ -57,56 +57,58 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
     }
 
     /**
-     * 当前环境
+     * 获取SpringBoot 配置信息
+     *
+     * @param key 配置项key
+     * @return /
      */
-    public static List<String> getCurrentEnv() {
-        Environment environment = getBean(Environment.class);
-        return CollUtil.toList(environment.getActiveProfiles());
-    }
-
-    /**
-     * 是否为指定环境
-     */
-    public static boolean isSpecifyEnv(String env) {
-        return CollUtil.contains(getCurrentEnv(), env);
+    public static String getProperty(String key) {
+        return getProperty(key, String.class);
     }
 
     /**
      * 获取SpringBoot 配置信息
      *
-     * @param property     属性key
+     * @param key          配置项key
+     * @param requiredType 返回类型
+     * @return /
+     */
+    public static <T> T getProperty(String key, Class<T> requiredType) {
+        return getProperty(key, null, requiredType);
+    }
+
+    /**
+     * 获取SpringBoot 配置信息
+     *
+     * @param key          配置项key
      * @param defaultValue 默认值
      * @param requiredType 返回类型
      * @return /
      */
-    public static <T> T getProperties(String property, T defaultValue, Class<T> requiredType) {
+    public static <T> T getProperty(String key, T defaultValue, Class<T> requiredType) {
         T result = defaultValue;
         try {
-            result = getBean(Environment.class).getProperty(property, requiredType);
+            result = getBean(Environment.class).getProperty(key, requiredType);
         } catch (Exception ignored) {
         }
         return result;
     }
 
     /**
-     * 获取SpringBoot 配置信息
+     * 获取当前的环境配置，无配置返回null
      *
-     * @param property 属性key
-     * @return /
+     * @return 当前的环境配置
      */
-    public static String getProperties(String property) {
-        return getProperties(property, null, String.class);
+    public static String[] getActiveProfiles() {
+        return getBean(Environment.class).getActiveProfiles();
     }
 
     /**
-     * 获取SpringBoot 配置信息
-     *
-     * @param property     属性key
-     * @param requiredType 返回类型
-     * @return /
+     * 是否为指定环境
      */
-    public static <T> T getProperties(String property, Class<T> requiredType) {
-        return getProperties(property, null, requiredType);
+    public static boolean isSpecifyEnv(String env) {
+        String[] activeProfiles = getActiveProfiles();
+        return CollUtil.contains(CollUtil.newArrayList(activeProfiles), env);
     }
 
     /**

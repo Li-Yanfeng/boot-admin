@@ -114,7 +114,7 @@ public class UserController {
     public Result updatePass(@RequestBody UserPassVO passVO) throws Exception {
         String oldPass = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey, passVO.getOldPass());
         String newPass = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey, passVO.getNewPass());
-        UserDTO user = userService.loadUserByUsername(SecurityUtils.getCurrentUsername());
+        UserDTO user = userService.getUserById(SecurityUtils.getCurrentUserId());
         if (!passwordEncoder.matches(oldPass, user.getPassword())) {
             throw new BadRequestException("修改失败，旧密码错误");
         }
@@ -131,7 +131,7 @@ public class UserController {
     @PutMapping(value = "/email/{code}")
     public void updateEmail(@PathVariable String code, @RequestBody User user) throws Exception {
         String password = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey, user.getPassword());
-        UserDTO userDTO = userService.loadUserByUsername(SecurityUtils.getCurrentUsername());
+        UserDTO userDTO = userService.getUserById(SecurityUtils.getCurrentUserId());
         if (!passwordEncoder.matches(password, userDTO.getPassword())) {
             throw new BadRequestException("密码错误");
         }
@@ -167,7 +167,7 @@ public class UserController {
         }
         // 数据权限
         List<Long> dataScopes =
-            dataService.listDeptIds(userService.loadUserByUsername(SecurityUtils.getCurrentUsername()));
+            dataService.listDeptIds(userService.getUserById(SecurityUtils.getCurrentUserId()));
         // query.getDeptIds() 不为空并且数据权限不为空则取交集
         if (!CollectionUtils.isEmpty(query.getDeptIds()) && !CollectionUtils.isEmpty(dataScopes)) {
             // 取交集

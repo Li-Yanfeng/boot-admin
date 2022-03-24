@@ -60,7 +60,7 @@ public class LogController {
     @GetMapping(value = "/users")
     public Page<LogSmallDTO> listUserLogs(LogQuery query, Page<com.boot.admin.model.Log> page) {
         query.setLogType(LogLevel.INFO.name());
-        query.setQ(SecurityUtils.getCurrentUsername());
+        query.setCreateBy(SecurityUtils.getCurrentUserId());
         return logService.listLogsByUser(query, page);
     }
 

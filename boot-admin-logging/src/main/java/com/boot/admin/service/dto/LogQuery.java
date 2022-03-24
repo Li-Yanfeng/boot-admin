@@ -22,17 +22,22 @@ public class LogQuery implements Serializable {
     @Query(type = SqlKeyword.EQ)
     private String logType;
 
+    @ApiModelProperty(value = "创建人")
+    @Query(type = SqlKeyword.EQ)
+    private Long createBy;
+
     @ApiModelProperty(value = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Query(type = SqlKeyword.BETWEEN)
     private List<LocalDateTime> createTime;
 
     @ApiModelProperty(value = "多字段模糊")
-    @Query(q = "username,description,address,requestIp,method,params")
+    @Query(q = "createByName,description,address,requestIp,method,params")
     private String q;
 
     @ApiModelProperty(value = "排序字段")
     private List<String> sort;
+
 
     public String getLogType() {
         return logType;
@@ -42,7 +47,15 @@ public class LogQuery implements Serializable {
         this.logType = logType;
     }
 
-    public List<LocalDateTime>getCreateTime() {
+    public Long getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Long createBy) {
+        this.createBy = createBy;
+    }
+
+    public List<LocalDateTime> getCreateTime() {
         return createTime;
     }
 

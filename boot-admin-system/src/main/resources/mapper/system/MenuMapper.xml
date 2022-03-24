@@ -20,13 +20,15 @@
         <result column="sub_count" property="subCount"/>
         <result column="create_by" property="createBy"/>
         <result column="update_by" property="updateBy"/>
+        <result column="create_by_name" property="createByName"/>
+        <result column="update_by_name" property="updateByName"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
     <!--通用查询结果列-->
     <sql id="MenuColumnList">
-        menu_id, pid, type, title, component, component_name, icon, permission, is_i_frame, path, is_cache, is_hidden, menu_sort, sub_count, create_by, update_by, create_time, update_time
+        menu_id, pid, type, title, component, component_name, icon, permission, is_i_frame, path, is_cache, is_hidden, menu_sort, sub_count, create_by, update_by, create_by_name, update_by_name, create_time, update_time
     </sql>
 
     <select id="selectMenuListByRoleId" resultMap="MenuResultMap">

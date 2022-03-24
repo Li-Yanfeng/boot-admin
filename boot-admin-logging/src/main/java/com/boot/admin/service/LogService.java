@@ -24,14 +24,13 @@ public interface LogService extends Service<Log> {
     /**
      * 插入一条记录
      *
-     * @param username  用户
      * @param browser   浏览器
      * @param ip        请求IP
      * @param joinPoint /
      * @param resource  日志实体
      */
     @Async
-    void saveLog(String username, String browser, String ip, ProceedingJoinPoint joinPoint, Log resource);
+    void saveLog(String browser, String ip, ProceedingJoinPoint joinPoint, Log resource);
 
     /**
      * 根据 ID 批量删除

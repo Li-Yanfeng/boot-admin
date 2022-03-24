@@ -5,7 +5,7 @@ package com.boot.admin.util;
  * 在SpringContextHolder 初始化后，进行回调使用
  *
  * @author Li Yanfeng
- * @see SpringContextHolder
+ * @see SpringUtils
  */
 public interface CallBack {
 

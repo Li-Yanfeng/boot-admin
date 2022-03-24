@@ -1,5 +1,6 @@
 package com.boot.admin.config;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
@@ -11,16 +12,15 @@ import com.baomidou.mybatisplus.extension.plugins.inner.IllegalSQLInnerIntercept
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.boot.admin.aspect.DataScopePermissionHandler;
-import com.boot.admin.constant.Environment;
 import com.boot.admin.constant.PackagePattern;
 import com.boot.admin.constant.SystemConstant;
-import com.boot.admin.util.SpringContextHolder;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
@@ -34,12 +34,14 @@ import javax.sql.DataSource;
 @MapperScan(basePackages = {PackagePattern.MAPPER_PATH_STAR})
 public class MybatisPlusConfig {
 
+    private final Environment environment;
     private final DataSource dataSource;
 
     @Value(value = "${mybatis-plus.illegal-sql-inner-interceptor.enabled}")
     private Boolean enableIllegalSqlInnerInterceptor;
 
-    public MybatisPlusConfig(DataSource dataSource) {
+    public MybatisPlusConfig(Environment environment, DataSource dataSource) {
+        this.environment = environment;
         this.dataSource = dataSource;
     }
 
@@ -102,11 +104,19 @@ public class MybatisPlusConfig {
         // 添加分页插件
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         // Sql性能规范插件
-        if (SpringContextHolder.isSpecifyEnv(Environment.DEV) && Boolean.TRUE.equals(enableIllegalSqlInnerInterceptor)) {
+        if (isDevEnv() && Boolean.TRUE.equals(enableIllegalSqlInnerInterceptor)) {
             interceptor.addInnerInterceptor(new IllegalSQLInnerInterceptor());
         }
         // 防止全表更新与删除插件
         interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         return interceptor;
+    }
+
+    /**
+     * 是否为开发环境
+     */
+    private boolean isDevEnv() {
+        String[] activeProfiles = environment.getActiveProfiles();
+        return CollUtil.contains(CollUtil.newArrayList(activeProfiles), com.boot.admin.constant.Environment.DEV);
     }
 }

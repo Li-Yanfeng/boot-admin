@@ -16,11 +16,19 @@ public abstract class BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "创建人")
     @TableField(fill = FieldFill.INSERT)
-    protected String createBy;
+    protected Long createBy;
 
     @ApiModelProperty(value = "更新人")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    protected String updateBy;
+    protected Long updateBy;
+
+    @ApiModelProperty(value = "创建人名称")
+    @TableField(fill = FieldFill.INSERT)
+    protected String createByName;
+
+    @ApiModelProperty(value = "更新人名称")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    protected String updateByName;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
@@ -31,20 +39,36 @@ public abstract class BaseEntity implements Serializable {
     protected LocalDateTime updateTime;
 
 
-    public String getCreateBy() {
+    public Long getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(String createBy) {
+    public void setCreateBy(Long createBy) {
         this.createBy = createBy;
     }
 
-    public String getUpdateBy() {
+    public Long getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(String updateBy) {
+    public void setUpdateBy(Long updateBy) {
         this.updateBy = updateBy;
+    }
+
+    public String getCreateByName() {
+        return createByName;
+    }
+
+    public void setCreateByName(String createByName) {
+        this.createByName = createByName;
+    }
+
+    public String getUpdateByName() {
+        return updateByName;
+    }
+
+    public void setUpdateByName(String updateByName) {
+        this.updateByName = updateByName;
     }
 
     public LocalDateTime getCreateTime() {

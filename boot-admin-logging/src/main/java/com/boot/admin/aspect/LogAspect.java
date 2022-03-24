@@ -54,7 +54,9 @@ public class LogAspect {
         Log log = new Log(LogLevel.INFO.name(), System.currentTimeMillis() - currentTime.get());
         currentTime.remove();
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
-        logService.saveLog(getUsername(), RequestHolder.getBrowser(request), IpUtils.getIp(request), joinPoint, log);
+        // 登陆者信息填充
+        loginInfoFill(log);
+        logService.saveLog(RequestHolder.getBrowser(request), IpUtils.getIp(request), joinPoint, log);
         return result;
     }
 
@@ -70,15 +72,16 @@ public class LogAspect {
         currentTime.remove();
         log.setExceptionDetail(ThrowableUtils.getStackTrace(e).getBytes());
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
-        logService.saveLog(getUsername(), RequestHolder.getBrowser(request), IpUtils.getIp(request),
-            (ProceedingJoinPoint) joinPoint, log);
+        // 登陆者信息填充
+        loginInfoFill(log);
+        logService.saveLog(RequestHolder.getBrowser(request), IpUtils.getIp(request), (ProceedingJoinPoint) joinPoint, log);
     }
 
-    private String getUsername() {
-        try {
-            return SecurityUtils.getCurrentUsername();
-        } catch (Exception e) {
-            return "";
-        }
+    /**
+     * 登陆者信息填充
+     */
+    private void loginInfoFill(Log log) {
+        log.setCreateBy(SecurityUtils.getCurrentUserId());
+        log.setCreateByName(SecurityUtils.getCurrentNickName());
     }
 }

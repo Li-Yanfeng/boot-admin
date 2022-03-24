@@ -35,8 +35,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, com.boot.admin.model.
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void saveLog(String username, String browser, String ip, ProceedingJoinPoint joinPoint,
-                        com.boot.admin.model.Log resource) {
+    public void saveLog(String browser, String ip, ProceedingJoinPoint joinPoint, com.boot.admin.model.Log resource) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         Log aopLog = method.getAnnotation(Log.class);
@@ -48,7 +47,6 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, com.boot.admin.model.
         resource.setRequestIp(ip);
         resource.setAddress(IpUtils.getCityInfo(resource.getRequestIp()));
         resource.setMethod(methodName);
-        resource.setUsername(username);
         resource.setParams(JSONUtil.toJsonStr(joinPoint.getArgs()));
         resource.setBrowser(browser);
         if (resource.getLogId() != null) {
@@ -97,7 +95,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, com.boot.admin.model.
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(log -> {
             Map<String, Object> map = MapUtil.newHashMap(8, true);
-            map.put("用户名", log.getUsername());
+            map.put("用户名", log.getCreateByName());
             map.put("IP", log.getRequestIp());
             map.put("IP来源", log.getAddress());
             map.put("描述", log.getDescription());

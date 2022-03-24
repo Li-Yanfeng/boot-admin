@@ -367,7 +367,7 @@ public class GenUtils {
             }
         }
         // 公共字段少于4个，不继承实体父类
-        if (commonColumns.size() < 4) {
+        if (commonColumns.size() < 6) {
             columns.addAll(commonColumns);
         } else {
             genMap.put("extendSuperEntity", true);

@@ -23,11 +23,11 @@ public class AuditorConfig implements AuditorAware<String> {
     public Optional<String> getCurrentAuditor() {
         try {
             // 这里应根据实际业务情况获取具体信息
-            return Optional.of(SecurityUtils.getCurrentUsername());
+            return Optional.of(SecurityUtils.getCurrentUserId() + "");
         } catch (Exception ignored) {
 
         }
         // 用户定时任务，或者无Token调用的情况
-        return Optional.of("System");
+        return Optional.of("0");
     }
 }

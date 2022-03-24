@@ -37,7 +37,7 @@ public class IpUtils {
 
     static {
         SpringContextHolder.addCallBacks(() -> {
-            IpUtils.ipLocal = SpringContextHolder.getProperties("ip.local-parsing", false, Boolean.class);
+            IpUtils.ipLocal = SpringContextHolder.getProperty("ip.local-parsing", false, Boolean.class);
             if (ipLocal) {
                 /*
                  * 此文件为独享 ，不必关闭

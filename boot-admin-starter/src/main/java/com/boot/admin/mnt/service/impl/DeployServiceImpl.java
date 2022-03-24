@@ -170,7 +170,7 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
         for (ServerDTO deploy : deploys) {
             StringBuilder sb = new StringBuilder();
             ExecuteShellUtils executeShellUtil = getExecuteShellUtils(deploy.getIp());
-            //为了防止重复启动，这里先停止应用
+            // 为了防止重复启动，这里先停止应用
             stopApp(app.getPort(), executeShellUtil);
             sb.append("服务器:").append(deploy.getName()).append("<br>应用:").append(app.getName());
             sendMsg("下发启动命令", MsgType.INFO);
@@ -204,7 +204,7 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
             ExecuteShellUtils executeShellUtil = getExecuteShellUtils(deploy.getIp());
             sb.append("服务器:").append(deploy.getName()).append("<br>应用:").append(app.getName());
             sendMsg("下发停止命令", MsgType.INFO);
-            //停止应用
+            // 停止应用
             stopApp(app.getPort(), executeShellUtil);
             sleep(1);
             boolean result = checkIsRunningStatus(app.getPort(), executeShellUtil);
@@ -255,7 +255,7 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
         }
         String backupPath = app.getBackupPath() + FILE_SEPARATOR;
         backupPath += resource.getAppName() + FILE_SEPARATOR + deployDate;
-        //这个是服务器部署路径
+        // 这个是服务器部署路径
         String deployPath = app.getDeployPath();
         String ip = resource.getIp();
         ExecuteShellUtils executeShellUtil = getExecuteShellUtils(ip);
@@ -265,12 +265,12 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
         logger.info(msg);
         sendMsg(msg, MsgType.INFO);
         sendMsg("停止原来应用", MsgType.INFO);
-        //停止应用
+        // 停止应用
         stopApp(app.getPort(), executeShellUtil);
-        //删除原来应用
+        // 删除原来应用
         sendMsg("删除应用", MsgType.INFO);
         executeShellUtil.execute("rm -rf " + deployPath + FILE_SEPARATOR + resource.getAppName());
-        //还原应用
+        // 还原应用
         sendMsg("还原应用", MsgType.INFO);
         executeShellUtil.execute("cp -r " + backupPath + "/. " + deployPath);
         sendMsg("启动应用", MsgType.INFO);
@@ -323,7 +323,7 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
             throw new BadRequestException("包对应应用信息不存在");
         }
         int port = app.getPort();
-        //这个是服务器部署路径
+        // 这个是服务器部署路径
         String uploadPath = app.getUploadPath();
         StringBuilder sb = new StringBuilder();
         String msg;
@@ -331,13 +331,13 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
         for (ServerDTO deployDTO : deploys) {
             String ip = deployDTO.getIp();
             ExecuteShellUtils executeShellUtil = getExecuteShellUtils(ip);
-            //判断是否第一次部署
+            // 判断是否第一次部署
             boolean flag = checkFile(executeShellUtil, app);
-            //第一步要确认服务器上有这个目录
+            // 第一步要确认服务器上有这个目录
             executeShellUtil.execute("mkdir -p " + app.getUploadPath());
             executeShellUtil.execute("mkdir -p " + app.getBackupPath());
             executeShellUtil.execute("mkdir -p " + app.getDeployPath());
-            //上传文件
+            // 上传文件
             msg = String.format("登陆到服务器:%s", ip);
             ScpClientUtils scpClientUtil = getScpClientUtils(ip);
             logger.info(msg);
@@ -347,15 +347,15 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
             scpClientUtil.putFile(fileSavePath, uploadPath);
             if (flag) {
                 sendMsg("停止原来应用", MsgType.INFO);
-                //停止应用
+                // 停止应用
                 stopApp(port, executeShellUtil);
                 sendMsg("备份原来应用", MsgType.INFO);
-                //备份应用
+                // 备份应用
                 backupApp(executeShellUtil, ip, app.getDeployPath() + FILE_SEPARATOR, app.getName(),
                     app.getBackupPath() + FILE_SEPARATOR, id);
             }
             sendMsg("部署应用", MsgType.INFO);
-            //部署文件,并启动应用
+            // 部署文件,并启动应用
             String deployScript = app.getDeployScript();
             executeShellUtil.execute(deployScript);
             sleep(3);
@@ -395,10 +395,10 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
         sb.append(appName).append(" ").append(backupPath);
         logger.info("备份应用脚本:" + sb);
         executeShellUtil.execute(sb.toString());
-        //还原信息入库
+        // 还原信息入库
         DeployHistory deployHistory = new DeployHistory();
         deployHistory.setAppName(appName);
-        deployHistory.setDeployUser(SecurityUtils.getCurrentUsername());
+        deployHistory.setDeployUser(SecurityUtils.getCurrentNickName());
         deployHistory.setIp(ip);
         deployHistory.setDeployId(id);
         deployHistoryService.saveDeployHistory(deployHistory);
@@ -411,7 +411,7 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
      * @param executeShellUtil /
      */
     private void stopApp(int port, ExecuteShellUtils executeShellUtil) {
-        //发送停止命令
+        // 发送停止命令
         executeShellUtil.execute(String.format("lsof -i :%d|grep -v \"PID\"|awk '{print \"kill -9\",$2}'|sh", port));
 
     }
