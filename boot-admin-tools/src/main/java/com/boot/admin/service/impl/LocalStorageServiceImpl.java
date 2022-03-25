@@ -13,8 +13,10 @@ import com.boot.admin.model.LocalStorage;
 import com.boot.admin.service.LocalStorageService;
 import com.boot.admin.service.dto.LocalStorageQuery;
 import com.boot.admin.util.FileUtils;
+import com.boot.admin.util.ImageUtils;
 import com.boot.admin.util.QueryHelp;
 import com.boot.admin.util.ValidationUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +37,9 @@ import java.util.Map;
 @Service
 public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, LocalStorage> implements LocalStorageService {
 
+    @Value(value = "${domain}")
+    private String domain;
+
     private final FileProperties fileProperties;
 
     public LocalStorageServiceImpl(FileProperties fileProperties) {
@@ -46,7 +51,8 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
         FileUtils.checkSize(fileProperties.getMaxSize(), file.getSize());
         String suffix = FileUtils.getExtensionName(file.getOriginalFilename());
         String type = FileUtils.getFileType(suffix);
-        String filePath = fileProperties.getPath().getPath() + type;
+        String rootPath = fileProperties.getPath().getPath();
+        String filePath = rootPath + type;
         // 上传文件
         File uploadFile = FileUtils.upload(file, filePath);
         if (ObjectUtil.isNull(uploadFile)) {
@@ -55,7 +61,7 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
         // 压缩文件
         File compressFile = null;
         if (FileUtils.IMAGE.equals(type) && fileProperties.isCompressImage()) {
-            compressFile = FileUtils.compressImage(uploadFile);
+            compressFile = ImageUtils.compress(uploadFile);
         }
         try {
             LocalStorage localStorage = new LocalStorage(
@@ -64,10 +70,10 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
                 suffix,
                 type,
                 FileUtils.getSize(file.getSize()),
-                uploadFile.getPath()
+                FileUtils.replaceAccessPath(uploadFile.getPath(), rootPath, domain)
             );
             if (compressFile != null) {
-                localStorage.setCompressPath(compressFile.getPath());
+                localStorage.setCompressPath(FileUtils.replaceAccessPath(compressFile.getPath(), rootPath, domain));
             }
             baseMapper.insert(localStorage);
             return localStorage;

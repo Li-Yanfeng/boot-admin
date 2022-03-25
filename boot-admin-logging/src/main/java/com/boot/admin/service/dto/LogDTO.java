@@ -1,7 +1,5 @@
 package com.boot.admin.service.dto;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -49,15 +47,12 @@ public class LogDTO implements Serializable {
     private byte[] exceptionDetail;
 
     @ApiModelProperty(value = "创建人")
-    @TableField(fill = FieldFill.INSERT)
     private Long createBy;
 
     @ApiModelProperty(value = "创建人名称")
-    @TableField(fill = FieldFill.INSERT)
     private String createByName;
 
     @ApiModelProperty(value = "创建时间")
-    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
 

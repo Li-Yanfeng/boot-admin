@@ -4,7 +4,6 @@ import com.boot.admin.annotation.ResultWrapper;
 import com.boot.admin.constant.PackagePattern;
 import com.boot.admin.core.model.Result;
 import org.springframework.core.MethodParameter;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @author Li Yanfeng
  * @link https://juejin.cn/post/6986800656950493214
  */
-@Order(1)
 @RestControllerAdvice(basePackages = PackagePattern.BASE_PATH)
 public class ResponseResultAdvice implements ResponseBodyAdvice<Object> {
 

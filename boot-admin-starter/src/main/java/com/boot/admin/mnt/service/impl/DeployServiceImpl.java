@@ -26,7 +26,10 @@ import com.boot.admin.mnt.util.ScpClientUtils;
 import com.boot.admin.mnt.websocket.MsgType;
 import com.boot.admin.mnt.websocket.SocketMsg;
 import com.boot.admin.mnt.websocket.WebSocketServer;
-import com.boot.admin.util.*;
+import com.boot.admin.util.ConvertUtils;
+import com.boot.admin.util.FileUtils;
+import com.boot.admin.util.QueryHelp;
+import com.boot.admin.util.ValidationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -247,7 +250,7 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
     public String serverReduction(DeployHistory resource) {
         Long deployId = resource.getDeployId();
         Deploy deployInfo = deployMapper.selectById(deployId);
-        String deployDate = DateUtil.format(resource.getDeployDate(), DatePattern.PURE_DATETIME_PATTERN);
+        String deployDate = DateUtil.format(resource.getCreateTime(), DatePattern.PURE_DATETIME_PATTERN);
         AppDTO app = appService.getAppById(deployInfo.getAppId());
         if (app == null) {
             sendMsg("应用信息不存在：" + resource.getAppName(), MsgType.ERROR);
@@ -398,7 +401,6 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
         // 还原信息入库
         DeployHistory deployHistory = new DeployHistory();
         deployHistory.setAppName(appName);
-        deployHistory.setDeployUser(SecurityUtils.getCurrentNickName());
         deployHistory.setIp(ip);
         deployHistory.setDeployId(id);
         deployHistoryService.saveDeployHistory(deployHistory);

@@ -20,20 +20,23 @@ public class DeployHistoryDTO implements Serializable {
     @ApiModelProperty(value = "ID")
     private Long historyId;
 
-    @ApiModelProperty(value = "应用名称")
-    private String appName;
-
-    @ApiModelProperty(value = "部署日期")
-    private LocalDateTime deployDate;
-
-    @ApiModelProperty(value = "部署用户")
-    private String deployUser;
+    @ApiModelProperty(value = "部署编号")
+    private Long deployId;
 
     @ApiModelProperty(value = "服务器IP")
     private String ip;
 
-    @ApiModelProperty(value = "部署编号")
-    private Long deployId;
+    @ApiModelProperty(value = "应用名称")
+    private String appName;
+
+    @ApiModelProperty(value = "创建人")
+    private Long createBy;
+
+    @ApiModelProperty(value = "创建人名称")
+    private String createByName;
+
+    @ApiModelProperty(value = "创建时间")
+    private LocalDateTime createTime;
 
 
     public Long getHistoryId() {
@@ -44,28 +47,12 @@ public class DeployHistoryDTO implements Serializable {
         this.historyId = historyId;
     }
 
-    public String getAppName() {
-        return appName;
+    public Long getDeployId() {
+        return deployId;
     }
 
-    public void setAppName(String appName) {
-        this.appName = appName;
-    }
-
-    public LocalDateTime getDeployDate() {
-        return deployDate;
-    }
-
-    public void setDeployDate(LocalDateTime  deployDate) {
-        this.deployDate = deployDate;
-    }
-
-    public String getDeployUser() {
-        return deployUser;
-    }
-
-    public void setDeployUser(String deployUser) {
-        this.deployUser = deployUser;
+    public void setDeployId(Long deployId) {
+        this.deployId = deployId;
     }
 
     public String getIp() {
@@ -76,12 +63,36 @@ public class DeployHistoryDTO implements Serializable {
         this.ip = ip;
     }
 
-    public Long getDeployId() {
-        return deployId;
+    public String getAppName() {
+        return appName;
     }
 
-    public void setDeployId(Long deployId) {
-        this.deployId = deployId;
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+
+    public Long getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Long createBy) {
+        this.createBy = createBy;
+    }
+
+    public String getCreateByName() {
+        return createByName;
+    }
+
+    public void setCreateByName(String createByName) {
+        this.createByName = createByName;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 
     @Override

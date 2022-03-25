@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  *
  * @author Li Yanfeng
  */
-@Target({ElementType.METHOD})
+@Target({ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Encrypt {
 }

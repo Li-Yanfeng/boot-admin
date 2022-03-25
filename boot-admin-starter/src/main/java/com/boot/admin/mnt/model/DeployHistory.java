@@ -1,8 +1,6 @@
 package com.boot.admin.mnt.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.boot.admin.core.validation.Update;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,20 +24,26 @@ public class DeployHistory implements Serializable {
     @NotNull(groups = Update.class)
     private Long historyId;
 
-    @ApiModelProperty(value = "应用名称")
-    private String appName;
-
-    @ApiModelProperty(value = "部署日期")
-    private LocalDateTime deployDate;
-
-    @ApiModelProperty(value = "部署用户")
-    private String deployUser;
+    @ApiModelProperty(value = "部署编号")
+    private Long deployId;
 
     @ApiModelProperty(value = "服务器IP")
     private String ip;
 
-    @ApiModelProperty(value = "部署编号")
-    private Long deployId;
+    @ApiModelProperty(value = "应用名称")
+    private String appName;
+
+    @ApiModelProperty(value = "创建人")
+    @TableField(fill = FieldFill.INSERT)
+    private Long createBy;
+
+    @ApiModelProperty(value = "创建人名称")
+    @TableField(fill = FieldFill.INSERT)
+    private String createByName;
+
+    @ApiModelProperty(value = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
 
 
     public Long getHistoryId() {
@@ -50,28 +54,12 @@ public class DeployHistory implements Serializable {
         this.historyId = historyId;
     }
 
-    public String getAppName() {
-        return appName;
+    public Long getDeployId() {
+        return deployId;
     }
 
-    public void setAppName(String appName) {
-        this.appName = appName;
-    }
-
-    public LocalDateTime getDeployDate() {
-        return deployDate;
-    }
-
-    public void setDeployDate(LocalDateTime  deployDate) {
-        this.deployDate = deployDate;
-    }
-
-    public String getDeployUser() {
-        return deployUser;
-    }
-
-    public void setDeployUser(String deployUser) {
-        this.deployUser = deployUser;
+    public void setDeployId(Long deployId) {
+        this.deployId = deployId;
     }
 
     public String getIp() {
@@ -82,11 +70,35 @@ public class DeployHistory implements Serializable {
         this.ip = ip;
     }
 
-    public Long getDeployId() {
-        return deployId;
+    public String getAppName() {
+        return appName;
     }
 
-    public void setDeployId(Long deployId) {
-        this.deployId = deployId;
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+
+    public Long getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Long createBy) {
+        this.createBy = createBy;
+    }
+
+    public String getCreateByName() {
+        return createByName;
+    }
+
+    public void setCreateByName(String createByName) {
+        this.createByName = createByName;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 }

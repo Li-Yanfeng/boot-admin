@@ -105,8 +105,8 @@ public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, Qin
             DefaultPutRet compressFilePutRet = null;
             // 如果需要压缩图片
             if (FileUtils.IMAGE.equals(type) && qiniuProperties.isCompressImage()) {
-                String compressFilePath = fileDir + FileUtils.IMAGE_COMPRESS + StringUtils.SLASH + filename;
-                File compressFile = FileUtils.compressImage(file, compressFilePath);
+                String compressFilePath = fileDir + ImageUtils.COMPRESS_DIR + StringUtils.SLASH + filename;
+                File compressFile = ImageUtils.compress(file, compressFilePath);
                 if (compressFile != null) {
                     // 压缩文件
                     Response compressFileResponse = uploadManager.put(compressFile, compressFilePath, upToken);

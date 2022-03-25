@@ -10,10 +10,7 @@ import com.boot.admin.mapper.QiniuContentMapper;
 import com.boot.admin.model.QiniuConfig;
 import com.boot.admin.model.QiniuContent;
 import com.boot.admin.service.QiniuConfigService;
-import com.boot.admin.util.FileUtils;
-import com.boot.admin.util.QiNiuUtils;
-import com.boot.admin.util.RedisUtils;
-import com.boot.admin.util.StringUtils;
+import com.boot.admin.util.*;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.model.FileInfo;
@@ -79,7 +76,7 @@ public class QiniuConfigServiceImpl extends ServiceImpl<QiniuConfigMapper, Qiniu
         BucketManager.FileListIterator fileListIterator = bucketManager.createFileListIterator(config.getBucket(), prefix, limit, delimiter);
         while (fileListIterator.hasNext()) {
             // 压缩目录
-            String compressDir = StringUtils.SLASH + FileUtils.IMAGE_COMPRESS;
+            String compressDir = StringUtils.SLASH + ImageUtils.COMPRESS_DIR;
             // 处理获取的file
             QiniuContent qiniuContent;
             FileInfo[] items = fileListIterator.next();

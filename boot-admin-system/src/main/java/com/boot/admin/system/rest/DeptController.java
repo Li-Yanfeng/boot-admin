@@ -74,7 +74,7 @@ public class DeptController {
     @ApiOperation(value = "查询部门")
     @PreAuthorize(value = "@authorize.check('users:list','depts:list')")
     @GetMapping
-    public List<Tree<Long>> list(String a, DeptQuery query) {
+    public List<Tree<Long>> list(DeptQuery query) {
         return deptService.buildTree(deptService.listDepts(query));
     }
 

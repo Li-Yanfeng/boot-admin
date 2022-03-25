@@ -132,8 +132,8 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
 
     @Override
     public List<DeptDTO> listDeptsChildren(Long id, boolean containsItself) {
-        String applySql = "FIND_IN_SET({0}, ancestors)";
-        List<Dept> depts = lambdaQuery().eq(containsItself, Dept::getDeptId, id).or().apply(applySql, id).list();
+        String applySql = SqlFunctionUtils.findInSet(id, "ancestors");
+        List<Dept> depts = lambdaQuery().eq(containsItself, Dept::getDeptId, id).or().apply(applySql).list();
         return ConvertUtils.convert(depts, DeptDTO.class);
     }
 

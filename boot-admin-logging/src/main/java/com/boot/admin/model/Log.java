@@ -48,11 +48,9 @@ public class Log implements Serializable {
     private byte[] exceptionDetail;
 
     @ApiModelProperty(value = "创建人")
-    @TableField(fill = FieldFill.INSERT)
     private Long createBy;
 
     @ApiModelProperty(value = "创建人名称")
-    @TableField(fill = FieldFill.INSERT)
     private String createByName;
 
     @ApiModelProperty(value = "创建时间")

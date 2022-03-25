@@ -13,7 +13,7 @@ import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdviceAdapter;
 
 import java.io.ByteArrayInputStream;
@@ -27,7 +27,7 @@ import java.nio.charset.StandardCharsets;
  * @author Li Yanfeng
  * @link https://juejin.cn/post/6844903981915832327
  */
-@RestControllerAdvice(basePackages = PackagePattern.BASE_PATH)
+@ControllerAdvice(basePackages = PackagePattern.BASE_PATH)
 public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(DecryptRequestBodyAdvice.class);

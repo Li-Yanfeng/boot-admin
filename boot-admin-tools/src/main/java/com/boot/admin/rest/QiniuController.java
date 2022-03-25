@@ -1,15 +1,17 @@
 package com.boot.admin.rest;
 
-import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
+import com.boot.admin.exception.BadRequestException;
+import com.boot.admin.exception.enums.UserErrorCode;
 import com.boot.admin.model.QiniuConfig;
 import com.boot.admin.model.QiniuContent;
 import com.boot.admin.service.QiniuConfigService;
 import com.boot.admin.service.QiniuContentService;
 import com.boot.admin.service.dto.QiniuContentQuery;
+import com.boot.admin.util.FileUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
@@ -70,17 +72,22 @@ public class QiniuController {
         return qiniuContentService.uploadContent(file, qiniuConfigService.getQiniuConfig());
     }
 
-    @ApiOperation(value = "删除文件")
-    @Log(value = "删除文件")
-    @DeleteMapping(value = "/{id}")
-    public void deleteFile(@PathVariable Long id) {
-        qiniuContentService.removeQiniuContentByIds(CollUtil.newHashSet(id), qiniuConfigService.getQiniuConfig());
+    @ApiOperation(value = "上传图片")
+    @NoRepeatSubmit
+    @PostMapping(value = "/pictures")
+    public QiniuContent uploadPicture(@RequestParam("file") MultipartFile file) {
+        // 判断文件是否为图片
+        String suffix = FileUtils.getExtensionName(file.getOriginalFilename());
+        if (!FileUtils.IMAGE.equals(FileUtils.getFileType(suffix))) {
+            throw new BadRequestException(UserErrorCode.USER_UPLOAD_FILE_TYPE_DOES_NOT_MATCH);
+        }
+        return qiniuContentService.uploadContent(file, qiniuConfigService.getQiniuConfig());
     }
 
-    @ApiOperation(value = "删除图片")
-    @Log(value = "删除图片")
+    @ApiOperation(value = "删除文件")
+    @Log(value = "删除文件")
     @DeleteMapping
-    public void deletePicture(@RequestBody Set<Long> ids) {
+    public void delete(@RequestBody Set<Long> ids) {
         qiniuContentService.removeQiniuContentByIds(ids, qiniuConfigService.getQiniuConfig());
     }
 

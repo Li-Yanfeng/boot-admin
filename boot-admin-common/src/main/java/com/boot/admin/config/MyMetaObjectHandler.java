@@ -48,8 +48,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        Long createBy = SecurityUtils.getCurrentUserId();
-        String createByName = SecurityUtils.getCurrentNickName();
+        Long createBy = getCurrentUserId();
+        String createByName = getCurrentNickName();
         LocalDateTime createTime = LocalDateTime.now();
 
         // 创建人
@@ -85,8 +85,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        Long updateBy = SecurityUtils.getCurrentUserId();
-        String updateByName = SecurityUtils.getCurrentNickName();
+        Long updateBy = getCurrentUserId();
+        String updateByName = getCurrentNickName();
         LocalDateTime updateTime = LocalDateTime.now();
 
         // 更新人
@@ -108,5 +108,27 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     private boolean hasSetterAndValueIsNull(MetaObject metaObject, String field) {
         return metaObject.hasSetter(field) && metaObject.getValue(field) == null;
+    }
+
+    /**
+     * 获取系统用户ID
+     */
+    private Long getCurrentUserId() {
+        try {
+            return SecurityUtils.getCurrentUserId();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * 获取系统用户昵称
+     */
+    private String getCurrentNickName() {
+        try {
+            return SecurityUtils.getCurrentNickName();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

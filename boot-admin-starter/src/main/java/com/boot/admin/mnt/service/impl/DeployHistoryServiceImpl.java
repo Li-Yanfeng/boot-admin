@@ -72,8 +72,8 @@ public class DeployHistoryServiceImpl extends ServiceImpl<DeployHistoryMapper, D
             map.put("部署编号", deployHistory.getDeployId());
             map.put("应用名称", deployHistory.getAppName());
             map.put("部署IP", deployHistory.getIp());
-            map.put("部署时间", deployHistory.getDeployDate());
-            map.put("部署人员", deployHistory.getDeployUser());
+            map.put("部署时间", deployHistory.getCreateTime());
+            map.put("部署人员", deployHistory.getCreateByName());
             list.add(map);
         });
         FileUtils.downloadExcel(list, response);

@@ -38,6 +38,9 @@ spring:
     # 连接超时时间
     timeout: 5000
 
+# 网站域名
+domain: http://localhost:8000
+
 # 登录相关配置
 login:
   # 登录缓存

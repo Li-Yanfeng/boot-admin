@@ -34,11 +34,11 @@ import javax.sql.DataSource;
 @MapperScan(basePackages = {PackagePattern.MAPPER_PATH_STAR})
 public class MybatisPlusConfig {
 
-    private final Environment environment;
-    private final DataSource dataSource;
-
     @Value(value = "${mybatis-plus.illegal-sql-inner-interceptor.enabled}")
     private Boolean enableIllegalSqlInnerInterceptor;
+
+    private final Environment environment;
+    private final DataSource dataSource;
 
     public MybatisPlusConfig(Environment environment, DataSource dataSource) {
         this.environment = environment;

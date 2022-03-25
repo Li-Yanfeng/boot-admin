@@ -5,12 +5,11 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.exception.enums.UserErrorCode;
-import net.coobird.thumbnailator.Thumbnails;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.streaming.SXSSFCell;
@@ -72,12 +71,9 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
 
     public static final String IMAGE = "picture";
     public static final String TXT = "document";
-    public static final String MUSIC = "music";
+    public static final String AUDIO = "audio";
     public static final String VIDEO = "video";
     public static final String OTHER = "other";
-
-    public static final String IMAGE_COMPRESS = "compress";
-
 
     /**
      * MultipartFile转File
@@ -185,55 +181,17 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
     }
 
     /**
-     * 压缩图片
+     * 将文件路径替换为可访问路径
      *
-     * @param sourceFile 源文件
+     * @param filePath 文件路径
+     * @param rootPath 文件根路径
+     * @param domain   域名
+     * @return 文件访问路径
      */
-    public static File compressImage(File sourceFile) {
-        String filename = getName(sourceFile);
-        // 判断文件是否为图片
-        String suffix = getExtensionName(filename);
-        if (ObjectUtil.notEqual(FileUtils.IMAGE, FileUtils.getFileType(suffix))) {
-            throw new BadRequestException(UserErrorCode.USER_UPLOAD_FILE_TYPE_DOES_NOT_MATCH);
-        }
-        // 目录路径
-        String compressPath = sourceFile.getParent() + File.separator + IMAGE_COMPRESS;
-        try {
-            // 目标文件
-            File dest = FileUtil.touch(compressPath, filename);
-            Thumbnails.of(sourceFile).scale(0.4F).outputQuality(0.4F).toFile(dest);
-            return dest;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-        return null;
-    }
-
-    /**
-     * 压缩图片
-     *
-     * @param destPath 目标文件
-     */
-    public static File compressImage(MultipartFile file, String destPath) {
-        // 判断文件是否为图片
-        String suffix = getExtensionName(destPath);
-        if (ObjectUtil.notEqual(FileUtils.IMAGE, FileUtils.getFileType(suffix))) {
-            throw new BadRequestException(UserErrorCode.USER_UPLOAD_FILE_TYPE_DOES_NOT_MATCH);
-        }
-
-        InputStream is = null;
-        try {
-            // 目标文件
-            File dest = FileUtil.touch(destPath);
-            is = file.getInputStream();
-            Thumbnails.of(is).scale(0.4F).outputQuality(0.4F).toFile(dest);
-            return dest;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        } finally {
-            IoUtil.close(is);
-        }
-        return null;
+    public static String replaceAccessPath(String filePath, String rootPath, String domain) {
+        String[] address = rootPath.split("\\\\");
+        String accessPath = domain + StrUtil.SLASH + address[address.length - 1] + StrUtil.SLASH;
+        return filePath.replace(rootPath, accessPath).replace(StrUtil.BACKSLASH, StrUtil.SLASH);
     }
 
     public static String getFileType(String type) {
@@ -246,7 +204,7 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
         } else if (documents.contains(type)) {
             return TXT;
         } else if (music.contains(type)) {
-            return MUSIC;
+            return AUDIO;
         } else if (video.contains(type)) {
             return VIDEO;
         } else {

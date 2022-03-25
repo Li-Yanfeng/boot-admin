@@ -148,12 +148,13 @@ CREATE TABLE `mnt_deploy`
 DROP TABLE IF EXISTS `mnt_deploy_history`;
 CREATE TABLE `mnt_deploy_history`
 (
-    `history_id`  bigint(20) NOT NULL COMMENT 'ID',
-    `app_name`    varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '应用名称',
-    `deploy_date` datetime                                                NOT NULL COMMENT '部署日期',
-    `deploy_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '部署用户',
-    `ip`          varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '服务器IP',
-    `deploy_id`   bigint(20) NULL DEFAULT NULL COMMENT '部署编号',
+    `history_id`     bigint(20) NOT NULL COMMENT 'ID',
+    `deploy_id`      bigint(20) NULL DEFAULT NULL COMMENT '部署编号',
+    `ip`             varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '服务器IP',
+    `app_name`       varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '应用名称',
+    `create_by`      bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+    `create_by_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人名称',
+    `create_time`    datetime NULL DEFAULT NULL COMMENT '创建时间',
     PRIMARY KEY (`history_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部署历史管理' ROW_FORMAT = COMPACT;
 

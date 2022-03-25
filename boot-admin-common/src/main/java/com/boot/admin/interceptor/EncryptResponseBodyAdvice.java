@@ -10,7 +10,6 @@ import com.boot.admin.util.RsaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -24,11 +23,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @author Li Yanfeng
  * @link https://juejin.cn/post/6844903981915832327
  */
-@Order(2)
 @RestControllerAdvice(basePackages = PackagePattern.BASE_PATH)
 public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     private static final Logger logger = LoggerFactory.getLogger(EncryptResponseBodyAdvice.class);
+
+    /**
+     * 自定义header：加密
+     */
+    public static final String HEADER_ENCRYPT = "Encrypt";
 
     /**
      * 该组件是否支持给定的控制器方法返回类型和选择的 {@code HttpMessageConverter} 类型
@@ -41,7 +44,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         // 判断方法或参数上是否有注加 @Encrypt
-        return returnType.hasMethodAnnotation(Encrypt.class);
+        return returnType.hasMethodAnnotation(Encrypt.class) || returnType.hasParameterAnnotation(Encrypt.class);
     }
 
     /**
@@ -67,7 +70,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
      */
     private Object encryptResponseBody(Object body, ServerHttpResponse response) {
         // 添加 Encrypt Header，方便前端统一处理
-        response.getHeaders().add("Encrypt", "true");
+        response.getHeaders().add(HEADER_ENCRYPT, "true");
         try {
             logger.info("========================================= 加密开始 =========================================");
             String responseBody = JSONUtil.toJsonStr(body);

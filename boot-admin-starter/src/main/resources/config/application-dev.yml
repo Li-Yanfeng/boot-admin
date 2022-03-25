@@ -60,6 +60,9 @@ mybatis-plus:
     # 是否启用
     enabled: false
 
+# 网站域名
+domain: http://localhost:8000
+
 # 登录相关配置
 login:
   # 登录缓存
