@@ -69,7 +69,7 @@ public class EmailServiceImpl extends ServiceImpl<EmailConfigMapper, EmailConfig
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
-        account.setFrom(emailConfig.getUser() + "<" + emailConfig.getFromUser() + ">");
+        account.setFrom(emailConfig.getFromUser());
         // ssl方式发送
         account.setSslEnable(true);
         // 使用STARTTLS安全连接

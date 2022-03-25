@@ -3,6 +3,7 @@ package com.boot.admin.service;
 import com.boot.admin.core.service.Service;
 import com.boot.admin.model.EmailConfig;
 import com.boot.admin.model.vo.EmailVO;
+import org.springframework.scheduling.annotation.Async;
 
 /**
  * 邮件配置 服务类
@@ -34,5 +35,6 @@ public interface EmailService extends Service<EmailConfig> {
      * @param emailVo     邮件发送的内容
      * @param emailConfig 邮件配置
      */
+    @Async
     void send(EmailVO emailVo, EmailConfig emailConfig);
 }

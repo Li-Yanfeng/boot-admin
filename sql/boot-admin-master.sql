@@ -777,17 +777,19 @@ DROP TABLE IF EXISTS `tool_email_config`;
 CREATE TABLE `tool_email_config`
 (
     `config_id` bigint(20) NOT NULL COMMENT 'ID',
-    `host`      varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮件服务器 SMTP 地址',
-    `port`      varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮件服务器 SMTP 端口',
-    `user`      varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '发件者用户名',
-    `pass`      varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密码',
-    `from_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收件人',
+    `host`      varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮件服务器 SMTP 地址',
+    `port`      varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮件服务器 SMTP 端口',
+    `user`      varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱地址',
+    `pass`      varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '授权密码',
+    `from_user` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '发件人昵称（遵循RFC-822标准）',
     PRIMARY KEY (`config_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '邮箱配置' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tool_email_config
 -- ----------------------------
+INSERT INTO `tool_email_config`
+VALUES (1, 'smtp.163.com', '465', 'yanfeng413@163.com', '25106154114899F3F895FA9A05F6E324D9FD7FDBC949FC61', 'Boot-Admin<yanfeng413@163.com>');
 
 -- ----------------------------
 -- Table structure for tool_local_storage

@@ -34,15 +34,15 @@ public class EmailConfig implements Serializable {
     @NotBlank
     private String port;
 
-    @ApiModelProperty(value = "发件者用户名")
+    @ApiModelProperty(value = "邮箱地址")
     @NotBlank
     private String user;
 
-    @ApiModelProperty(value = "密码")
+    @ApiModelProperty(value = "授权密码")
     @NotBlank
     private String pass;
 
-    @ApiModelProperty(value = "收件人")
+    @ApiModelProperty(value = "发件人昵称（遵循RFC-822标准）")
     @NotBlank
     private String fromUser;
 

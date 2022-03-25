@@ -3,6 +3,7 @@ package com.boot.admin.rest;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
+import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.model.EmailConfig;
 import com.boot.admin.model.vo.EmailVO;
 import com.boot.admin.service.EmailService;
@@ -46,6 +47,10 @@ public class EmailController {
     @NoRepeatSubmit
     @PostMapping
     public void sendEmail(@Validated @RequestBody EmailVO emailVo) {
-        emailService.send(emailVo, emailService.getEmailConfig());
+        EmailConfig emailConfig = emailService.getEmailConfig();
+        if (emailConfig == null || emailConfig.getConfigId() == null) {
+            throw new BadRequestException("请先配置，再操作");
+        }
+        emailService.send(emailVo, emailConfig);
     }
 }
