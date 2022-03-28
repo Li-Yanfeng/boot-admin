@@ -10,6 +10,7 @@ import com.boot.admin.util.RsaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @author Li Yanfeng
  * @link https://juejin.cn/post/6844903981915832327
  */
+@Order(2)
 @RestControllerAdvice(basePackages = PackagePattern.BASE_PATH)
 public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
@@ -31,7 +33,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
     /**
      * 自定义header：加密
      */
-    public static final String HEADER_ENCRYPT = "Encrypt";
+    public static final String HEADER_ENCRYPT = "encrypt";
 
     /**
      * 该组件是否支持给定的控制器方法返回类型和选择的 {@code HttpMessageConverter} 类型

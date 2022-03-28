@@ -4,6 +4,7 @@ import com.boot.admin.annotation.ResultWrapper;
 import com.boot.admin.constant.PackagePattern;
 import com.boot.admin.core.model.Result;
 import org.springframework.core.MethodParameter;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -17,8 +18,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @author Li Yanfeng
  * @link https://juejin.cn/post/6986800656950493214
  */
+@Order(1)
 @RestControllerAdvice(basePackages = PackagePattern.BASE_PATH)
 public class ResponseResultAdvice implements ResponseBodyAdvice<Object> {
+
+    /**
+     * 自定义header：加密
+     */
+    public static final String HEADER_RESULT_WRAPPER = "result-wrapper";
 
     /**
      * 该组件是否支持给定的控制器方法返回类型和选择的 {@code HttpMessageConverter} 类型
@@ -49,9 +56,11 @@ public class ResponseResultAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<?
         extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        /*
-          将类或方法上带有注解@ResponseResult的，使用统一返回结果
-         */
+        /* 将类或方法上带有注解@ResponseResult的，使用统一返回结果 */
+
+        // 添加 Result Wrapper Header，方便前端统一处理
+        response.getHeaders().add(HEADER_RESULT_WRAPPER, "true");
+
         // 如果返回 Result,直接返回
         if (body instanceof Result) {
             return body;
