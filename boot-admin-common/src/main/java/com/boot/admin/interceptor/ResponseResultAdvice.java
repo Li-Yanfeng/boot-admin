@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class ResponseResultAdvice implements ResponseBodyAdvice<Object> {
 
     /**
-     * 自定义header：加密
+     * 自定义header：包装接口
      */
     public static final String HEADER_RESULT_WRAPPER = "result-wrapper";
 

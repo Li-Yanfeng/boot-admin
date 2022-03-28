@@ -8,7 +8,7 @@ public enum DatabaseTypeEnum {
     /**
      * mysql
      */
-    MYSQL("mysql", "mysql", "com.mysql.jdbc.Driver", "`", "`", "'", "'"),
+    MYSQL("mysql", "mysql", "com.mysql.cj.jdbc.Driver", "`", "`", "'", "'"),
     /**
      * oracle
      */
