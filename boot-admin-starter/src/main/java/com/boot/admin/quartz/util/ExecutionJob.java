@@ -93,7 +93,7 @@ public class ExecutionJob extends QuartzJobBean {
             log.setSuccess(CommonConstant.NO);
             log.setExceptionDetail(ThrowableUtils.getStackTrace(e));
             // 任务如果失败了则暂停
-            if (quartzJob.getPauseAfterFailure() != null && quartzJob.getPauseAfterFailure()) {
+            if (quartzJob.getPauseAfterFailure() != null && CommonConstant.YES.equals(quartzJob.getPauseAfterFailure())) {
                 quartzJob.setPause(CommonConstant.NO);
                 //更新状态
                 quartzJobService.updateQuartzJobByIsPause(quartzJob);

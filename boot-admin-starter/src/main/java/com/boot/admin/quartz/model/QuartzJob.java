@@ -59,7 +59,7 @@ public class QuartzJob extends BaseEntity implements Serializable {
     private String email;
 
     @ApiModelProperty(value = "任务失败后是否暂停")
-    private Boolean pauseAfterFailure;
+    private Integer pauseAfterFailure;
 
     @ApiModelProperty(value = "备注")
     private String description;
@@ -149,11 +149,11 @@ public class QuartzJob extends BaseEntity implements Serializable {
         this.email = email;
     }
 
-    public Boolean getPauseAfterFailure() {
+    public Integer getPauseAfterFailure() {
         return pauseAfterFailure;
     }
 
-    public void setPauseAfterFailure(Boolean pauseAfterFailure) {
+    public void setPauseAfterFailure(Integer pauseAfterFailure) {
         this.pauseAfterFailure = pauseAfterFailure;
     }
 

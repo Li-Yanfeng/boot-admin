@@ -567,7 +567,7 @@ CREATE TABLE `sys_quartz_job`
     `sub_task`            varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '子任务ID',
     `person_in_charge`    varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '负责人',
     `email`               varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '报警邮箱',
-    `pause_after_failure` bit(1) NULL DEFAULT NULL COMMENT '任务失败后是否暂停',
+    `pause_after_failure` tinyint(1) UNSIGNED NULL DEFAULT NULL COMMENT '任务失败后是否暂停',
     `description`         varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
     `create_by`           bigint(20) NULL DEFAULT NULL COMMENT '创建人',
     `update_by`           bigint(20) NULL DEFAULT NULL COMMENT '更新人',
