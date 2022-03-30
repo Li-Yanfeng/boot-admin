@@ -5,7 +5,6 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.boot.admin.exception.BadRequestException;
@@ -34,7 +33,7 @@ import java.util.Map;
  *
  * @author Li Yanfeng
  */
-public class FileUtils extends cn.hutool.core.io.FileUtil {
+public class FileUtils extends FileUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
@@ -74,6 +73,10 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
     public static final String AUDIO = "audio";
     public static final String VIDEO = "video";
     public static final String OTHER = "other";
+
+
+    private static final String SLASH = "/";
+    private static final String BACKSLASH = "\\";
 
     /**
      * MultipartFile转File
@@ -190,8 +193,8 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
      */
     public static String replaceAccessPath(String filePath, String rootPath, String domain) {
         String[] address = rootPath.split("\\\\");
-        String accessPath = domain + StrUtil.SLASH + address[address.length - 1] + StrUtil.SLASH;
-        return filePath.replace(rootPath, accessPath).replace(StrUtil.BACKSLASH, StrUtil.SLASH);
+        String accessPath = domain + SLASH + address[address.length - 1] + SLASH;
+        return filePath.replace(rootPath, accessPath).replace(BACKSLASH, SLASH);
     }
 
     public static String getFileType(String type) {

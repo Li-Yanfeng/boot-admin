@@ -34,6 +34,8 @@ public class QiniuConfigServiceImpl extends ServiceImpl<QiniuConfigMapper, Qiniu
 
     private final RedisUtils redisUtils;
 
+    private static final String SLASH = "/";
+
     public QiniuConfigServiceImpl(QiniuContentMapper qiniuContentMapper, RedisUtils redisUtils) {
         this.qiniuContentMapper = qiniuContentMapper;
         this.redisUtils = redisUtils;
@@ -76,7 +78,7 @@ public class QiniuConfigServiceImpl extends ServiceImpl<QiniuConfigMapper, Qiniu
         BucketManager.FileListIterator fileListIterator = bucketManager.createFileListIterator(config.getBucket(), prefix, limit, delimiter);
         while (fileListIterator.hasNext()) {
             // 压缩目录
-            String compressDir = StringUtils.SLASH + ImageUtils.COMPRESS_DIR;
+            String compressDir = SLASH + ImageUtils.COMPRESS_DIR;
             // 处理获取的file
             QiniuContent qiniuContent;
             FileInfo[] items = fileListIterator.next();
@@ -104,8 +106,8 @@ public class QiniuConfigServiceImpl extends ServiceImpl<QiniuConfigMapper, Qiniu
                     qiniuContent = new QiniuContent();
                 }
                 // 是否为压缩文件
-                if (item.key.contains(compressDir + StringUtils.SLASH)) {
-                    qiniuContent.setCompressUrl(config.getDomain() + StringUtils.SLASH + item.key);
+                if (item.key.contains(compressDir + SLASH)) {
+                    qiniuContent.setCompressUrl(config.getDomain() + SLASH + item.key);
                 } else {
                     qiniuContent.setBucket(config.getBucket());
                     qiniuContent.setSpaceType(config.getSpaceType());
@@ -113,7 +115,7 @@ public class QiniuConfigServiceImpl extends ServiceImpl<QiniuConfigMapper, Qiniu
                     qiniuContent.setSuffix(suffix);
                     qiniuContent.setType(type);
                     qiniuContent.setSize(FileUtils.getSize(item.fsize));
-                    qiniuContent.setUrl(config.getDomain() + StringUtils.SLASH + item.key);
+                    qiniuContent.setUrl(config.getDomain() + SLASH + item.key);
                     qiniuContent.setCreateTime(
                         DateUtil.toLocalDateTime(DateUtil.date(Long.parseLong((item.putTime + "").substring(0, 13))))
                     );
