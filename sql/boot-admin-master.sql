@@ -718,7 +718,7 @@ CREATE TABLE `sys_user_job`
     `user_id` bigint(20) NOT NULL COMMENT '用户ID',
     `job_id`  bigint(20) NOT NULL COMMENT '岗位ID',
     PRIMARY KEY (`user_id`, `job_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户岗位关联' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_job
