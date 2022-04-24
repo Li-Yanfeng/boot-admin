@@ -12,7 +12,7 @@ spring:
         master:
           url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_NAME:boot-admin-master}?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false
           username: ${MYSQL_USER:root}
-          password: ${MYSQL_PWD:root}
+          password: ${MYSQL_PWD:123456}
           driver-class-name: com.mysql.cj.jdbc.Driver
           type: com.zaxxer.hikari.HikariDataSource
           # 配置则生效,自动初始化表结构
@@ -47,7 +47,7 @@ spring:
 
   redis:
     # 数据库索引
-    database: ${REDIS_DB:0}
+    database: ${REDIS_DB:6}
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}
     password: ${REDIS_PWD:}

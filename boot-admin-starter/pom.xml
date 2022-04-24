@@ -50,11 +50,46 @@
     <build>
         <finalName>boot-admin</finalName>
         <plugins>
+            <!-- 指定启动类，将依赖打成外部jar包 -->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.2</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <!-- 生成的jar中，不要包含pom.xml和pom.properties这两个文件 -->
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifest>
+                            <!-- 项目启动类 -->
+                            <mainClass>com.boot.admin.AppRun</mainClass>
+                            <!-- 是否要把第三方jar加入到类构建路径 -->
+                            <addClasspath>true</addClasspath>
+                            <!-- 外部依赖jar包的最终位置 -->
+                            <classpathPrefix>lib</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
+            <!--maven打包组装插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <!--指定 assembly.xml 文件-->
+                        <descriptor>assembly/assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!--跳过单元测试-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -64,6 +99,7 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
+
             <!-- docker的maven插件 -->
             <plugin>
                 <groupId>com.spotify</groupId>

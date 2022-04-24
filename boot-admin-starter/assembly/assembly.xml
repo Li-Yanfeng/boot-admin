@@ -1,0 +1,64 @@
+<assembly>
+    <id>package</id>
+    <formats>
+<!--        <format>zip</format>-->
+        <format>tar.gz</format>
+    </formats>
+
+    <!--第三方依赖设置-->
+    <dependencySets>
+        <dependencySet>
+            <!--不使用项目的artifact，第三方jar不要解压，打包进zip文件的lib目录-->
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>/lib</outputDirectory>
+            <unpack>false</unpack>
+        </dependencySet>
+    </dependencySets>
+
+    <!--文件设置-->
+    <fileSets>
+        <!--获取bin目录下脚本指定文件格式为unix，并赋权为744-->
+        <fileSet>
+            <outputDirectory></outputDirectory>
+            <directory>${project.basedir}/assembly/bin</directory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+        <!--获取配置文件，打包到压缩文件conf目录下-->
+        <fileSet>
+            <outputDirectory>config</outputDirectory>
+            <directory>target/classes</directory>
+            <includes>
+                <include>**/*.yml</include>
+                <include>**/*.yaml</include>
+                <include>**/*.properties</include>
+                <include>**/*.xml</include>
+                <include>**/*.txt</include>
+            </includes>
+        </fileSet>
+        <!--获取模板文件，打包到压缩文件templates目录下-->
+        <fileSet>
+            <outputDirectory>config/templates</outputDirectory>
+            <directory>target/classes/templates</directory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+        <!-- 获取特定后缀的jar文件作为项目的启动jar -->
+        <fileSet>
+            <outputDirectory></outputDirectory>
+            <directory>${project.build.directory}</directory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>lib</outputDirectory>
+            <directory>${project.build.directory}/lib</directory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>
