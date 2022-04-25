@@ -1,6 +1,6 @@
 package com.boot.admin.exception;
 
-import org.springframework.util.StringUtils;
+import com.boot.admin.util.StringUtils;
 
 /**
  * 实体存在异常
@@ -9,11 +9,7 @@ import org.springframework.util.StringUtils;
  */
 public class EntityExistException extends RuntimeException {
 
-    public EntityExistException(Class clazz, String field, String val) {
-        super(generateMessage(clazz.getSimpleName(), field, val));
-    }
-
-    private static String generateMessage(String entity, String field, String val) {
-        return StringUtils.capitalize(entity) + " with " + field + " " + val + " existed";
+    public EntityExistException(String message) {
+        super(StringUtils.format("【%s】已存在", message));
     }
 }

@@ -10,10 +10,10 @@ import com.boot.admin.mnt.service.ServerService;
 import com.boot.admin.mnt.service.dto.ServerDTO;
 import com.boot.admin.mnt.service.dto.ServerQuery;
 import com.boot.admin.mnt.util.ExecuteShellUtils;
+import com.boot.admin.util.Assert;
 import com.boot.admin.util.ConvertUtils;
 import com.boot.admin.util.FileUtils;
 import com.boot.admin.util.QueryHelp;
-import com.boot.admin.util.ValidationUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -44,7 +44,7 @@ public class ServerServiceImpl extends ServiceImpl<ServerMapper, Server> impleme
     @Override
     public void updateServerById(Server resource) {
         Long serverId = resource.getServerId();
-        ValidationUtils.notNull(baseMapper.selectById(serverId), "Server", "serverId", serverId);
+        Assert.notNull(baseMapper.selectById(serverId));
         baseMapper.updateById(resource);
     }
 
@@ -61,7 +61,7 @@ public class ServerServiceImpl extends ServiceImpl<ServerMapper, Server> impleme
     @Override
     public ServerDTO getServerById(Long id) {
         Server server = baseMapper.selectById(id);
-        ValidationUtils.notNull(server, "Server", "serverId", id);
+        Assert.notNull(server);
         return ConvertUtils.convert(server, ServerDTO.class);
     }
 

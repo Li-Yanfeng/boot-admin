@@ -9,10 +9,10 @@ import com.boot.admin.mnt.model.DeployHistory;
 import com.boot.admin.mnt.service.DeployHistoryService;
 import com.boot.admin.mnt.service.dto.DeployHistoryDTO;
 import com.boot.admin.mnt.service.dto.DeployHistoryQuery;
+import com.boot.admin.util.Assert;
 import com.boot.admin.util.ConvertUtils;
 import com.boot.admin.util.FileUtils;
 import com.boot.admin.util.QueryHelp;
-import com.boot.admin.util.ValidationUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +43,7 @@ public class DeployHistoryServiceImpl extends ServiceImpl<DeployHistoryMapper, D
     @Override
     public void updateDeployHistoryById(DeployHistory resource) {
         Long historyId = resource.getHistoryId();
-        ValidationUtils.notNull(baseMapper.selectById(historyId), "DeployHistory", "historyId", historyId);
+        Assert.notNull(baseMapper.selectById(historyId));
         baseMapper.updateById(resource);
     }
 
@@ -60,7 +60,7 @@ public class DeployHistoryServiceImpl extends ServiceImpl<DeployHistoryMapper, D
     @Override
     public DeployHistoryDTO getDeployHistoryById(Long id) {
         DeployHistory deployHistory = baseMapper.selectById(id);
-        ValidationUtils.notNull(deployHistory, "DeployHistory", "historyId", id);
+        Assert.notNull(deployHistory);
         return ConvertUtils.convert(deployHistory, DeployHistoryDTO.class);
     }
 

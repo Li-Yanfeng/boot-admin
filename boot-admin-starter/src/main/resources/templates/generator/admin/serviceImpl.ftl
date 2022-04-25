@@ -59,7 +59,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
         <#list columns as column>
             <#if column.columnKey = 'UNI'>
         if (ObjectUtil.isNotNull(lambdaQuery().eq(${className}::get${column.capitalColumnName}, resource.get${column.capitalColumnName}()).one())) {
-            throw new EntityExistException(${className}.class, "${column.columnName}", resource.get${column.capitalColumnName}());
+            throw new EntityExistException(resource.get${column.capitalColumnName}());
         }
             </#if>
         </#list>
@@ -77,13 +77,13 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     @Override
     public void update${className}ById(${className} resource) {
         ${pkColumnType} ${pkChangeColName} = resource.get${pkCapitalColName}();
-        ValidationUtils.notNull(baseMapper.selectById(${pkChangeColName}), "${className}", "${pkChangeColName}", ${pkChangeColName});
+        Assert.notNull(baseMapper.selectById(${pkChangeColName}));
     <#if columns??>
         <#list columns as column>
             <#if column.columnKey = 'UNI'>
         ${className} ${column.columnName}Obj = lambdaQuery().eq(${className}::get${column.capitalColumnName}, resource.get${column.capitalColumnName}()).one();
         if (ObjectUtil.isNotNull(${column.columnName}Obj) && ObjectUtil.notEqual(${pkChangeColName}, ${column.columnName}Obj.get${pkCapitalColName}())) {
-            throw new EntityExistException(${className}.class, "${column.columnName}", resource.get${column.capitalColumnName}());
+            throw new EntityExistException(resource.get${column.capitalColumnName}());
         }
             </#if>
         </#list>
@@ -107,7 +107,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     @Override
     public ${className}DTO get${className}ById(${pkColumnType} id) {
         ${className} ${changeClassName} = baseMapper.selectById(id);
-        ValidationUtils.notNull(${changeClassName}, "${className}", "${pkChangeColName}", id);
+        Assert.notNull(${changeClassName});
         return ConvertUtils.convert(${changeClassName}, ${className}DTO.class);
     }
 

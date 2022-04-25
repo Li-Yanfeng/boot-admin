@@ -26,10 +26,7 @@ import com.boot.admin.mnt.util.ScpClientUtils;
 import com.boot.admin.mnt.websocket.MsgType;
 import com.boot.admin.mnt.websocket.SocketMsg;
 import com.boot.admin.mnt.websocket.WebSocketServer;
-import com.boot.admin.util.ConvertUtils;
-import com.boot.admin.util.FileUtils;
-import com.boot.admin.util.QueryHelp;
-import com.boot.admin.util.ValidationUtils;
+import com.boot.admin.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -41,6 +38,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 部署 服务实现类
@@ -109,21 +107,31 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
     @Override
     public void updateDeployById(DeployDTO resource) {
         Long deployId = resource.getDeployId();
-        ValidationUtils.notNull(baseMapper.selectById(deployId), "Deploy", "deployId", deployId);
+        Assert.notNull(baseMapper.selectById(deployId));
 
         Deploy deploy = ConvertUtils.convert(resource, Deploy.class);
         deploy.setAppId(resource.getApp().getAppId());
         deployMapper.updateById(deploy);
 
-        if (deploy.getDeployId() != null) {
-            deployServerService.removeDeployServerByDeployIds(CollUtil.newHashSet(deploy.getDeployId()));
+        List<ServerDTO> servers = resource.getDeploys();
+        if (CollUtil.isNotEmpty(servers)) {
+            // 更新数据
+            List<Long> oldServerIds = deployServerService.listServerIdsByDeployId(deployId);
+            List<Long> newServerIds = servers.stream().map(ServerDTO::getServerId).collect(Collectors.toList());
+            List<Long> delServerIds = ComparatorUtils.findDataNotIncludedInSourceData(oldServerIds, newServerIds);
+            List<Long> addServerIds = ComparatorUtils.findDataNotIncludedInSourceData(newServerIds, oldServerIds);
+            if (CollUtil.isNotEmpty(delServerIds)) {
+                deployServerService.removeDeployServerByDeployIdEqAndServerIdsIn(deployId, delServerIds);
+            }
+            if (CollUtil.isNotEmpty(addServerIds)) {
+                addServerIds.forEach(serverId -> {
+                    DeployServer ds = new DeployServer();
+                    ds.setDeployId(deploy.getDeployId());
+                    ds.setServerId(serverId);
+                    deployServerMapper.insert(ds);
+                });
+            }
         }
-        resource.getDeploys().forEach(server -> {
-            DeployServer ds = new DeployServer();
-            ds.setDeployId(deploy.getDeployId());
-            ds.setServerId(server.getServerId());
-            deployServerMapper.insert(ds);
-        });
     }
 
     @Override
@@ -157,7 +165,7 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
     @Override
     public DeployDTO getDeployById(Long id) {
         Deploy deploy = baseMapper.selectById(id);
-        ValidationUtils.notNull(deploy, "Deploy", "deployId", id);
+        Assert.notNull(deploy);
         return ConvertUtils.convert(deploy, DeployDTO.class);
     }
 

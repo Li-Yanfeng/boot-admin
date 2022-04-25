@@ -50,7 +50,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
     @Override
     public void saveJob(Job resource) {
         if (ObjectUtil.isNotNull(getJobByName(resource.getName()))) {
-            throw new EntityExistException(Job.class, "name", resource.getName());
+            throw new EntityExistException(resource.getName());
         }
         baseMapper.insert(resource);
     }
@@ -66,10 +66,10 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
     @Override
     public void updateJobById(Job resource) {
         Long jobId = resource.getJobId();
-        ValidationUtils.notNull(baseMapper.selectById(jobId), "Job", "jobId", jobId);
+        Assert.notNull(baseMapper.selectById(jobId));
         Job job1 = getJobByName(resource.getName());
         if (ObjectUtil.isNotNull(job1) && ObjectUtil.notEqual(jobId, job1.getJobId())) {
-            throw new EntityExistException(Job.class, "name", resource.getName());
+            throw new EntityExistException(resource.getName());
         }
         baseMapper.updateById(resource);
         // 清空缓存
@@ -95,7 +95,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
     @Override
     public JobDTO getJobById(Long id) {
         Job job = baseMapper.selectById(id);
-        ValidationUtils.notNull(job, "Job", "jobId", id);
+        Assert.notNull(job);
         return ConvertUtils.convert(job, JobDTO.class);
     }
 

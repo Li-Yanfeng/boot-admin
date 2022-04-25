@@ -2,7 +2,7 @@ package com.boot.admin.mnt.service.dto;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.boot.admin.core.service.dto.BaseDTO;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -24,7 +24,7 @@ public class DeployDTO extends BaseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "ID")
-    @NotNull(groups = Update.class)
+    @NotNull(groups = ValidGroup.class)
     private Long deployId;
 
     @ApiModelProperty(value = "应用编号")

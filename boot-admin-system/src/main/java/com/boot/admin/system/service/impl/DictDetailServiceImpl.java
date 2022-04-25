@@ -8,10 +8,10 @@ import com.boot.admin.system.model.DictDetail;
 import com.boot.admin.system.service.DictDetailService;
 import com.boot.admin.system.service.dto.DictDetailDTO;
 import com.boot.admin.system.service.dto.DictDetailQuery;
+import com.boot.admin.util.Assert;
 import com.boot.admin.util.ConvertUtils;
 import com.boot.admin.util.QueryHelp;
 import com.boot.admin.util.RedisUtils;
-import com.boot.admin.util.ValidationUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,7 +62,7 @@ public class DictDetailServiceImpl extends ServiceImpl<DictDetailMapper, DictDet
     @Override
     public void updateDictDetailById(DictDetail resource) {
         Long detailId = resource.getDetailId();
-        ValidationUtils.notNull(baseMapper.selectById(detailId), "DictDetail", "detailId", detailId);
+        Assert.notNull(baseMapper.selectById(detailId));
         baseMapper.updateById(resource);
         // 清理缓存
         delCaches(resource.getDictId());

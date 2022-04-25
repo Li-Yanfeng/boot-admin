@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import ${package}.model.${className};
 import ${package}.service.${className}Service;
 import ${package}.service.dto.${className}DTO;

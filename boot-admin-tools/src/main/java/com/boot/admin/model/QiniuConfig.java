@@ -3,7 +3,7 @@ package com.boot.admin.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -23,7 +23,7 @@ public class QiniuConfig implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.ASSIGN_ID)
-    @NotNull(groups = Update.class)
+    @NotNull(groups = ValidGroup.class)
     private Long configId;
 
     @ApiModelProperty(value = "accessKey")

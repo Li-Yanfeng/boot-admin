@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.mnt.model.Server;
 import com.boot.admin.mnt.service.ServerService;
 import com.boot.admin.mnt.service.dto.ServerDTO;
@@ -57,7 +57,7 @@ public class ServerController {
     @PreAuthorize(value = "@authorize.check('servers:edit')")
     @NoRepeatSubmit
     @PutMapping
-    public void update(@Validated(value = Update.class) @RequestBody Server resource) {
+    public void update(@Validated(value = ValidGroup.Update.class) @RequestBody Server resource) {
         serverService.updateServerById(resource);
     }
 

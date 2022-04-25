@@ -4,8 +4,8 @@ import com.boot.admin.core.service.impl.ServiceImpl;
 import com.boot.admin.mapper.GenConfigMapper;
 import com.boot.admin.model.GenConfig;
 import com.boot.admin.service.GenConfigService;
+import com.boot.admin.util.Assert;
 import com.boot.admin.util.ConvertUtils;
-import com.boot.admin.util.ValidationUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -35,7 +35,7 @@ public class GenConfigServiceImpl extends ServiceImpl<GenConfigMapper, GenConfig
     @Override
     public GenConfig getGenConfigById(Long id) {
         GenConfig genConfig = baseMapper.selectById(id);
-        ValidationUtils.notNull(genConfig, "GenConfig", "configId", id);
+        Assert.notNull(genConfig);
         return ConvertUtils.convert(genConfig, GenConfig.class);
     }
 

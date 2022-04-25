@@ -5,7 +5,7 @@ import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
 import com.boot.admin.constant.CommonConstant;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.system.model.Menu;
 import com.boot.admin.system.model.vo.MenuVO;
 import com.boot.admin.system.service.MenuService;
@@ -68,7 +68,7 @@ public class MenuController {
     @PreAuthorize(value = "@authorize.check('menus:edit')")
     @NoRepeatSubmit
     @PutMapping
-    public void update(@Validated(value = Update.class) @RequestBody Menu resource) {
+    public void update(@Validated(value = ValidGroup.Update.class) @RequestBody Menu resource) {
         menuService.updateMenuById(resource);
     }
 

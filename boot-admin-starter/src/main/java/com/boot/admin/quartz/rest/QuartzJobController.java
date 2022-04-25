@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.quartz.model.QuartzJob;
 import com.boot.admin.quartz.model.QuartzLog;
 import com.boot.admin.quartz.service.QuartzJobService;
@@ -60,7 +60,7 @@ public class QuartzJobController {
     @PreAuthorize(value = "@authorize.check('timing:edit')")
     @NoRepeatSubmit
     @PutMapping
-    public void update(@Validated(value = Update.class) @RequestBody QuartzJob resource) {
+    public void update(@Validated(value = ValidGroup.Update.class) @RequestBody QuartzJob resource) {
         quartzJobService.updateQuartzJobById(resource);
     }
 

@@ -6,10 +6,11 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.model.BaseEntity;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.annotation.RegEx;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -27,7 +28,7 @@ public class QuartzJob extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.AUTO)
-    @NotNull(groups = Update.class)
+    @NotNull(groups = ValidGroup.class)
     private Long jobId;
 
     @ApiModelProperty(value = "任务名称")

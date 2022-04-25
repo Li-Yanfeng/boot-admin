@@ -9,10 +9,10 @@ import com.boot.admin.quartz.mapper.QuartzLogMapper;
 import com.boot.admin.quartz.model.QuartzLog;
 import com.boot.admin.quartz.service.QuartzLogService;
 import com.boot.admin.quartz.service.dto.QuartzJobQuery;
+import com.boot.admin.util.Assert;
 import com.boot.admin.util.ConvertUtils;
 import com.boot.admin.util.FileUtils;
 import com.boot.admin.util.QueryHelp;
-import com.boot.admin.util.ValidationUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -42,8 +42,7 @@ public class QuartzLogServiceImpl extends ServiceImpl<QuartzLogMapper, QuartzLog
 
     @Override
     public void updateQuartzLogById(QuartzLog resource) {
-        Long logId = resource.getLogId();
-        ValidationUtils.notNull(baseMapper.selectById(logId), "QuartzLog", "logId", logId);
+        Assert.notNull(resource.getLogId());
         baseMapper.updateById(resource);
     }
 
@@ -60,7 +59,7 @@ public class QuartzLogServiceImpl extends ServiceImpl<QuartzLogMapper, QuartzLog
     @Override
     public QuartzLog getQuartzLogById(Long id) {
         QuartzLog quartzLog = baseMapper.selectById(id);
-        ValidationUtils.notNull(quartzLog, "QuartzLog", "logId", id);
+        Assert.notNull(quartzLog);
         return ConvertUtils.convert(quartzLog, QuartzLog.class);
     }
 

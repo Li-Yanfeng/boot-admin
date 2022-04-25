@@ -64,7 +64,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, com.boot.admin.model.
     @Override
     public void updateLogById(com.boot.admin.model.Log resource) {
         Long logId = resource.getLogId();
-        ValidationUtils.notNull(baseMapper.selectById(logId), "Log", "logId", logId);
+        Assert.notNull(baseMapper.selectById(logId));
         baseMapper.updateById(resource);
     }
 
@@ -86,7 +86,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, com.boot.admin.model.
     @Override
     public LogDTO getLogById(Long id) {
         com.boot.admin.model.Log log = baseMapper.selectById(id);
-        ValidationUtils.notNull(log, "Log", "logId", id);
+        Assert.notNull(log);
         return ConvertUtils.convert(log, LogDTO.class);
     }
 

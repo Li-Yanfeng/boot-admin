@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.system.model.Job;
 import com.boot.admin.system.service.JobService;
 import com.boot.admin.system.service.dto.JobDTO;
@@ -59,7 +59,7 @@ public class JobController {
     @PreAuthorize(value = "@authorize.check('jobs:edit')")
     @NoRepeatSubmit
     @PutMapping
-    public void update(@Validated(value = Update.class) @RequestBody Job resource) {
+    public void update(@Validated(value = ValidGroup.Update.class) @RequestBody Job resource) {
         jobService.updateJobById(resource);
     }
 

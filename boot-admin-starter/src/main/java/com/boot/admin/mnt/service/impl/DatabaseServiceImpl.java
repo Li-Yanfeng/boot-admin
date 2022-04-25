@@ -10,10 +10,10 @@ import com.boot.admin.mnt.service.DatabaseService;
 import com.boot.admin.mnt.service.dto.DatabaseDTO;
 import com.boot.admin.mnt.service.dto.DatabaseQuery;
 import com.boot.admin.mnt.util.SqlUtils;
+import com.boot.admin.util.Assert;
 import com.boot.admin.util.ConvertUtils;
 import com.boot.admin.util.FileUtils;
 import com.boot.admin.util.QueryHelp;
-import com.boot.admin.util.ValidationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheConfig;
@@ -50,7 +50,7 @@ public class DatabaseServiceImpl extends ServiceImpl<DatabaseMapper, Database> i
     @Override
     public void updateDatabaseById(Database resource) {
         Long dbId = resource.getDbId();
-        ValidationUtils.notNull(baseMapper.selectById(dbId), "Database", "dbId", dbId);
+        Assert.notNull(baseMapper.selectById(dbId));
         baseMapper.updateById(resource);
     }
 
@@ -67,7 +67,7 @@ public class DatabaseServiceImpl extends ServiceImpl<DatabaseMapper, Database> i
     @Override
     public DatabaseDTO getDatabaseById(Long id) {
         Database database = baseMapper.selectById(id);
-        ValidationUtils.notNull(database, "Database", "dbId", id);
+        Assert.notNull(database);
         return ConvertUtils.convert(database, DatabaseDTO.class);
     }
 

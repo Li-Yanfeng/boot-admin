@@ -77,7 +77,7 @@ public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, Qin
     @Override
     public QiniuContent getQiniuContentById(Long id) {
         QiniuContent qiniuContent = baseMapper.selectById(id);
-        ValidationUtils.notNull(qiniuContent, "QiniuContent", "contentId", id);
+        Assert.notNull(qiniuContent);
         return qiniuContent;
     }
 

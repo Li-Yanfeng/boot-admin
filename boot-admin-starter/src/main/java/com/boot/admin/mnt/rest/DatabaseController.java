@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.mnt.model.Database;
 import com.boot.admin.mnt.service.DatabaseService;
@@ -65,7 +65,7 @@ public class DatabaseController {
     @PreAuthorize(value = "@authorize.check('databases:edit')")
     @NoRepeatSubmit
     @PutMapping
-    public void update(@Validated(value = Update.class) @RequestBody Database resource) {
+    public void update(@Validated(value = ValidGroup.Update.class) @RequestBody Database resource) {
         databaseService.updateDatabaseById(resource);
     }
 

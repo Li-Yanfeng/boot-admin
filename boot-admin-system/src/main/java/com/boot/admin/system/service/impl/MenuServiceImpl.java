@@ -67,11 +67,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public void saveMenu(Menu resource) {
         if (ObjectUtil.isNotNull(getMenuByTitle(resource.getTitle()))) {
-            throw new EntityExistException(Menu.class, "title", resource.getTitle());
+            throw new EntityExistException(resource.getTitle());
         }
         if (StringUtils.isNotBlank(resource.getComponentName())) {
             if (ObjectUtil.isNotNull(getMenuByComponentName(resource.getComponentName()))) {
-                throw new EntityExistException(Menu.class, "componentName", resource.getComponentName());
+                throw new EntityExistException(resource.getComponentName());
             }
         }
         if (CommonConstant.YES.equals(resource.getIFrame())) {
@@ -107,7 +107,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public void updateMenuById(Menu resource) {
         Long menuId = resource.getMenuId();
         Menu menu = baseMapper.selectById(menuId);
-        ValidationUtils.notNull(menu, "Menu", "menuId", menuId);
+        Assert.notNull(menu);
 
         if (menuId.equals(resource.getPid())) {
             throw new BadRequestException("上级不能为自己");
@@ -120,12 +120,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
         Menu menu1 = getMenuByTitle(resource.getTitle());
         if (ObjectUtil.isNotNull(menu1) && ObjectUtil.notEqual(menu.getMenuId(), menu1.getMenuId())) {
-            throw new EntityExistException(Menu.class, "title", resource.getTitle());
+            throw new EntityExistException(resource.getTitle());
         }
         if (StringUtils.isNotBlank(resource.getComponentName())) {
             menu1 = getMenuByComponentName(resource.getComponentName());
             if (ObjectUtil.isNotNull(menu1) && ObjectUtil.notEqual(menu.getMenuId(), menu1.getMenuId())) {
-                throw new EntityExistException(Menu.class, "componentName", resource.getComponentName());
+                throw new EntityExistException(resource.getComponentName());
             }
         }
 
@@ -196,7 +196,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public MenuDTO getMenuById(Long id) {
         Menu menu = baseMapper.selectById(id);
-        ValidationUtils.notNull(menu, "Menu", "menuId", id);
+        Assert.notNull(menu);
         return ConvertUtils.convert(menu, MenuDTO.class);
     }
 

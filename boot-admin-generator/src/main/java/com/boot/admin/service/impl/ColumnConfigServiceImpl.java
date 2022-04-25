@@ -10,10 +10,10 @@ import com.boot.admin.mapper.ColumnConfigMapper;
 import com.boot.admin.model.ColumnConfig;
 import com.boot.admin.model.GenConfig;
 import com.boot.admin.service.ColumnConfigService;
+import com.boot.admin.util.Assert;
 import com.boot.admin.util.FileUtils;
 import com.boot.admin.util.GenUtils;
 import com.boot.admin.util.StringUtils;
-import com.boot.admin.util.ValidationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -129,7 +129,7 @@ public class ColumnConfigServiceImpl extends ServiceImpl<ColumnConfigMapper, Col
     @Override
     public ColumnConfig getColumnConfigById(Long id) {
         ColumnConfig columnConfig = baseMapper.selectById(id);
-        ValidationUtils.notNull(columnConfig, "ColumnConfig", "columnId", id);
+        Assert.notNull(columnConfig);
         return columnConfig;
     }
 

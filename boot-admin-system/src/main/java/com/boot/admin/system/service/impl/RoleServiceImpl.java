@@ -77,7 +77,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public void saveRole(RoleDTO resource) {
         if (ObjectUtil.isNotNull(lambdaQuery().eq(Role::getName, resource.getName()).one())) {
-            throw new EntityExistException(Role.class, "name", resource.getName());
+            throw new EntityExistException(resource.getName());
         }
         Role role = ConvertUtils.convert(resource, Role.class);
         baseMapper.insert(role);
@@ -108,10 +108,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public void updateRoleById(RoleDTO resource) {
         Long roleId = resource.getRoleId();
-        ValidationUtils.notNull(baseMapper.selectById(roleId), "Role", "roleId", roleId);
+        Assert.notNull(baseMapper.selectById(roleId));
         Role role1 = lambdaQuery().eq(Role::getName, resource.getName()).one();
         if (ObjectUtil.isNotNull(role1) && ObjectUtil.notEqual(roleId, role1.getRoleId())) {
-            throw new EntityExistException(Role.class, "name", resource.getName());
+            throw new EntityExistException(resource.getName());
         }
 
         List<DeptDTO> depts = resource.getDepts();
@@ -144,7 +144,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public void updateMenu(RoleDTO newResource, RoleDTO oldResource) {
         Long roleId = newResource.getRoleId();
-        ValidationUtils.notNull(baseMapper.selectById(roleId), "Role", "roleId", roleId);
+        Assert.notNull(baseMapper.selectById(roleId));
         // 清理缓存
         delCaches(newResource.getRoleId());
         // 更新数据
@@ -192,7 +192,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public RoleDTO getRoleById(Long id) {
         Role role = baseMapper.selectById(id);
-        ValidationUtils.notNull(role, "Role", "roleId", id);
+        Assert.notNull(role);
         RoleDTO roleDTO = ConvertUtils.convert(role, RoleDTO.class);
         // 获取关联数据
         getRelevantData(roleDTO);

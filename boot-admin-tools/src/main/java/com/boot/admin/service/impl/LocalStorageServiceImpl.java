@@ -12,10 +12,10 @@ import com.boot.admin.mapper.LocalStorageMapper;
 import com.boot.admin.model.LocalStorage;
 import com.boot.admin.service.LocalStorageService;
 import com.boot.admin.service.dto.LocalStorageQuery;
+import com.boot.admin.util.Assert;
 import com.boot.admin.util.FileUtils;
 import com.boot.admin.util.ImageUtils;
 import com.boot.admin.util.QueryHelp;
-import com.boot.admin.util.ValidationUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,8 +98,7 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
 
     @Override
     public void updateLocalStorageById(LocalStorage resource) {
-        Long storageId = resource.getStorageId();
-        ValidationUtils.notNull(baseMapper.selectById(storageId), "LocalStorage", "storageId", storageId);
+        getLocalStorageById(resource.getStorageId());
         baseMapper.updateById(resource);
     }
 
@@ -116,7 +115,7 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
     @Override
     public LocalStorage getLocalStorageById(Long id) {
         LocalStorage localStorage = baseMapper.selectById(id);
-        ValidationUtils.notNull(localStorage, "LocalStorage", "storageId", id);
+        Assert.notNull(localStorage);
         return localStorage;
     }
 

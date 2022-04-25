@@ -8,7 +8,7 @@ import com.boot.admin.annotation.ResultWrapper;
 import com.boot.admin.config.bean.RsaProperties;
 import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.model.Result;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.exception.enums.UserErrorCode;
 import com.boot.admin.system.model.User;
@@ -103,7 +103,7 @@ public class UserController {
     @PreAuthorize(value = "@authorize.check('users:edit')")
     @NoRepeatSubmit
     @PutMapping
-    public void update(@Validated(value = Update.class) @RequestBody UserDTO resource) {
+    public void update(@Validated(value = ValidGroup.Update.class) @RequestBody UserDTO resource) {
         checkLevel(resource);
         userService.updateUserById(resource);
     }

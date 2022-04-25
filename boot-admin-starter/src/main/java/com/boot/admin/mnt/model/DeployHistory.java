@@ -1,7 +1,7 @@
 package com.boot.admin.mnt.model;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -21,7 +21,7 @@ public class DeployHistory implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.ASSIGN_ID)
-    @NotNull(groups = Update.class)
+    @NotNull(groups = ValidGroup.class)
     private Long historyId;
 
     @ApiModelProperty(value = "部署编号")

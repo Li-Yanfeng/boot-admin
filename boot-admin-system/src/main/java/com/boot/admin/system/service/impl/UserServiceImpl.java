@@ -82,13 +82,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public void saveUser(UserDTO resource) {
         if (ObjectUtil.isNotNull(getUserByUsername(resource.getUsername()))) {
-            throw new EntityExistException(User.class, "username", resource.getUsername());
+            throw new EntityExistException(resource.getUsername());
         }
         if (ObjectUtil.isNotNull(getUserByEmail(resource.getEmail()))) {
-            throw new EntityExistException(User.class, "email", resource.getEmail());
+            throw new EntityExistException(resource.getEmail());
         }
         if (ObjectUtil.isNotNull(getUserByPhone(resource.getPhone()))) {
-            throw new EntityExistException(User.class, "phone", resource.getPhone());
+            throw new EntityExistException(resource.getPhone());
         }
         User user = ConvertUtils.convert(resource, User.class);
         if (ObjectUtil.isNotNull(resource.getDept())) {
@@ -135,15 +135,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         UserDTO userDTO = getUserById(userId);
         User user1 = getUserByUsername(resource.getUsername());
         if (ObjectUtil.isNotNull(user1) && ObjectUtil.notEqual(userId, user1.getUserId())) {
-            throw new EntityExistException(User.class, "username", resource.getUsername());
+            throw new EntityExistException(resource.getUsername());
         }
         user1 = getUserByEmail(resource.getEmail());
         if (ObjectUtil.isNotNull(user1) && ObjectUtil.notEqual(userId, user1.getUserId())) {
-            throw new EntityExistException(User.class, "email", resource.getEmail());
+            throw new EntityExistException(resource.getEmail());
         }
         user1 = getUserByPhone(resource.getPhone());
         if (ObjectUtil.isNotNull(user1) && ObjectUtil.notEqual(userId, user1.getUserId())) {
-            throw new EntityExistException(User.class, "phone", resource.getPhone());
+            throw new EntityExistException(resource.getPhone());
         }
 
         User user = ConvertUtils.convert(resource, User.class);
@@ -219,7 +219,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = getUserByUsername(username);
         User user1 = getUserByEmail(email);
         if (ObjectUtil.notEqual(user.getUserId(), user1.getUserId())) {
-            throw new EntityExistException(User.class, "email", email);
+            throw new EntityExistException( email);
         }
         User updateUser = new User();
         updateUser.setEmail(email);
@@ -232,7 +232,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public void updateCenter(User resource) {
         User user2 = getUserByPhone(resource.getPhone());
         if (ObjectUtil.notEqual(resource.getUserId(), user2.getUserId())) {
-            throw new EntityExistException(User.class, "phone", resource.getPhone());
+            throw new EntityExistException(resource.getPhone());
         }
         lambdaUpdate().eq(User::getUserId, resource.getUserId()).update(resource);
         // 清理缓存
@@ -251,7 +251,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         Long userId = SecurityUtils.getCurrentUserId();
         User user = baseMapper.selectById(userId);
-        ValidationUtils.notNull(user, "User", "userId", userId);
+        Assert.notNull(user);
 
         String oldPath = user.getAvatarPath();
         File uploadFile = FileUtils.upload(file, fileProperties.getPath().getAvatar());
@@ -291,7 +291,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public UserDTO getUserById(Long id) {
         User user = baseMapper.selectById(id);
-        ValidationUtils.notNull(user, "User", "userId", id);
+        Assert.notNull(user);
         UserDTO userDTO = ConvertUtils.convert(user, UserDTO.class);
         // 获取关联数据
         getRelevantData(userDTO);

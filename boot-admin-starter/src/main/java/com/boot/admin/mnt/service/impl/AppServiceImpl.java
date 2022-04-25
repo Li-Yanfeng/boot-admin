@@ -10,10 +10,10 @@ import com.boot.admin.mnt.model.App;
 import com.boot.admin.mnt.service.AppService;
 import com.boot.admin.mnt.service.dto.AppDTO;
 import com.boot.admin.mnt.service.dto.AppQuery;
+import com.boot.admin.util.Assert;
 import com.boot.admin.util.ConvertUtils;
 import com.boot.admin.util.FileUtils;
 import com.boot.admin.util.QueryHelp;
-import com.boot.admin.util.ValidationUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -45,7 +45,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
     @Override
     public void updateAppById(App resource) {
         Long appId = resource.getAppId();
-        ValidationUtils.notNull(baseMapper.selectById(appId), "App", "appId", appId);
+        Assert.notNull(baseMapper.selectById(appId));
         verification(resource);
         baseMapper.updateById(resource);
     }
@@ -63,7 +63,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
     @Override
     public AppDTO getAppById(Long id) {
         App app = baseMapper.selectById(id);
-        ValidationUtils.notNull(app, "App", "appId", id);
+        Assert.notNull(app);
         return ConvertUtils.convert(app, AppDTO.class);
     }
 

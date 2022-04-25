@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.core.model.BaseEntity;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -24,7 +24,7 @@ public class Job extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.AUTO)
-    @NotNull(groups = Update.class)
+    @NotNull(groups = ValidGroup.class)
     private Long jobId;
 
     @ApiModelProperty(value = "岗位名称")

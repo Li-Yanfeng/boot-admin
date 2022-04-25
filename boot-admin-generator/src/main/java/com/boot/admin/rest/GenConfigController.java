@@ -1,7 +1,7 @@
 package com.boot.admin.rest;
 
 import com.boot.admin.annotation.NoRepeatSubmit;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.model.GenConfig;
 import com.boot.admin.service.GenConfigService;
 import io.swagger.annotations.Api;
@@ -26,7 +26,7 @@ public class GenConfigController {
     @ApiOperation(value = "修改代码生成配置")
     @NoRepeatSubmit
     @PutMapping
-    public void update(@Validated(value = Update.class) @RequestBody GenConfig resource) {
+    public void update(@Validated(value = ValidGroup.Update.class) @RequestBody GenConfig resource) {
         genConfigService.saveGenConfig(resource);
     }
 

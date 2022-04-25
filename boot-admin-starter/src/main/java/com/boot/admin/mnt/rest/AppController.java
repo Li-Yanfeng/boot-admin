@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.mnt.model.App;
 import com.boot.admin.mnt.service.AppService;
 import com.boot.admin.mnt.service.dto.AppDTO;
@@ -57,7 +57,7 @@ public class AppController {
     @PreAuthorize(value = "@authorize.check('apps:edit')")
     @NoRepeatSubmit
     @PutMapping
-    public void update(@Validated(value = Update.class) @RequestBody App resource) {
+    public void update(@Validated(value = ValidGroup.Update.class) @RequestBody App resource) {
         appService.updateAppById(resource);
     }
 

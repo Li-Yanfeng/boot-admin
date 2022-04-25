@@ -10,11 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.Objects;
 
 /**
  * 全局异常处理程序
@@ -84,12 +83,8 @@ public class GlobalExceptionHandler {
     public Result handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         // 打印堆栈信息
         logger.error(ThrowableUtils.getStackTrace(e));
-        String[] str = Objects.requireNonNull(e.getBindingResult().getAllErrors().get(0).getCodes())[1].split("\\.");
-        String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-        String msg = "不能为空";
-        if (msg.equals(message))
-            message = str[1] + ":" + message;
-        return Result.failure(message);
+        FieldError fieldError = e.getBindingResult().getFieldErrors().get(0);
+        return Result.failure(fieldError.getDefaultMessage());
     }
 
     /**

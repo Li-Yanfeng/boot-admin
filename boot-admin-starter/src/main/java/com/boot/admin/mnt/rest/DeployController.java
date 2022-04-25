@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.mnt.model.Deploy;
 import com.boot.admin.mnt.model.DeployHistory;
 import com.boot.admin.mnt.service.DeployService;
@@ -67,7 +67,7 @@ public class DeployController {
     @PreAuthorize(value = "@authorize.check('deploys:edit')")
     @NoRepeatSubmit
     @PutMapping
-    public void update(@Validated(value = Update.class) @RequestBody DeployDTO resource) {
+    public void update(@Validated(value = ValidGroup.Update.class) @RequestBody DeployDTO resource) {
         deployService.updateDeployById(resource);
     }
 

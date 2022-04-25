@@ -64,8 +64,7 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
 
     @Override
     public void updateQuartzJobById(QuartzJob resource) {
-        Long jobId = resource.getJobId();
-        ValidationUtils.notNull(baseMapper.selectById(jobId), "QuartzJob", "jobId", jobId);
+        Assert.notNull(getQuartzJobById(resource.getJobId()));
 
         if (!CronExpression.isValidExpression(resource.getCronExpression())) {
             throw new BadRequestException("cron表达式格式错误");
@@ -106,7 +105,7 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
     @Override
     public QuartzJob getQuartzJobById(Long id) {
         QuartzJob quartzJob = baseMapper.selectById(id);
-        ValidationUtils.notNull(quartzJob, "QuartzJob", "jobId", id);
+        Assert.notNull(quartzJob);
         return ConvertUtils.convert(quartzJob, QuartzJob.class);
     }
 

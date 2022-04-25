@@ -91,7 +91,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     public void updateDeptById(Dept resource) {
         Long deptId = resource.getDeptId();
         Dept dept = baseMapper.selectById(deptId);
-        ValidationUtils.notNull(dept, "Dept", "deptId", deptId);
+        Assert.notNull(dept);
 
         // 旧部门
         Long oldPid = dept.getPid();
@@ -140,7 +140,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     @Override
     public List<DeptDTO> listDeptsSuperior(Long id) {
         Dept dept = baseMapper.selectById(id);
-        ValidationUtils.notNull(dept, "Dept", "deptId", id);
+        Assert.notNull(dept);
         List<Long> superiorDeptIds = listDeptsSuperiorIds(dept.getAncestors());
         return ConvertUtils.convert(baseMapper.selectBatchIds(superiorDeptIds), DeptDTO.class);
     }
@@ -149,7 +149,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     @Override
     public DeptDTO getDeptById(Long id) {
         Dept dept = baseMapper.selectById(id);
-        ValidationUtils.notNull(dept, "Dept", "deptId", id);
+        Assert.notNull(dept);
         return ConvertUtils.convert(dept, DeptDTO.class);
     }
 

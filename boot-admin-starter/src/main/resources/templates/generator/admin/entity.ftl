@@ -12,7 +12,7 @@ import com.boot.admin.core.model.BaseEntityLogicDelete;
 import com.boot.admin.core.model.BaseEntity;
     </#if>
 </#if>
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 
 import javax.validation.constraints.*;
 <#if hasBigDecimal>

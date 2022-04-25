@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.system.model.Role;
 import com.boot.admin.system.service.RoleService;
@@ -71,7 +71,7 @@ public class RoleController {
     @PreAuthorize(value = "@authorize.check('roles:edit')")
     @NoRepeatSubmit
     @PutMapping
-    public void update(@Validated(value = Update.class) @RequestBody RoleDTO resource) {
+    public void update(@Validated(value = ValidGroup.Update.class) @RequestBody RoleDTO resource) {
         getRoleLevelByCurrentUser(resource.getLevel());
         roleService.updateRoleById(resource);
     }
@@ -81,7 +81,7 @@ public class RoleController {
     @PreAuthorize(value = "@authorize.check('roles:edit')")
     @NoRepeatSubmit
     @PutMapping(value = "/menus")
-    public void updateMenu(@Validated(value = Update.class) @RequestBody RoleDTO resource) {
+    public void updateMenu(@Validated(value = ValidGroup.Update.class) @RequestBody RoleDTO resource) {
         RoleDTO role = roleService.getRoleById(resource.getRoleId());
         getRoleLevelByCurrentUser(role.getLevel());
         roleService.updateMenu(resource, role);

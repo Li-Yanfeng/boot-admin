@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.system.model.DictDetail;
 import com.boot.admin.system.service.DictDetailService;
 import com.boot.admin.system.service.dto.DictDetailDTO;
@@ -55,7 +55,7 @@ public class DictDetailController {
     @PreAuthorize(value = "@authorize.check('dicts:edit')")
     @NoRepeatSubmit
     @PutMapping
-    public void update(@Validated(value = Update.class) @RequestBody DictDetail resource) {
+    public void update(@Validated(value = ValidGroup.Update.class) @RequestBody DictDetail resource) {
         dictDetailService.updateDictDetailById(resource);
     }
 

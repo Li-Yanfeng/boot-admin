@@ -64,7 +64,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     @Override
     public void updateDictById(Dict resource) {
         Long dictId = resource.getDictId();
-        ValidationUtils.notNull(baseMapper.selectById(dictId), "Dict", "dictId", dictId);
+        Assert.notNull(baseMapper.selectById(dictId));
         baseMapper.updateById(resource);
         // 清理缓存
         delCaches(resource);
@@ -93,7 +93,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     @Override
     public DictDTO getDictById(Long id) {
         Dict dict = baseMapper.selectById(id);
-        ValidationUtils.notNull(dict, "Dict", "dictId", id);
+        Assert.notNull(dict);
         DictDTO dictDTO = ConvertUtils.convert(dict, DictDTO.class);
         // 获取关联数据
         getRelevantData(dictDTO);

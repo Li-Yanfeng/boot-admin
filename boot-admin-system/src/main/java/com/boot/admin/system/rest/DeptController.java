@@ -5,7 +5,7 @@ import cn.hutool.core.lang.tree.Tree;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.core.validation.Update;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.system.model.Dept;
 import com.boot.admin.system.service.DeptService;
 import com.boot.admin.system.service.dto.DeptDTO;
@@ -67,7 +67,7 @@ public class DeptController {
     @PreAuthorize(value = "@authorize.check('depts:edit')")
     @NoRepeatSubmit
     @PutMapping
-    public void update(@Validated(value = Update.class) @RequestBody Dept resource) {
+    public void update(@Validated(value = ValidGroup.Update.class) @RequestBody Dept resource) {
         deptService.updateDeptById(resource);
     }
 
