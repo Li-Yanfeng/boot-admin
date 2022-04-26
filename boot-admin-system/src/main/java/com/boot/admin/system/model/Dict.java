@@ -23,7 +23,7 @@ public class Dict extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.AUTO)
-    @NotNull(groups = ValidGroup.class)
+    @NotNull(groups = ValidGroup.Update.class)
     private Long dictId;
 
     @ApiModelProperty(value = "字典名称")

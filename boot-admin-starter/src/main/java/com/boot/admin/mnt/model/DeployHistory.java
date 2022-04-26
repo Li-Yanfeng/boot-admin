@@ -21,7 +21,7 @@ public class DeployHistory implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.ASSIGN_ID)
-    @NotNull(groups = ValidGroup.class)
+    @NotNull(groups = ValidGroup.Update.class)
     private Long historyId;
 
     @ApiModelProperty(value = "部署编号")

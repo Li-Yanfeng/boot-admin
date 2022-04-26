@@ -21,7 +21,7 @@ public class QuartzLog implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.AUTO)
-    @NotNull(groups = ValidGroup.class)
+    @NotNull(groups = ValidGroup.Update.class)
     private Long logId;
 
     @ApiModelProperty(value = "任务名称")

@@ -23,7 +23,7 @@ public class Role extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.AUTO)
-    @NotNull(groups = ValidGroup.class)
+    @NotNull(groups = ValidGroup.Update.class)
     private Long roleId;
 
     @ApiModelProperty(value = "名称")

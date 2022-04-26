@@ -24,7 +24,7 @@ public class Dept extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.AUTO)
-    @NotNull(groups = ValidGroup.class)
+    @NotNull(groups = ValidGroup.Update.class)
     private Long deptId;
 
     @ApiModelProperty(value = "上级部门")

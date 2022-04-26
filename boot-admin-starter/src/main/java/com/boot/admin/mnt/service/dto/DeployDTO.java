@@ -24,7 +24,7 @@ public class DeployDTO extends BaseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "ID")
-    @NotNull(groups = ValidGroup.class)
+    @NotNull(groups = ValidGroup.Update.class)
     private Long deployId;
 
     @ApiModelProperty(value = "应用编号")

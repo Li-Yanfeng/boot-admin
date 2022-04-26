@@ -1,10 +1,6 @@
 package ${package}.model;
 
 import com.baomidou.mybatisplus.annotation.*;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-<#if extendSuperEntity>
-</#if>
 <#if extendSuperEntity>
     <#if extendLogicDeleteSuperEntity>
 import com.boot.admin.core.model.BaseEntityLogicDelete;
@@ -13,6 +9,8 @@ import com.boot.admin.core.model.BaseEntity;
     </#if>
 </#if>
 import com.boot.admin.annotation.ValidGroup;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.*;
 <#if hasBigDecimal>
@@ -55,9 +53,9 @@ public class ${className} implements Serializable {
     @TableId(type = IdType.ASSIGN_ID)
             </#if>
             <#if column.columnType = 'String'>
-    @NotBlank(groups = Update.class)
+    @NotBlank(message = "主键不能为空", groups = ValidGroup.Update.class)
             <#else>
-    @NotNull(groups = Update.class)
+    @NotNull(message = "主键不能为空", groups = ValidGroup.Update.class)
             </#if>
         </#if>
         <#if column.columnName?starts_with("is_")>
@@ -65,9 +63,9 @@ public class ${className} implements Serializable {
         </#if>
         <#if column.isNotNull && column.columnKey != 'PRI'>
             <#if column.columnType = 'String'>
-    @NotBlank
+    @NotBlank(message = "${column.remark}不能为空")
             <#else>
-    @NotNull
+    @NotNull(message = "${column.remark}不能为空")
             </#if>
         </#if>
         <#if !extendSuperEntity>

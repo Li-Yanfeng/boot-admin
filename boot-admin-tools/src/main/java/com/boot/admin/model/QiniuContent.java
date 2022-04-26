@@ -21,7 +21,7 @@ public class QiniuContent implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.AUTO)
-    @NotNull(groups = ValidGroup.class)
+    @NotNull(groups = ValidGroup.Update.class)
     private Long contentId;
 
     @ApiModelProperty(value = "Bucket 识别符")

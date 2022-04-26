@@ -23,7 +23,7 @@ public class EmailConfig implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.ASSIGN_ID)
-    @NotNull(groups = ValidGroup.class)
+    @NotNull(groups = ValidGroup.Update.class)
     private Long configId;
 
     @ApiModelProperty(value = "邮件服务器 SMTP 地址")

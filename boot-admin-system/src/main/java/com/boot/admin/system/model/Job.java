@@ -24,7 +24,7 @@ public class Job extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.AUTO)
-    @NotNull(groups = ValidGroup.class)
+    @NotNull(groups = ValidGroup.Update.class)
     private Long jobId;
 
     @ApiModelProperty(value = "岗位名称")

@@ -23,7 +23,7 @@ public class Server extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.AUTO)
-    @NotNull(groups = ValidGroup.class)
+    @NotNull(groups = ValidGroup.Update.class)
     private Long serverId;
 
     @ApiModelProperty(value = "名称")

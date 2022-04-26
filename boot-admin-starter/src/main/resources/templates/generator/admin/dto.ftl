@@ -1,12 +1,12 @@
 package ${package}.service.dto;
 
+<#if extendSuperEntity>
+import com.boot.admin.core.service.dto.BaseDTO;
+</#if>
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-<#if extendSuperEntity>
-import BaseDTO;
-</#if>
 
 <#if hasBigDecimal>
 import java.math.BigDecimal;

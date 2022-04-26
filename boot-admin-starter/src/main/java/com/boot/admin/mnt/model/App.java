@@ -23,7 +23,7 @@ public class App extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "ID")
     @TableId(type = IdType.AUTO)
-    @NotNull(groups = ValidGroup.class)
+    @NotNull(groups = ValidGroup.Update.class)
     private Long appId;
 
     @ApiModelProperty(value = "应用名称")

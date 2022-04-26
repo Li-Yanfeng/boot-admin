@@ -2,11 +2,11 @@ package ${package}.service.dto;
 
 <#if (queryColumns?size > 0)>
 import com.baomidou.mybatisplus.core.enums.SqlKeyword;
+import com.boot.admin.annotation.Query;
 </#if>
 import io.swagger.annotations.ApiModel;
 <#if (queryColumns?size > 0)>
 import io.swagger.annotations.ApiModelProperty;
-import Query;
 </#if>
 
 <#if queryHasBigDecimal>
