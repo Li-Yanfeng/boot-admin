@@ -353,6 +353,7 @@ public class FileUtils extends FileUtil {
             out = response.getOutputStream();
             // 终止后删除临时文件
             file.deleteOnExit();
+            // 将Excel Workbook刷出到输出流，并关闭输出流
             writer.flush(out, true);
         } catch (IOException ignored) {
 
