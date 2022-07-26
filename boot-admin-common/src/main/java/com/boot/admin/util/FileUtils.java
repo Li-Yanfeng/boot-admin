@@ -297,7 +297,7 @@ public class FileUtils extends FileUtil {
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(file);
-            response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(file.getName(), "UTF-8"));
             IOUtils.copy(fis, response.getOutputStream());
             response.flushBuffer();
         } catch (Exception e) {
@@ -353,11 +353,10 @@ public class FileUtils extends FileUtil {
             out = response.getOutputStream();
             // 终止后删除临时文件
             file.deleteOnExit();
+            writer.flush(out, true);
         } catch (IOException ignored) {
 
         } finally {
-            // 关闭writer，释放内存
-            writer.close();
             // 此处记得关闭输出Servlet流
             IoUtil.close(out);
         }
