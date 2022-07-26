@@ -30,7 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -316,7 +315,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public void exportUser(List<UserDTO> exportData, HttpServletResponse response) throws IOException {
+    public void exportUser(List<UserDTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(user -> {
             Map<String, Object> map = MapUtil.newHashMap(9, true);
@@ -331,7 +330,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             map.put("创建日期", user.getCreateTime());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("用户", list, response);
     }
 
     /**

@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -139,7 +138,7 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
     }
 
     @Override
-    public void exportQuartzJob(List<QuartzJob> exportData, HttpServletResponse response) throws IOException {
+    public void exportQuartzJob(List<QuartzJob> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(quartzJob -> {
             Map<String, Object> map = MapUtil.newHashMap(8, true);
@@ -153,6 +152,6 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
             map.put("创建日期", quartzJob.getCreateTime());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("定时任务", list, response);
     }
 }

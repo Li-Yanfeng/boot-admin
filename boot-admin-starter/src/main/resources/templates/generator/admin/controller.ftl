@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -79,7 +78,7 @@ public class ${className}Controller {
     @Log(value = "导出${apiAlias!}")
     @PreAuthorize(value = "@authorize.check('${changeClassName}s:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, ${className}Query query) throws IOException {
+    public void export(HttpServletResponse response, ${className}Query query) {
         ${changeClassName}Service.export${className}(${changeClassName}Service.list${className}s(query), response);
     }
 }

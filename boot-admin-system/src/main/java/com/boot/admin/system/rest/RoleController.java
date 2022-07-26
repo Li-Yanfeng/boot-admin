@@ -20,7 +20,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -118,7 +117,7 @@ public class RoleController {
     @Log(value = "导出角色")
     @PreAuthorize(value = "@authorize.check('roles:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, RoleQuery query) throws IOException {
+    public void export(HttpServletResponse response, RoleQuery query) {
         roleService.exportRole(roleService.listRoles(query), response);
     }
 

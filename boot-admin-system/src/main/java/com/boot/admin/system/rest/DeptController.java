@@ -17,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -94,7 +93,7 @@ public class DeptController {
     @Log(value = "导出部门")
     @PreAuthorize(value = "@authorize.check('depts:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, DeptQuery query) throws IOException {
+    public void export(HttpServletResponse response, DeptQuery query) {
         deptService.exportDept(deptService.listDepts(query), response);
     }
 }

@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -120,7 +119,7 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
     }
 
     @Override
-    public void exportLocalStorage(List<LocalStorage> exportData, HttpServletResponse response) throws IOException {
+    public void exportLocalStorage(List<LocalStorage> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(localStorage -> {
             Map<String, Object> map = MapUtil.newHashMap(6, true);
@@ -132,6 +131,6 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
             map.put("创建日期", localStorage.getCreateTime());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("文件", list, response);
     }
 }

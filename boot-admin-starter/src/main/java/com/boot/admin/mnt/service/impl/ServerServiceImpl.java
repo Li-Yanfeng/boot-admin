@@ -17,7 +17,6 @@ import com.boot.admin.util.QueryHelp;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +86,7 @@ public class ServerServiceImpl extends ServiceImpl<ServerMapper, Server> impleme
     }
 
     @Override
-    public void exportServer(List<ServerDTO> exportData, HttpServletResponse response) throws IOException {
+    public void exportServer(List<ServerDTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(server -> {
             Map<String, Object> map = MapUtil.newHashMap(5, true);
@@ -98,6 +97,6 @@ public class ServerServiceImpl extends ServiceImpl<ServerMapper, Server> impleme
             map.put("端口", server.getPort());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("服务器", list, response);
     }
 }

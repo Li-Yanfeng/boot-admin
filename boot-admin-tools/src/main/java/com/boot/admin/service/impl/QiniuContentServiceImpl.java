@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -150,7 +149,7 @@ public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, Qin
     }
 
     @Override
-    public void exportQiniuContent(List<QiniuContent> exportData, HttpServletResponse response) throws IOException {
+    public void exportQiniuContent(List<QiniuContent> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(content -> {
             Map<String, Object> map = MapUtil.newHashMap(6, true);
@@ -162,6 +161,6 @@ public class QiniuContentServiceImpl extends ServiceImpl<QiniuContentMapper, Qin
             map.put("创建日期", content.getCreateBy());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("文件", list, response);
     }
 }

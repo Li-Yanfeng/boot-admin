@@ -32,7 +32,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -112,7 +111,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     }
 
     @Override
-    public void export${className}(List<${className}DTO> exportData, HttpServletResponse response) throws IOException {
+    public void export${className}(List<${className}DTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(${changeClassName} -> {
             Map<String, Object> map = MapUtil.newHashMap(${(columns?size) - 1}, true);
@@ -127,6 +126,6 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
         </#list>
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("${apiAlias!}", list, response);
     }
 }

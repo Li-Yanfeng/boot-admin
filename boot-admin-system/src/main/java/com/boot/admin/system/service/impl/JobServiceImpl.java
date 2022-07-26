@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +106,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
     }
 
     @Override
-    public void exportJob(List<JobDTO> exportData, HttpServletResponse response) throws IOException {
+    public void exportJob(List<JobDTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(job -> {
             Map<String, Object> map = MapUtil.newHashMap(3, true);
@@ -116,7 +115,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
             map.put("创建日期", job.getCreateTime());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("岗位", list, response);
     }
 
     /**

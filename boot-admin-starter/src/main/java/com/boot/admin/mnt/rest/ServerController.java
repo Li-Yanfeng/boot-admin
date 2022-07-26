@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -81,7 +80,7 @@ public class ServerController {
     @Log(value = "导出服务器")
     @PreAuthorize(value = "@authorize.check('servers:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, ServerQuery query) throws IOException {
+    public void export(HttpServletResponse response, ServerQuery query) {
         serverService.exportServer(serverService.listServers(query), response);
     }
 }

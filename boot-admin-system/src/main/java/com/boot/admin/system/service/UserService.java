@@ -8,7 +8,6 @@ import com.boot.admin.system.service.dto.UserQuery;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +110,6 @@ public interface UserService extends Service<User> {
      *
      * @param exportData 待导出数据
      * @param response   响应对象
-     * @throws IOException /
      */
-    void exportUser(List<UserDTO> exportData, HttpServletResponse response) throws IOException;
+    void exportUser(List<UserDTO> exportData, HttpServletResponse response);
 }

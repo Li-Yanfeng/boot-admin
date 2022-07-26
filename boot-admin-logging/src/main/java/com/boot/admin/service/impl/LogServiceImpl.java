@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
@@ -91,7 +90,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, com.boot.admin.model.
     }
 
     @Override
-    public void exportLog(List<LogDTO> exportData, HttpServletResponse response) throws IOException {
+    public void exportLog(List<LogDTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(log -> {
             Map<String, Object> map = MapUtil.newHashMap(8, true);
@@ -105,6 +104,6 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, com.boot.admin.model.
             map.put("创建日期", log.getCreateTime());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("操作日志", list, response);
     }
 }

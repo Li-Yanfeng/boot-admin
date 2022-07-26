@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -108,7 +107,7 @@ public class DatabaseController {
     @Log(value = "导出数据库")
     @PreAuthorize(value = "@authorize.check('databases:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, DatabaseQuery query) throws IOException {
+    public void export(HttpServletResponse response, DatabaseQuery query) {
         databaseService.exportDatabase(databaseService.listDatabases(query), response);
     }
 }

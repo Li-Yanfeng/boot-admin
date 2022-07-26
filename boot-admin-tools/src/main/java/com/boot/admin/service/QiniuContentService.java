@@ -8,7 +8,6 @@ import com.boot.admin.service.dto.QiniuContentQuery;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -76,7 +75,6 @@ public interface QiniuContentService extends Service<QiniuContent> {
      *
      * @param exportData 待导出数据
      * @param response   响应对象
-     * @throws IOException /
      */
-    void exportQiniuContent(List<QiniuContent> exportData, HttpServletResponse response) throws IOException;
+    void exportQiniuContent(List<QiniuContent> exportData, HttpServletResponse response);
 }

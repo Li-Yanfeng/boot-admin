@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
+import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.config.bean.RsaProperties;
 import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.model.Result;
-import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.exception.enums.UserErrorCode;
 import com.boot.admin.system.model.User;
@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -183,7 +182,7 @@ public class UserController {
     @Log(value = "导出用户")
     @PreAuthorize(value = "@authorize.check('users:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, UserQuery query) throws IOException {
+    public void export(HttpServletResponse response, UserQuery query) {
         userService.exportUser(userService.listUsers(query), response);
     }
 

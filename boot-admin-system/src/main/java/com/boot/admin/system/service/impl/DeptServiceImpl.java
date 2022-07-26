@@ -27,7 +27,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -186,7 +185,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     }
 
     @Override
-    public void exportDept(List<DeptDTO> exportData, HttpServletResponse response) throws IOException {
+    public void exportDept(List<DeptDTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(dept -> {
             Map<String, Object> map = MapUtil.newHashMap(3, true);
@@ -195,7 +194,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
             map.put("创建日期", dept.getCreateTime());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("部门", list, response);
     }
 
     /**

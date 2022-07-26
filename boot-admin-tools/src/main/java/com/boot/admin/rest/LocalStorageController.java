@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -84,7 +83,7 @@ public class LocalStorageController {
     @Log(value = "导出文件")
     @PreAuthorize(value = "@authorize.check('storages:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, LocalStorageQuery query) throws IOException {
+    public void export(HttpServletResponse response, LocalStorageQuery query) {
         localStorageService.exportLocalStorage(localStorageService.listLocalStorages(query), response);
     }
 }

@@ -16,7 +16,6 @@ import com.boot.admin.util.QueryHelp;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +63,7 @@ public class QuartzLogServiceImpl extends ServiceImpl<QuartzLogMapper, QuartzLog
     }
 
     @Override
-    public void exportQuartzLog(List<QuartzLog> exportData, HttpServletResponse response) throws IOException {
+    public void exportQuartzLog(List<QuartzLog> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(quartzLog -> {
             Map<String, Object> map = MapUtil.newHashMap(9, true);
@@ -79,6 +78,6 @@ public class QuartzLogServiceImpl extends ServiceImpl<QuartzLogMapper, QuartzLog
             map.put("创建日期", quartzLog.getCreateTime());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("定时任务日志", list, response);
     }
 }

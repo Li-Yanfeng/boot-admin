@@ -20,7 +20,6 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -82,7 +81,7 @@ public class DatabaseServiceImpl extends ServiceImpl<DatabaseMapper, Database> i
     }
 
     @Override
-    public void exportDatabase(List<DatabaseDTO> exportData, HttpServletResponse response) throws IOException {
+    public void exportDatabase(List<DatabaseDTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(database -> {
             Map<String, Object> map = MapUtil.newHashMap(4, true);
@@ -92,6 +91,6 @@ public class DatabaseServiceImpl extends ServiceImpl<DatabaseMapper, Database> i
             map.put("创建日期", database.getCreateTime());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("数据库", list, response);
     }
 }

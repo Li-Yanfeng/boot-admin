@@ -7,7 +7,6 @@ import ${package}.service.dto.${className}DTO;
 import ${package}.service.dto.${className}Query;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -70,7 +69,6 @@ public interface ${className}Service extends Service<${className}> {
      *
      * @param exportData 待导出数据
      * @param response   响应对象
-     * @throws IOException /
      */
-    void export${className}(List<${className}DTO> exportData, HttpServletResponse response) throws IOException;
+    void export${className}(List<${className}DTO> exportData, HttpServletResponse response);
 }

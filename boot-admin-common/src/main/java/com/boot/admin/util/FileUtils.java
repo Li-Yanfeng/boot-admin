@@ -22,6 +22,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -318,14 +319,14 @@ public class FileUtils extends FileUtil {
     /**
      * 导出excel
      */
-    public static void downloadExcel(List<Map<String, Object>> list, HttpServletResponse response) throws IOException {
-        downloadExcel(list, null, response);
+    public static void downloadExcel(String fileName, List<Map<String, Object>> list, HttpServletResponse response) {
+        downloadExcel(fileName, null, list, response);
     }
 
     /**
      * 导出excel（输出表名）
      */
-    public static void downloadExcel(List<Map<String, Object>> list, String tableName, HttpServletResponse response) throws IOException {
+    public static void downloadExcel(String fileName, String tableName, List<Map<String, Object>> list, HttpServletResponse response) {
         String tempPath = SYS_TEM_DIR + IdUtil.fastSimpleUUID() + ".xlsx";
         File file = new File(tempPath);
         BigExcelWriter writer = ExcelUtil.getBigWriter(file);
@@ -342,17 +343,24 @@ public class FileUtils extends FileUtil {
         writer.autoSizeColumnAll();
         // 列宽自适应支持中文单元格
         sizeChineseColumn(sheet, writer);
-        // response为HttpServletResponse对象
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-        // test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
-        response.setHeader("Content-Disposition", "attachment;filename=file.xlsx");
-        ServletOutputStream out = response.getOutputStream();
-        // 终止后删除临时文件
-        file.deleteOnExit();
-        // 关闭writer，释放内存
-        writer.close();
-        // 此处记得关闭输出Servlet流
-        IoUtil.close(out);
+
+        ServletOutputStream out = null;
+        try {
+            // response为HttpServletResponse对象
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName + ".xlsx", "UTF-8"));
+            out = response.getOutputStream();
+            // 终止后删除临时文件
+            file.deleteOnExit();
+        } catch (IOException ignored) {
+
+        } finally {
+            // 关闭writer，释放内存
+            writer.close();
+            // 此处记得关闭输出Servlet流
+            IoUtil.close(out);
+        }
     }
 
     /**

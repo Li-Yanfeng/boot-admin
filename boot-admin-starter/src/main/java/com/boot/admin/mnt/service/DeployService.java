@@ -8,7 +8,6 @@ import com.boot.admin.mnt.service.dto.DeployDTO;
 import com.boot.admin.mnt.service.dto.DeployQuery;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -111,7 +110,6 @@ public interface DeployService extends Service<Deploy> {
      *
      * @param exportData 待导出数据
      * @param response   响应对象
-     * @throws IOException /
      */
-    void exportDeploy(List<DeployDTO> exportData, HttpServletResponse response) throws IOException;
+    void exportDeploy(List<DeployDTO> exportData, HttpServletResponse response);
 }

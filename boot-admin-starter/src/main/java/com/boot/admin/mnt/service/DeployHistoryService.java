@@ -7,7 +7,6 @@ import com.boot.admin.mnt.service.dto.DeployHistoryDTO;
 import com.boot.admin.mnt.service.dto.DeployHistoryQuery;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -70,7 +69,6 @@ public interface DeployHistoryService extends Service<DeployHistory> {
      *
      * @param exportData 待导出数据
      * @param response   响应对象
-     * @throws IOException /
      */
-    void exportDeployHistory(List<DeployHistoryDTO> exportData, HttpServletResponse response) throws IOException;
+    void exportDeployHistory(List<DeployHistoryDTO> exportData, HttpServletResponse response);
 }

@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -80,7 +79,7 @@ public class DictController {
     @Log(value = "导出字典")
     @PreAuthorize(value = "@authorize.check('dicts:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, DictQuery query) throws IOException {
+    public void export(HttpServletResponse response, DictQuery query) {
         dictService.exportDict(dictService.listDicts(query), response);
     }
 }

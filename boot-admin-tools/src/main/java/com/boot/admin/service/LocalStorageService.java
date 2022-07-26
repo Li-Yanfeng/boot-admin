@@ -7,7 +7,6 @@ import com.boot.admin.service.dto.LocalStorageQuery;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -70,7 +69,6 @@ public interface LocalStorageService extends Service<LocalStorage> {
      *
      * @param exportData 待导出数据
      * @param response   响应对象
-     * @throws IOException /
      */
-    void exportLocalStorage(List<LocalStorage> exportData, HttpServletResponse response) throws IOException;
+    void exportLocalStorage(List<LocalStorage> exportData, HttpServletResponse response);
 }

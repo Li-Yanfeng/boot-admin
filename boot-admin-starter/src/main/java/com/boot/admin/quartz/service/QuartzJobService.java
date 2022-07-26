@@ -7,7 +7,6 @@ import com.boot.admin.quartz.service.dto.QuartzJobQuery;
 import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -93,7 +92,6 @@ public interface QuartzJobService extends Service<QuartzJob> {
      *
      * @param exportData 待导出数据
      * @param response   响应对象
-     * @throws IOException /
      */
-    void exportQuartzJob(List<QuartzJob> exportData, HttpServletResponse response) throws IOException;
+    void exportQuartzJob(List<QuartzJob> exportData, HttpServletResponse response);
 }

@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -110,7 +109,7 @@ public class QiniuController {
     @ApiOperation(value = "导出数据")
     @Log(value = "导出数据")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, QiniuContentQuery query) throws IOException {
+    public void export(HttpServletResponse response, QiniuContentQuery query) {
         qiniuContentService.exportQiniuContent(qiniuContentService.listQiniuContents(query), response);
     }
 }

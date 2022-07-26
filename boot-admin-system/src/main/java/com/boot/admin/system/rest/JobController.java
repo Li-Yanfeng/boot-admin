@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -74,7 +73,7 @@ public class JobController {
     @Log(value = "导出岗位")
     @PreAuthorize(value = "@authorize.check('jobs:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, JobQuery query) throws IOException {
+    public void export(HttpServletResponse response, JobQuery query) {
         jobService.exportJob(jobService.listJobs(query), response);
     }
 }

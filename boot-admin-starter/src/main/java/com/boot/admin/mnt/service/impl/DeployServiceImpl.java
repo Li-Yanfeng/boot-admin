@@ -306,7 +306,7 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
     }
 
     @Override
-    public void exportDeploy(List<DeployDTO> exportData, HttpServletResponse response) throws IOException {
+    public void exportDeploy(List<DeployDTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(deploy -> {
             Map<String, Object> map = MapUtil.newHashMap(3, true);
@@ -315,7 +315,7 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
             map.put("部署日期", deploy.getCreateTime());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("部署", list, response);
     }
 
     /**

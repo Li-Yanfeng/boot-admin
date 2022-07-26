@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -101,7 +100,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     }
 
     @Override
-    public void exportDict(List<DictDTO> exportData, HttpServletResponse response) throws IOException {
+    public void exportDict(List<DictDTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(dict -> {
             List<DictDetailDTO> dictDetails = dict.getDictDetails();
@@ -125,7 +124,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
                 list.add(map);
             }
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("字典", list, response);
     }
 
     /**

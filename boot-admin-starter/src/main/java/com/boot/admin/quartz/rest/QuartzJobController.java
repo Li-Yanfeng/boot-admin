@@ -17,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -100,7 +99,7 @@ public class QuartzJobController {
     @Log(value = "导出任务数据")
     @PreAuthorize(value = "@authorize.check('timing:list')")
     @GetMapping(value = "/exports")
-    public void exportQuartzJob(HttpServletResponse response, QuartzJobQuery query) throws IOException {
+    public void exportQuartzJob(HttpServletResponse response, QuartzJobQuery query) {
         quartzJobService.exportQuartzJob(quartzJobService.listQuartzJobs(query), response);
     }
 
@@ -108,7 +107,7 @@ public class QuartzJobController {
     @Log(value = "导出任务日志数据")
     @PreAuthorize(value = "@authorize.check('timing:list')")
     @GetMapping(value = "/logs/exports")
-    public void exportQuartzLog(HttpServletResponse response, QuartzJobQuery query) throws IOException {
+    public void exportQuartzLog(HttpServletResponse response, QuartzJobQuery query) {
         quartzLogService.exportQuartzLog(quartzLogService.listQuartzLogs(query), response);
     }
 }

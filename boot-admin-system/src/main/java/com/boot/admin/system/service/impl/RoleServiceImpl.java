@@ -27,7 +27,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -234,7 +233,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public void exportRole(List<RoleDTO> exportData, HttpServletResponse response) throws IOException {
+    public void exportRole(List<RoleDTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(role -> {
             Map<String, Object> map = MapUtil.newHashMap(4, true);
@@ -244,7 +243,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             map.put("创建日期", role.getCreateTime());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("角色", list, response);
     }
 
     /**

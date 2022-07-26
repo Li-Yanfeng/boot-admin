@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -72,7 +71,7 @@ public class AppController {
     @Log(value = "导出应用")
     @PreAuthorize(value = "@authorize.check('apps:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, AppQuery query) throws IOException {
+    public void export(HttpServletResponse response, AppQuery query) {
         appService.exportApp(appService.listApps(query), response);
     }
 }

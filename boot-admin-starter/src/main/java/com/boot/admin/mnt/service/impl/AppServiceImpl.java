@@ -17,7 +17,6 @@ import com.boot.admin.util.QueryHelp;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +67,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
     }
 
     @Override
-    public void exportApp(List<AppDTO> exportData, HttpServletResponse response) throws IOException {
+    public void exportApp(List<AppDTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(app -> {
             Map<String, Object> map = MapUtil.newHashMap(8, true);
@@ -82,7 +81,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
             map.put("创建日期", app.getCreateTime());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("应用", list, response);
     }
 
     /**

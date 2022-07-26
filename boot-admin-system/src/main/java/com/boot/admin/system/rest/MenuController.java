@@ -4,8 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import com.boot.admin.annotation.Log;
 import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ResultWrapper;
-import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.annotation.ValidGroup;
+import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.system.model.Menu;
 import com.boot.admin.system.model.vo.MenuVO;
 import com.boot.admin.system.service.MenuService;
@@ -19,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -124,7 +123,7 @@ public class MenuController {
     @Log(value = "导出菜单")
     @PreAuthorize(value = "@authorize.check('menus:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, MenuQuery query) throws IOException {
+    public void export(HttpServletResponse response, MenuQuery query) {
         menuService.exportMenu(menuService.listMenus(query), response);
     }
 }

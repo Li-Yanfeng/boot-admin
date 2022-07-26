@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -143,7 +142,7 @@ public class DeployController {
     @Log(value = "导出部署")
     @PreAuthorize(value = "@authorize.check('deploys:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, DeployQuery query) throws IOException {
+    public void export(HttpServletResponse response, DeployQuery query) {
         deployService.exportDeploy(deployService.listDeploys(query), response);
     }
 }

@@ -172,7 +172,7 @@ public class OnlineUserService {
      * @param response   /
      * @throws IOException /
      */
-    public void export(List<OnlineUserDTO> exportData, HttpServletResponse response) throws IOException {
+    public void export(List<OnlineUserDTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = new ArrayList<>();
         for (OnlineUserDTO user : exportData) {
             Map<String, Object> map = new LinkedHashMap<>();
@@ -184,6 +184,6 @@ public class OnlineUserService {
             map.put("登录日期", user.getLoginTime());
             list.add(map);
         }
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("在线用户", list, response);
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -50,7 +49,7 @@ public class DeployHistoryController {
     @Log(value = "导出部署历史")
     @PreAuthorize(value = "@authorize.check('deployHistories:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, DeployHistoryQuery query) throws IOException {
+    public void export(HttpServletResponse response, DeployHistoryQuery query) {
         deployHistoryService.exportDeployHistory(deployHistoryService.listDeployHistorys(query), response);
     }
 }

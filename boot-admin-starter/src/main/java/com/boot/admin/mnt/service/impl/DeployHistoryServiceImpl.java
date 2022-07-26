@@ -16,7 +16,6 @@ import com.boot.admin.util.QueryHelp;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +64,7 @@ public class DeployHistoryServiceImpl extends ServiceImpl<DeployHistoryMapper, D
     }
 
     @Override
-    public void exportDeployHistory(List<DeployHistoryDTO> exportData, HttpServletResponse response) throws IOException {
+    public void exportDeployHistory(List<DeployHistoryDTO> exportData, HttpServletResponse response) {
         List<Map<String, Object>> list = CollUtil.newArrayList();
         exportData.forEach(deployHistory -> {
             Map<String, Object> map = MapUtil.newHashMap(5, true);
@@ -76,6 +75,6 @@ public class DeployHistoryServiceImpl extends ServiceImpl<DeployHistoryMapper, D
             map.put("部署人员", deployHistory.getCreateByName());
             list.add(map);
         });
-        FileUtils.downloadExcel(list, response);
+        FileUtils.downloadExcel("部署历史", list, response);
     }
 }

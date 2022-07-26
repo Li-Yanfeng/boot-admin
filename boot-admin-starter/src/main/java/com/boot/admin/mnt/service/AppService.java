@@ -7,7 +7,6 @@ import com.boot.admin.mnt.service.dto.AppDTO;
 import com.boot.admin.mnt.service.dto.AppQuery;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -70,7 +69,6 @@ public interface AppService extends Service<App> {
      *
      * @param exportData 待导出数据
      * @param response   响应对象
-     * @throws IOException /
      */
-    void exportApp(List<AppDTO> exportData, HttpServletResponse response) throws IOException;
+    void exportApp(List<AppDTO> exportData, HttpServletResponse response);
 }

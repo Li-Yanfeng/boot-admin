@@ -15,7 +15,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @author Li Yanfeng
@@ -83,7 +82,7 @@ public class LogController {
     @Log(value = "导出日志")
     @PreAuthorize(value = "@authorize.check('logs:list')")
     @GetMapping(value = "/exports")
-    public void export(HttpServletResponse response, LogQuery query) throws IOException {
+    public void export(HttpServletResponse response, LogQuery query) {
         query.setLogType(LogLevel.INFO.name());
         logService.exportLog(logService.listLogs(query), response);
     }
@@ -92,7 +91,7 @@ public class LogController {
     @Log(value = "导出错误日志")
     @PreAuthorize(value = "@authorize.check('logs:list')")
     @GetMapping(value = "/exports/errors")
-    public void exportErrorLog(HttpServletResponse response, LogQuery query) throws IOException {
+    public void exportErrorLog(HttpServletResponse response, LogQuery query) {
         query.setLogType(LogLevel.ERROR.name());
         logService.exportLog(logService.listLogs(query), response);
     }
