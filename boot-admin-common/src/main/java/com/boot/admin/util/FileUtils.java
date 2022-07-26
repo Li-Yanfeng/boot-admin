@@ -319,13 +319,13 @@ public class FileUtils extends FileUtil {
      * 导出excel
      */
     public static void downloadExcel(List<Map<String, Object>> list, HttpServletResponse response) throws IOException {
-        downloadExcel(list, response, null);
+        downloadExcel(list, null, response);
     }
 
     /**
      * 导出excel（输出表名）
      */
-    public static void downloadExcel(List<Map<String, Object>> list, HttpServletResponse response, String tableName) throws IOException {
+    public static void downloadExcel(List<Map<String, Object>> list, String tableName, HttpServletResponse response) throws IOException {
         String tempPath = SYS_TEM_DIR + IdUtil.fastSimpleUUID() + ".xlsx";
         File file = new File(tempPath);
         BigExcelWriter writer = ExcelUtil.getBigWriter(file);
