@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "七牛云文件")
 @TableName(value = "tool_qiniu_content")

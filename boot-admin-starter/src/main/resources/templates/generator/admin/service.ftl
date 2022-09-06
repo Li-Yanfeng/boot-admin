@@ -14,7 +14,7 @@ import java.util.List;
  * ${apiAlias!} 服务类
  *
  * @author ${author}
- * @since ${date}
+ * @date ${date}
  */
 public interface ${className}Service extends Service<${className}> {
 

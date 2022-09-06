@@ -8,7 +8,7 @@ import com.boot.admin.model.vo.TradeVO;
  * 支付宝配置 服务类
  *
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 public interface AlipayService extends Service<AlipayConfig> {
 

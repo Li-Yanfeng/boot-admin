@@ -12,7 +12,7 @@ import java.util.List;
  * 用户 Mapper 接口
  *
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @Repository
 public interface UserMapper extends BaseMapper<User> {

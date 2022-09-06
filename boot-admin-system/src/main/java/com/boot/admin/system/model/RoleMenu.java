@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "角色菜单关联")
 @TableName(value = "sys_role_menu")

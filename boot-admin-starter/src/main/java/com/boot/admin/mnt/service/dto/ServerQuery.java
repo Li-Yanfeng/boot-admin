@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "服务器 数据查询对象")
 public class ServerQuery implements Serializable {

@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "支付宝配置")
 @TableName(value = "tool_alipay_config")

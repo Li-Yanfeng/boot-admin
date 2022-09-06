@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "本地存储")
 @TableName(value = "tool_local_storage")

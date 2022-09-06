@@ -57,8 +57,6 @@ public @interface AnonymousGetMapping {
 
     /**
      * Alias for {@link RequestMapping#consumes}.
-     *
-     * @since 4.3.5
      */
     @AliasFor(annotation = RequestMapping.class)
     String[] consumes() default {};

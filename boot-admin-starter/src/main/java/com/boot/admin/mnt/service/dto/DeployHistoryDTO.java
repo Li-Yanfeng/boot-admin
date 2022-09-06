@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "部署历史 数据传输对象")
 public class DeployHistoryDTO implements Serializable {

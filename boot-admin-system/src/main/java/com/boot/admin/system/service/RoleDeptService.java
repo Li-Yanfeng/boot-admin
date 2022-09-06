@@ -10,7 +10,7 @@ import java.util.List;
  * 角色部门关联 服务类
  *
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 public interface RoleDeptService extends Service<RoleDept> {
 

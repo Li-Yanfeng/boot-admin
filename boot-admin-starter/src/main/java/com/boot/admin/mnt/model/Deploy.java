@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "部署")
 @TableName(value = "mnt_deploy")

@@ -13,7 +13,7 @@ import java.util.Objects;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "部门 数据传输对象")
 public class DeptDTO extends BaseDTO implements Serializable {

@@ -40,7 +40,7 @@ import java.util.Map;
  * ${apiAlias!} 服务实现类
  *
  * @author ${author}
- * @since ${date}
+ * @date ${date}
  */
 @Service
 @CacheConfig(cacheNames = {"${changeClassName}"})

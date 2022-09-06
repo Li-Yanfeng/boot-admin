@@ -15,7 +15,7 @@ import java.util.Objects;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "菜单")
 @TableName(value = "sys_menu")

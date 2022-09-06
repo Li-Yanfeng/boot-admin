@@ -22,7 +22,7 @@ import java.util.List;
  * 字典详情 服务实现类
  *
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @Service
 public class DictDetailServiceImpl extends ServiceImpl<DictDetailMapper, DictDetail> implements DictDetailService {

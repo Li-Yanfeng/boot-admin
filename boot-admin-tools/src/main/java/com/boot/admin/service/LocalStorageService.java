@@ -14,7 +14,7 @@ import java.util.List;
  * 本地存储 服务类
  *
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 public interface LocalStorageService extends Service<LocalStorage> {
 

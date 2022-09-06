@@ -14,7 +14,7 @@ import java.util.List;
  * 构建前端路由时用到
  *
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "元菜单 视图展示对象")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)

@@ -24,7 +24,7 @@ import java.sql.Timestamp;
 
 /**
  * @author ${author}
- * @since ${date}
+ * @date ${date}
  */
 @ApiModel(description = "${apiAlias!}")
 @TableName(value = "${tableName}")

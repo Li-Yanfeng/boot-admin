@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "字典详情")
 @TableName(value = "sys_dict_detail")

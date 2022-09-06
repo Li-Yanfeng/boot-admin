@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "数据库 数据传输对象")
 public class DatabaseDTO extends BaseDTO implements Serializable {

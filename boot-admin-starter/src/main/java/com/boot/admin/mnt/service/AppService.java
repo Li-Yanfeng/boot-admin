@@ -14,7 +14,7 @@ import java.util.List;
  * 应用 服务类
  *
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 public interface AppService extends Service<App> {
 

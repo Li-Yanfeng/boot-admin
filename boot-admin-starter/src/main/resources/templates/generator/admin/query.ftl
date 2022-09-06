@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 /**
  * @author ${author}
- * @since ${date}
+ * @date ${date}
  */
 @ApiModel(description = "${apiAlias!} 数据查询对象")
 public class ${className}Query implements Serializable {

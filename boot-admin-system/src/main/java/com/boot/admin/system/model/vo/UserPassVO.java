@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @ApiModel(description = "修改密码 视图展示对象")
 public class UserPassVO implements Serializable {

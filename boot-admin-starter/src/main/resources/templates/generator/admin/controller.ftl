@@ -20,7 +20,7 @@ import java.util.Set;
 
 /**
  * @author ${author}
- * @since ${date}
+ * @date ${date}
  */
 @Api(tags = "${apiAlias!}管理")
 @RestController

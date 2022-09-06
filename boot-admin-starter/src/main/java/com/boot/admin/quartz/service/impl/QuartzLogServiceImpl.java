@@ -24,7 +24,7 @@ import java.util.Map;
  * 定时任务日志 服务实现类
  *
  * @author Li Yanfeng
- * @since 2021-06-01
+ * @date 2021-06-01
  */
 @Service
 public class QuartzLogServiceImpl extends ServiceImpl<QuartzLogMapper, QuartzLog> implements QuartzLogService {
