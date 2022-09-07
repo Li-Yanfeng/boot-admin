@@ -2,7 +2,6 @@ package com.boot.admin.config;
 
 import cn.hutool.core.collection.CollUtil;
 import com.boot.admin.config.bean.FileProperties;
-import com.boot.admin.resolver.PropertyNamingStrategyParameterResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -59,7 +58,7 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
      */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new PropertyNamingStrategyParameterResolver());
+        // resolvers.add(new PropertyNamingStrategyParameterResolver());
     }
 
     /**
