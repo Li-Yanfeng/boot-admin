@@ -61,8 +61,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
     @ConditionalOnMissingBean
-    public StringRedisTemplate stringRedisTemplate(
-        RedisConnectionFactory redisConnectionFactory) {
+    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         StringRedisTemplate template = new StringRedisTemplate();
         template.setConnectionFactory(redisConnectionFactory);
         template.setEnableTransactionSupport(true);
@@ -99,10 +98,11 @@ public class RedisConfig extends CachingConfigurerSupport {
     public CacheManager cacheManager() {
         // 初始化缓存管理器
         logger.info("init -> [{}]", "CacheManager RedisCacheManager Start");
-        RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder
-            .fromConnectionFactory(lettuceConnectionFactory);
+        RedisCacheManager.RedisCacheManagerBuilder builder =
+            RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(lettuceConnectionFactory);
 
-        RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+        RedisCacheConfiguration cacheConfiguration =
+            RedisCacheConfiguration.defaultCacheConfig(Thread.currentThread().getContextClassLoader())
             // 设置缓存过期时间
             .entryTtl(Duration.ofHours(2))
             // 不缓存空值

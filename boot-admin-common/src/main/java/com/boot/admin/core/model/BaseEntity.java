@@ -14,27 +14,27 @@ import java.time.LocalDateTime;
 @ApiModel(description = "基础实体,包含通用实体字段")
 public abstract class BaseEntity implements Serializable {
 
-    @ApiModelProperty(value = "创建人")
+    @ApiModelProperty(value = "创建人", hidden = true)
     @TableField(fill = FieldFill.INSERT)
     protected Long createBy;
 
-    @ApiModelProperty(value = "更新人")
+    @ApiModelProperty(value = "更新人", hidden = true)
     @TableField(fill = FieldFill.INSERT_UPDATE)
     protected Long updateBy;
 
-    @ApiModelProperty(value = "创建人名称")
+    @ApiModelProperty(value = "创建人名称", hidden = true)
     @TableField(fill = FieldFill.INSERT)
     protected String createByName;
 
-    @ApiModelProperty(value = "更新人名称")
+    @ApiModelProperty(value = "更新人名称", hidden = true)
     @TableField(fill = FieldFill.INSERT_UPDATE)
     protected String updateByName;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "创建时间", hidden = true)
     @TableField(fill = FieldFill.INSERT)
     protected LocalDateTime createTime;
 
-    @ApiModelProperty(value = "更新时间")
+    @ApiModelProperty(value = "更新时间", hidden = true)
     @TableField(fill = FieldFill.INSERT_UPDATE)
     protected LocalDateTime updateTime;
 
