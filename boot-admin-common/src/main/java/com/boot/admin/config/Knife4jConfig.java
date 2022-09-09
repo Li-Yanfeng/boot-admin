@@ -2,35 +2,22 @@ package com.boot.admin.config;
 
 import cn.hutool.core.collection.CollUtil;
 import com.boot.admin.config.bean.SwaggerProperties;
-import com.fasterxml.classmate.TypeResolver;
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.models.auth.In;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.core.Ordered;
-import org.springframework.data.domain.Pageable;
-import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.oas.annotations.EnableOpenApi;
-import springfox.documentation.schema.AlternateTypeRule;
-import springfox.documentation.schema.AlternateTypeRuleConvention;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.List;
-
-import static springfox.documentation.schema.AlternateTypeRules.newRule;
 
 /**
  * Swagger3 配置类
@@ -40,7 +27,6 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 @Configuration
 @EnableOpenApi
 @EnableKnife4j
-@Import(BeanValidatorPluginsConfiguration.class)
 public class Knife4jConfig {
 
     @Value("${jwt.header}")
@@ -115,71 +101,5 @@ public class Knife4jConfig {
         authorizationScopes[0] = authorizationScope;
         securityReferences.add(new SecurityReference(tokenHeader, authorizationScopes));
         return securityReferences;
-    }
-}
-
-/**
- * 将Pageable转换展示在swagger中
- */
-@Configuration
-@EnableOpenApi
-class Knife4jDataConfig {
-
-    @Bean
-    public AlternateTypeRuleConvention pageableConvention(final TypeResolver resolver) {
-        return new AlternateTypeRuleConvention() {
-            @Override
-            public int getOrder() {
-                return Ordered.HIGHEST_PRECEDENCE;
-            }
-
-            @Override
-            public List<AlternateTypeRule> rules() {
-                return CollUtil.newArrayList(newRule(resolver.resolve(Pageable.class), resolver.resolve(Page.class)));
-            }
-        };
-    }
-
-    @ApiModel
-    private static class Page {
-
-        @ApiModelProperty("页码 (0..N)")
-        private Long current;
-
-        @ApiModelProperty("每页显示的数目")
-        private Long size;
-
-        @ApiModelProperty("以下列格式排序标准：property[,asc | desc]。 默认排序顺序为升序。 支持多种排序条件：如：id,asc")
-        private List<String> sort;
-
-
-        public Long getCurrent() {
-            return current;
-        }
-
-        public void setCurrent(Long current) {
-            this.current = current;
-        }
-
-        public Long getSize() {
-            return size;
-        }
-
-        public void setSize(Long size) {
-            this.size = size;
-        }
-
-        public List<String> getSort() {
-            return sort;
-        }
-
-        public void setSort(List<String> sort) {
-            this.sort = sort;
-        }
-
-        @Override
-        public String toString() {
-            return getClass().getSimpleName() + ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
-        }
     }
 }

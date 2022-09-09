@@ -100,7 +100,7 @@
                 </configuration>
             </plugin>
 
-            <!-- docker的maven插件 -->
+            <!--Docker的maven插件-->
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>

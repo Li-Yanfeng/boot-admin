@@ -103,10 +103,10 @@ public class RedisConfig extends CachingConfigurerSupport {
 
         RedisCacheConfiguration cacheConfiguration =
             RedisCacheConfiguration.defaultCacheConfig(Thread.currentThread().getContextClassLoader())
-            // 设置缓存过期时间
-            .entryTtl(Duration.ofHours(2))
-            // 不缓存空值
-            .disableCachingNullValues();
+                // 设置缓存过期时间
+                .entryTtl(Duration.ofHours(2))
+                // 不缓存空值
+                .disableCachingNullValues();
         return builder.cacheDefaults(cacheConfiguration).build();
     }
 
@@ -146,7 +146,8 @@ public class RedisConfig extends CachingConfigurerSupport {
                                    boolean isEnableTransactionSupport) {
         redisTemplate.setConnectionFactory(lettuceConnectionFactory);
 
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
+        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer =
+            new Jackson2JsonRedisSerializer<>(Object.class);
 
         // 添加 jackson 配置信息
         ObjectMapper objectMapper = new ObjectMapper();
