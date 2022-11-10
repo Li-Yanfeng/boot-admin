@@ -2,22 +2,32 @@ package com.boot.admin.config;
 
 import cn.hutool.core.collection.CollUtil;
 import com.boot.admin.config.bean.SwaggerProperties;
+import com.fasterxml.classmate.TypeResolver;
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.annotations.Api;
 import io.swagger.models.auth.In;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.oas.annotations.EnableOpenApi;
+import springfox.documentation.schema.AlternateTypeRule;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+
+import static springfox.documentation.schema.AlternateTypeRules.newRule;
 
 /**
  * Swagger3 配置类
@@ -38,6 +48,9 @@ public class Knife4jConfig {
         this.swaggerProperties = swaggerProperties;
     }
 
+    @Autowired
+    private TypeResolver typeResolver;
+
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.OAS_30)
@@ -53,6 +66,14 @@ public class Knife4jConfig {
             // 扫描所在包下的api
             .paths(PathSelectors.regex("/error.*").negate())
             .build()
+            // 设置全局响应
+            .globalResponses(HttpMethod.POST, commonResponses)
+            .globalResponses(HttpMethod.DELETE, commonResponses)
+            .globalResponses(HttpMethod.PUT, commonResponses)
+            .globalResponses(HttpMethod.PATCH, commonResponses)
+            .globalResponses(HttpMethod.GET, commonResponses)
+            // 类型转换规则
+            .alternateTypeRules(alternateTypeRules())
             // 添加登陆认证
             .securitySchemes(securitySchemes())
             .securityContexts(securityContexts());
@@ -70,6 +91,26 @@ public class Knife4jConfig {
                 swaggerProperties.getContactEmail()
             ))
             .build();
+    }
+
+    /**
+     * 通用响应
+     */
+    private static List<Response> commonResponses =
+        CollUtil.newArrayList(new Response("200", "OK", false, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+
+    /**
+     * 类型转换规则
+     */
+    private AlternateTypeRule[] alternateTypeRules() {
+        return new AlternateTypeRule[]{
+            newRule(LocalDateTime.class, String.class),
+            newRule(LocalDate.class, String.class),
+            newRule(LocalTime.class, String.class),
+            newRule(typeResolver.resolve(List.class, LocalDateTime.class), typeResolver.resolve(List.class, String.class)),
+            newRule(typeResolver.resolve(List.class, LocalDate.class), typeResolver.resolve(List.class, String.class)),
+            newRule(typeResolver.resolve(List.class, LocalTime.class), typeResolver.resolve(List.class, String.class))
+        };
     }
 
     private List<SecurityScheme> securitySchemes() {
