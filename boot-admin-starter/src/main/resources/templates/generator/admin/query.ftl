@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author ${author}
  * @date ${date}
  */
-@ApiModel(description = "${apiAlias!} 数据查询对象")
+@Schema(description = "${apiAlias!} 数据查询对象")
 public class ${className}Query implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,7 +33,7 @@ public class ${className}Query implements Serializable {
     <#list queryColumns as column>
 
         <#if column.remark != ''>
-    @ApiModelProperty(value = "${column.remark}")
+    @Schema(description = "${column.remark}")
         </#if>
         <#if column.queryType = 'In'>
     @Query(type = SqlKeyword.IN)
@@ -67,7 +67,7 @@ public class ${className}Query implements Serializable {
     <#list betweens as column>
 
         <#if column.remark != ''>
-    @ApiModelProperty(value = "${column.remark}")
+    @Schema(description = "${column.remark}")
         </#if>
     @Query(type = SqlKeyword.BETWEEN)
     private List<${column.columnType}> ${column.changeColumnName};

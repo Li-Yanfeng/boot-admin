@@ -12,11 +12,10 @@ import com.boot.admin.model.vo.TradeVO;
 import com.boot.admin.service.AlipayService;
 import com.boot.admin.util.AliPayStatusEnum;
 import com.boot.admin.util.AlipayUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +25,7 @@ import java.nio.charset.StandardCharsets;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@Api(tags = "工具：支付宝管理")
+@Tag(name = "工具：支付宝管理")
 @RestController
 @RequestMapping(value = "/api/ali_pays")
 @ResultWrapper
@@ -41,7 +40,7 @@ public class AlipayController {
         this.alipayUtils = alipayUtils;
     }
 
-    @ApiOperation(value = "修改支付宝配置")
+    @Operation(summary = "修改支付宝配置")
     @Log(value = "修改支付宝配置")
     @NoRepeatSubmit
     @PutMapping
@@ -49,13 +48,13 @@ public class AlipayController {
         alipayService.updateAlipayConfig(resource);
     }
 
-    @ApiOperation(value = "获取支付宝配置")
+    @Operation(summary = "获取支付宝配置")
     @GetMapping
     public AlipayConfig config() {
         return alipayService.getAlipayConfig();
     }
 
-    @ApiOperation(value = "PC 网页支付")
+    @Operation(summary = "PC 网页支付")
     @Log(value = "支付宝PC网页支付")
     @NoRepeatSubmit
     @PostMapping(value = "/pcs")
@@ -65,7 +64,7 @@ public class AlipayController {
         return alipayService.toPayAsPc(aliPay, trade);
     }
 
-    @ApiOperation(value = "手机网页支付")
+    @Operation(summary = "手机网页支付")
     @Log(value = "支付宝手机网页支付")
     @NoRepeatSubmit
     @PostMapping(value = "/webs")
@@ -75,8 +74,7 @@ public class AlipayController {
         return alipayService.toPayAsWeb(alipay, trade);
     }
 
-    @ApiIgnore
-    @ApiOperation(value = "支付之后跳转的链接")
+    @Operation(summary = "支付之后跳转的链接", hidden = true)
     @AnonymousGetMapping(value = "/return")
     public Result returnPage(HttpServletRequest request, HttpServletResponse response) {
         AlipayConfig alipay = alipayService.getAlipayConfig();
@@ -99,8 +97,7 @@ public class AlipayController {
         }
     }
 
-    @ApiIgnore
-    @ApiOperation(value = "支付异步通知(要公网访问)，接收异步通知，检查通知内容app_id、out_trade_no、total_amount是否与请求中的一致，根据trade_status进行后续业务处理")
+    @Operation(summary = "支付异步通知(要公网访问)，接收异步通知，检查通知内容app_id、out_trade_no、total_amount是否与请求中的一致，根据trade_status进行后续业务处理", hidden = true)
     @AnonymousAccess
     @AnonymousGetMapping(value = "/notifies")
     public Result notify(HttpServletRequest request) {

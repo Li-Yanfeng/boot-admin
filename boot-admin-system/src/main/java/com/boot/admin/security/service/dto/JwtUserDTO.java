@@ -4,8 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.system.service.dto.RoleSmallDTO;
 import com.boot.admin.system.service.dto.UserDTO;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,19 +17,19 @@ import java.util.stream.Collectors;
 /**
  * @author Li Yanfeng
  */
-@ApiModel(description = "授权用户 数据传输对象")
+@Schema(description = "授权用户 数据传输对象")
 public class JwtUserDTO implements UserDetails {
 
-    @ApiModelProperty(value = "用户")
+    @Schema(description = "用户")
     private final UserDTO user;
 
-    @ApiModelProperty(value = "数据范围类型")
+    @Schema(description = "数据范围类型")
     private final List<String> dataScopesTypes;
 
-    @ApiModelProperty(value = "数据范围")
+    @Schema(description = "数据范围")
     private final List<Long> dataScopes;
 
-    @ApiModelProperty(value = "权限")
+    @Schema(description = "权限")
     @JSONField(serialize = false)
     private final List<GrantedAuthority> authorities;
 

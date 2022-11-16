@@ -1,31 +1,30 @@
 package com.boot.admin.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
 /**
  * @author Li Yanfeng
  */
-@ApiModel(description = "表的数据信息")
+@Schema(description = "表的数据信息")
 public class TableInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "表名称")
+    @Schema(description = "表名称")
     private Object tableName;
 
-    @ApiModelProperty(value = "创建日期")
+    @Schema(description = "创建日期")
     private Object createTime;
 
-    @ApiModelProperty(value = "数据库引擎")
+    @Schema(description = "数据库引擎")
     private Object engine;
 
-    @ApiModelProperty(value = "编码集")
+    @Schema(description = "编码集")
     private Object coding;
 
-    @ApiModelProperty(value = "备注")
+    @Schema(description = "备注")
     private Object remark;
 
 

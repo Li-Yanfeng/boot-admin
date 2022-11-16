@@ -3,8 +3,7 @@ package com.boot.admin.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -13,49 +12,49 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "支付宝配置")
+@Schema(description = "支付宝配置")
 @TableName(value = "tool_alipay_config")
 public class AlipayConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.ASSIGN_ID)
     private Long configId;
 
-    @ApiModelProperty(value = "应用ID")
+    @Schema(description = "应用ID")
     @NotBlank
     private String appId;
 
-    @ApiModelProperty(value = "商户号")
+    @Schema(description = "商户号")
     @NotBlank
     private String sysServiceProviderId;
 
-    @ApiModelProperty(value = "商户私钥")
+    @Schema(description = "商户私钥")
     @NotBlank
     private String privateKey;
 
-    @ApiModelProperty(value = "支付宝公钥")
+    @Schema(description = "支付宝公钥")
     @NotBlank
     private String publicKey;
 
-    @ApiModelProperty(value = "签名方式")
+    @Schema(description = "签名方式")
     private String signType = "RSA2";
 
-    @ApiModelProperty(value = "编码", hidden = true)
+    @Schema(description = "编码", hidden = true)
     private String charset = "utf-8";
 
-    @ApiModelProperty(value = "类型")
+    @Schema(description = "类型")
     private String format = "JSON";
 
-    @ApiModelProperty(value = "支付宝开放安全地址", hidden = true)
+    @Schema(description = "支付宝开放安全地址", hidden = true)
     private String gatewayUrl = "https://openapi.alipaydev.com/gateway.do";
 
-    @ApiModelProperty(value = "异步通知地址")
+    @Schema(description = "异步通知地址")
     private String notifyUrl;
 
     @NotBlank
-    @ApiModelProperty(value = "订单完成后返回的页面")
+    @Schema(description = "订单完成后返回的页面")
     private String returnUrl;
 
 

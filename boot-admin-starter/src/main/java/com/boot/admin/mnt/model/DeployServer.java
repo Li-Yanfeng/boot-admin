@@ -2,8 +2,7 @@ package com.boot.admin.mnt.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
@@ -11,17 +10,17 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "服务器")
+@Schema(description = "服务器")
 @TableName(value = "mnt_deploy_server")
 public class DeployServer implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "部署ID")
+    @Schema(description = "部署ID")
     @TableField
     private Long deployId;
 
-    @ApiModelProperty(value = "服务ID")
+    @Schema(description = "服务ID")
     @TableField
     private Long serverId;
 

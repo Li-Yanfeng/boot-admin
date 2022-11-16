@@ -1,7 +1,6 @@
 package com.boot.admin.core.service.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -14,25 +13,25 @@ import java.time.LocalDateTime;
  * @author Li Yanfeng
  * @link https://www.cnblogs.com/qixuejia/p/4390086.html
  */
-@ApiModel(description = "基础数据传输对象,包含通用实体字段")
+@Schema(description = "基础数据传输对象,包含通用实体字段")
 public abstract class BaseDTO implements Serializable {
 
-    @ApiModelProperty(value = "创建人")
+    @Schema(description = "创建人")
     protected Long createBy;
 
-    @ApiModelProperty(value = "更新人")
+    @Schema(description = "更新人")
     protected Long updateBy;
 
-    @ApiModelProperty(value = "创建人名称")
+    @Schema(description = "创建人名称")
     protected String createByName;
 
-    @ApiModelProperty(value = "更新人名称")
+    @Schema(description = "更新人名称")
     protected String updateByName;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     protected LocalDateTime createTime;
 
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     protected LocalDateTime updateTime;
 
 

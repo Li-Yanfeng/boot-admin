@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,26 +14,26 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "七牛云存储配置")
+@Schema(description = "七牛云存储配置")
 @TableName(value = "tool_qiniu_config")
 public class QiniuConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.ASSIGN_ID)
     @NotNull(groups = ValidGroup.Update.class)
     private Long configId;
 
-    @ApiModelProperty(value = "accessKey")
+    @Schema(description = "accessKey")
     @NotBlank
     private String accessKey;
 
-    @ApiModelProperty(value = "secretKey")
+    @Schema(description = "secretKey")
     @NotBlank
     private String secretKey;
 
-    @ApiModelProperty(value = "存储空间名称作为唯一的 Bucket 识别符")
+    @Schema(description = "存储空间名称作为唯一的 Bucket 识别符")
     @NotBlank
     private String bucket;
 
@@ -46,15 +45,15 @@ public class QiniuConfig implements Serializable {
      * 北美	 Zone.zoneNa0()
      * 东南亚 Zone.zoneAs0()
      */
-    @ApiModelProperty(value = "Zone表示与机房的对应关系")
+    @Schema(description = "Zone表示与机房的对应关系")
     @NotBlank
     private String zone;
 
-    @ApiModelProperty(value = "域名，需在七牛云绑定")
+    @Schema(description = "域名，需在七牛云绑定")
     @NotBlank
     private String domain;
 
-    @ApiModelProperty(value = "空间类型：私有或公开")
+    @Schema(description = "空间类型：私有或公开")
     private String spaceType;
 
 

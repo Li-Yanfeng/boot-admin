@@ -11,8 +11,8 @@ import com.boot.admin.mnt.service.DeployService;
 import com.boot.admin.mnt.service.dto.DeployDTO;
 import com.boot.admin.mnt.service.dto.DeployQuery;
 import com.boot.admin.util.FileUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ import java.util.Set;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@Api(tags = "运维：部署管理")
+@Tag(name = "运维：部署管理")
 @RestController
 @RequestMapping(value = "/api/deploys")
 @ResultWrapper
@@ -44,7 +44,7 @@ public class DeployController {
         this.deployService = deployService;
     }
 
-    @ApiOperation(value = "新增部署")
+    @Operation(summary = "新增部署")
     @Log(value = "新增部署")
     @PreAuthorize(value = "@authorize.check('deploys:add')")
     @NoRepeatSubmit
@@ -53,7 +53,7 @@ public class DeployController {
         deployService.saveDeploy(resource);
     }
 
-    @ApiOperation(value = "删除部署")
+    @Operation(summary = "删除部署")
     @Log(value = "删除部署")
     @PreAuthorize(value = "@authorize.check('deploys:del')")
     @DeleteMapping
@@ -61,7 +61,7 @@ public class DeployController {
         deployService.removeDeployByIds(ids);
     }
 
-    @ApiOperation(value = "修改部署")
+    @Operation(summary = "修改部署")
     @Log(value = "修改部署")
     @PreAuthorize(value = "@authorize.check('deploys:edit')")
     @NoRepeatSubmit
@@ -70,14 +70,14 @@ public class DeployController {
         deployService.updateDeployById(resource);
     }
 
-    @ApiOperation(value = "查询部署")
+    @Operation(summary = "查询部署")
     @PreAuthorize(value = "@authorize.check('deploys:list')")
     @GetMapping
     public Page<DeployDTO> list(DeployQuery query, Page<Deploy> page) {
         return deployService.listDeploys(query, page);
     }
 
-    @ApiOperation(value = "上传文件部署")
+    @Operation(summary = "上传文件部署")
     @Log(value = "上传文件部署")
     @PreAuthorize(value = "@authorize.check('deploy:edit')")
     @NoRepeatSubmit
@@ -102,7 +102,7 @@ public class DeployController {
         return map;
     }
 
-    @ApiOperation(value = "系统还原")
+    @Operation(summary = "系统还原")
     @Log(value = "系统还原")
     @PreAuthorize(value = "@authorize.check('deploy:edit')")
     @NoRepeatSubmit
@@ -111,7 +111,7 @@ public class DeployController {
         return deployService.serverReduction(resource);
     }
 
-    @ApiOperation(value = "服务运行状态")
+    @Operation(summary = "服务运行状态")
     @Log(value = "服务运行状态")
     @PreAuthorize(value = "@authorize.check('deploy:edit')")
     @NoRepeatSubmit
@@ -120,7 +120,7 @@ public class DeployController {
         return deployService.serverStatus(resource);
     }
 
-    @ApiOperation(value = "启动服务")
+    @Operation(summary = "启动服务")
     @Log(value = "启动服务")
     @PreAuthorize(value = "@authorize.check('deploy:edit')")
     @NoRepeatSubmit
@@ -129,7 +129,7 @@ public class DeployController {
         return deployService.startServer(resource);
     }
 
-    @ApiOperation(value = "停止服务")
+    @Operation(summary = "停止服务")
     @Log(value = "停止服务")
     @PreAuthorize(value = "@authorize.check('deploy:edit')")
     @NoRepeatSubmit
@@ -138,7 +138,7 @@ public class DeployController {
         return deployService.stopServer(resource);
     }
 
-    @ApiOperation(value = "导出部署")
+    @Operation(summary = "导出部署")
     @Log(value = "导出部署")
     @PreAuthorize(value = "@authorize.check('deploys:list')")
     @GetMapping(value = "/exports")

@@ -1,7 +1,6 @@
 package com.boot.admin.service.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -11,48 +10,48 @@ import java.time.LocalDateTime;
 /**
  * @author Li Yanfeng
  */
-@ApiModel(description = "日志 数据传输对象")
+@Schema(description = "日志 数据传输对象")
 public class LogDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     private Long logId;
 
-    @ApiModelProperty(value = "方法名")
+    @Schema(description = "方法名")
     private String method;
 
-    @ApiModelProperty(value = "参数")
+    @Schema(description = "参数")
     private String params;
 
-    @ApiModelProperty(value = "日志类型")
+    @Schema(description = "日志类型")
     private String logType;
 
-    @ApiModelProperty(value = "请求Ip")
+    @Schema(description = "请求Ip")
     private String requestIp;
 
-    @ApiModelProperty(value = "请求耗时")
+    @Schema(description = "请求耗时")
     private Long time;
 
-    @ApiModelProperty(value = "地址")
+    @Schema(description = "地址")
     private String address;
 
-    @ApiModelProperty(value = "浏览器")
+    @Schema(description = "浏览器")
     private String browser;
 
-    @ApiModelProperty(value = "描述")
+    @Schema(description = "描述")
     private String description;
 
-    @ApiModelProperty(value = "异常详细")
+    @Schema(description = "异常详细")
     private byte[] exceptionDetail;
 
-    @ApiModelProperty(value = "创建人")
+    @Schema(description = "创建人")
     private Long createBy;
 
-    @ApiModelProperty(value = "创建人名称")
+    @Schema(description = "创建人名称")
     private String createByName;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createTime;
 
 

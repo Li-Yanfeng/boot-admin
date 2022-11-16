@@ -9,8 +9,7 @@ import com.boot.admin.core.model.BaseEntity;
     </#if>
 </#if>
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.*;
 <#if hasBigDecimal>
@@ -26,7 +25,7 @@ import java.sql.Timestamp;
  * @author ${author}
  * @date ${date}
  */
-@ApiModel(description = "${apiAlias!}")
+@Schema(description = "${apiAlias!}")
 @TableName(value = "${tableName}")
 <#if extendSuperEntity>
     <#if extendLogicDeleteSuperEntity>
@@ -44,7 +43,7 @@ public class ${className} implements Serializable {
     <#list columns as column>
 
         <#if column.remark != ''>
-    @ApiModelProperty(value = "${column.remark}")
+    @Schema(description = "${column.remark}")
         </#if>
         <#if column.columnKey = 'PRI'>
             <#if auto>

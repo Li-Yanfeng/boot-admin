@@ -9,8 +9,8 @@ import com.boot.admin.mnt.model.App;
 import com.boot.admin.mnt.service.AppService;
 import com.boot.admin.mnt.service.dto.AppDTO;
 import com.boot.admin.mnt.service.dto.AppQuery;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import java.util.Set;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@Api(tags = "运维：应用管理")
+@Tag(name = "运维：应用管理")
 @RestController
 @RequestMapping(value = "/api/apps")
 @ResultWrapper
@@ -34,7 +34,7 @@ public class AppController {
         this.appService = appService;
     }
 
-    @ApiOperation(value = "新增应用")
+    @Operation(summary = "新增应用")
     @Log(value = "新增应用")
     @PreAuthorize(value = "@authorize.check('apps:add')")
     @NoRepeatSubmit
@@ -43,7 +43,7 @@ public class AppController {
         appService.saveApp(resource);
     }
 
-    @ApiOperation(value = "删除应用")
+    @Operation(summary = "删除应用")
     @Log(value = "删除应用")
     @PreAuthorize(value = "@authorize.check('apps:del')")
     @DeleteMapping
@@ -51,7 +51,7 @@ public class AppController {
         appService.removeAppByIds(ids);
     }
 
-    @ApiOperation(value = "修改应用")
+    @Operation(summary = "修改应用")
     @Log(value = "修改应用")
     @PreAuthorize(value = "@authorize.check('apps:edit')")
     @NoRepeatSubmit
@@ -60,14 +60,14 @@ public class AppController {
         appService.updateAppById(resource);
     }
 
-    @ApiOperation(value = "查询应用")
+    @Operation(summary = "查询应用")
     @PreAuthorize(value = "@authorize.check('apps:list')")
     @GetMapping
     public Page<AppDTO> list(AppQuery query, Page<App> page) {
         return appService.listApps(query, page);
     }
 
-    @ApiOperation(value = "导出应用")
+    @Operation(summary = "导出应用")
     @Log(value = "导出应用")
     @PreAuthorize(value = "@authorize.check('apps:list')")
     @GetMapping(value = "/exports")

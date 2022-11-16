@@ -1,7 +1,6 @@
 package com.boot.admin.security.service.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -10,31 +9,31 @@ import java.time.LocalDateTime;
 /**
  * @author Li Yanfeng
  */
-@ApiModel(description = "在线用户 数据传输对象")
+@Schema(description = "在线用户 数据传输对象")
 public class OnlineUserDTO {
 
-    @ApiModelProperty(value = "用户名")
+    @Schema(description = "用户名")
     private String userName;
 
-    @ApiModelProperty(value = "昵称")
+    @Schema(description = "昵称")
     private String nickName;
 
-    @ApiModelProperty(value = "部门")
+    @Schema(description = "部门")
     private String dept;
 
-    @ApiModelProperty(value = "浏览器")
+    @Schema(description = "浏览器")
     private String browser;
 
-    @ApiModelProperty(value = "IP")
+    @Schema(description = "IP")
     private String ip;
 
-    @ApiModelProperty(value = "地址")
+    @Schema(description = "地址")
     private String address;
 
-    @ApiModelProperty(value = "token")
+    @Schema(description = "token")
     private String key;
 
-    @ApiModelProperty(value = "登录时间")
+    @Schema(description = "登录时间")
     private LocalDateTime loginTime;
 
 

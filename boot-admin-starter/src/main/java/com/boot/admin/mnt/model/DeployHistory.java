@@ -2,8 +2,7 @@ package com.boot.admin.mnt.model;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -13,35 +12,35 @@ import java.time.LocalDateTime;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "部署历史")
+@Schema(description = "部署历史")
 @TableName(value = "mnt_deploy_history")
 public class DeployHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.ASSIGN_ID)
     @NotNull(groups = ValidGroup.Update.class)
     private Long historyId;
 
-    @ApiModelProperty(value = "部署编号")
+    @Schema(description = "部署编号")
     private Long deployId;
 
-    @ApiModelProperty(value = "服务器IP")
+    @Schema(description = "服务器IP")
     private String ip;
 
-    @ApiModelProperty(value = "应用名称")
+    @Schema(description = "应用名称")
     private String appName;
 
-    @ApiModelProperty(value = "创建人")
+    @Schema(description = "创建人")
     @TableField(fill = FieldFill.INSERT)
     private Long createBy;
 
-    @ApiModelProperty(value = "创建人名称")
+    @Schema(description = "创建人名称")
     @TableField(fill = FieldFill.INSERT)
     private String createByName;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 

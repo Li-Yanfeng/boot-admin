@@ -1,8 +1,7 @@
 package com.boot.admin.system.service.dto;
 
 import com.boot.admin.core.service.dto.BaseDTO;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -14,30 +13,30 @@ import java.util.Objects;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "角色 数据传输对象")
+@Schema(description = "角色 数据传输对象")
 public class RoleDTO extends BaseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     private Long roleId;
 
-    @ApiModelProperty(value = "名称")
+    @Schema(description = "名称")
     private String name;
 
-    @ApiModelProperty(value = "角色级别")
+    @Schema(description = "角色级别")
     private Integer level;
 
-    @ApiModelProperty(value = "描述")
+    @Schema(description = "描述")
     private String description;
 
-    @ApiModelProperty(value = "数据权限")
+    @Schema(description = "数据权限")
     private String dataScope;
 
-    @ApiModelProperty(value = "菜单")
+    @Schema(description = "菜单")
     private List<MenuDTO> menus;
 
-    @ApiModelProperty(value = "部门")
+    @Schema(description = "部门")
     private List<DeptDTO> depts;
 
     public Long getRoleId() {

@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -14,42 +13,42 @@ import java.io.Serializable;
 /**
  * @author Li Yanfeng
  */
-@ApiModel(description = "代码生成配置")
+@Schema(description = "代码生成配置")
 @TableName(value = "code_gen_config")
 public class GenConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     @NotNull(groups = ValidGroup.Update.class)
     private Long configId;
 
-    @ApiModelProperty(value = "表名")
+    @Schema(description = "表名")
     private String tableName;
 
-    @ApiModelProperty(value = "接口名称")
+    @Schema(description = "接口名称")
     private String apiAlias;
 
-    @ApiModelProperty(value = "模块名称")
+    @Schema(description = "模块名称")
     private String moduleName;
 
-    @ApiModelProperty(value = "包路径")
+    @Schema(description = "包路径")
     private String pack;
 
-    @ApiModelProperty(value = "后端代码生成的路径")
+    @Schema(description = "后端代码生成的路径")
     private String adminPath;
 
-    @ApiModelProperty(value = "前端代码生成的路径")
+    @Schema(description = "前端代码生成的路径")
     private String frontPath;
 
-    @ApiModelProperty(value = "作者")
+    @Schema(description = "作者")
     private String author;
 
-    @ApiModelProperty(value = "表前缀")
+    @Schema(description = "表前缀")
     private String prefix;
 
-    @ApiModelProperty(value = "是否覆盖")
+    @Schema(description = "是否覆盖")
     @TableField(value = "is_cover")
     private Integer cover;
 

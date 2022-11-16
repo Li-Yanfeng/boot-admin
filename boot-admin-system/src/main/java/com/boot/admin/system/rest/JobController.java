@@ -9,8 +9,8 @@ import com.boot.admin.system.model.Job;
 import com.boot.admin.system.service.JobService;
 import com.boot.admin.system.service.dto.JobDTO;
 import com.boot.admin.system.service.dto.JobQuery;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import java.util.Set;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@Api(tags = "系统：岗位管理")
+@Tag(name = "系统：岗位管理")
 @RestController
 @RequestMapping(value = "/api/jobs")
 @ResultWrapper
@@ -34,7 +34,7 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @ApiOperation(value = "新增岗位")
+    @Operation(summary = "新增岗位")
     @Log(value = "新增岗位")
     @PreAuthorize(value = "@authorize.check('jobs:add')")
     @NoRepeatSubmit
@@ -43,7 +43,7 @@ public class JobController {
         jobService.saveJob(resource);
     }
 
-    @ApiOperation(value = "删除岗位")
+    @Operation(summary = "删除岗位")
     @Log(value = "删除岗位")
     @PreAuthorize(value = "@authorize.check('jobs:del')")
     @DeleteMapping
@@ -53,7 +53,7 @@ public class JobController {
         jobService.removeJobByIds(ids);
     }
 
-    @ApiOperation(value = "修改岗位")
+    @Operation(summary = "修改岗位")
     @Log(value = "修改岗位")
     @PreAuthorize(value = "@authorize.check('jobs:edit')")
     @NoRepeatSubmit
@@ -62,14 +62,14 @@ public class JobController {
         jobService.updateJobById(resource);
     }
 
-    @ApiOperation(value = "查询岗位")
+    @Operation(summary = "查询岗位")
     @PreAuthorize(value = "@authorize.check('jobs:list')")
     @GetMapping
     public Page<JobDTO> list(JobQuery query, Page<Job> page) {
         return jobService.listJobs(query, page);
     }
 
-    @ApiOperation(value = "导出岗位")
+    @Operation(summary = "导出岗位")
     @Log(value = "导出岗位")
     @PreAuthorize(value = "@authorize.check('jobs:list')")
     @GetMapping(value = "/exports")

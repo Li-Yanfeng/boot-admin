@@ -114,16 +114,12 @@ ip:
 generator:
   enabled: true
 
-# 是否开启 swagger-ui
-swagger:
-  enabled: true
+# 接口文档
+spring-doc:
   title: ADMIN 接口文档
   description: 一个简单且易上手的 Spring boot 后台管理框架
   version: 1.0
   service-url:
-  contact-name:
-  contact-url:
-  contact-email:
 
 # 文件存储路径
 file:

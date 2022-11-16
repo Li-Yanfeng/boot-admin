@@ -1,7 +1,6 @@
 package com.boot.admin.system.model.vo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -11,15 +10,15 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "修改密码 视图展示对象")
+@Schema(description = "修改密码 视图展示对象")
 public class UserPassVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "旧密码")
+    @Schema(description = "旧密码")
     private String oldPass;
 
-    @ApiModelProperty(value = "新密码")
+    @Schema(description = "新密码")
     private String newPass;
 
 

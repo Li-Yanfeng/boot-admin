@@ -386,7 +386,7 @@ public class FileUtils extends FileUtil {
                     }
                 }
             }
-            sheet.setColumnWidth(columnNum, columnWidth * 256);
+            sheet.setColumnWidth(columnNum, (columnWidth > 40 ? 40 : columnWidth + 2) * 256);
         }
     }
 }

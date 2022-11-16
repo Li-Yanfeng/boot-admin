@@ -2,8 +2,7 @@ package com.boot.admin.core.model;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,30 +10,30 @@ import java.time.LocalDateTime;
 /**
  * @author Li Yanfeng
  */
-@ApiModel(description = "基础实体,包含通用实体字段")
+@Schema(description = "基础实体,包含通用实体字段")
 public abstract class BaseEntity implements Serializable {
 
-    @ApiModelProperty(value = "创建人", hidden = true)
+    @Schema(description = "创建人", hidden = true)
     @TableField(fill = FieldFill.INSERT)
     protected Long createBy;
 
-    @ApiModelProperty(value = "更新人", hidden = true)
+    @Schema(description = "更新人", hidden = true)
     @TableField(fill = FieldFill.INSERT_UPDATE)
     protected Long updateBy;
 
-    @ApiModelProperty(value = "创建人名称", hidden = true)
+    @Schema(description = "创建人名称", hidden = true)
     @TableField(fill = FieldFill.INSERT)
     protected String createByName;
 
-    @ApiModelProperty(value = "更新人名称", hidden = true)
+    @Schema(description = "更新人名称", hidden = true)
     @TableField(fill = FieldFill.INSERT_UPDATE)
     protected String updateByName;
 
-    @ApiModelProperty(value = "创建时间", hidden = true)
+    @Schema(description = "创建时间", hidden = true)
     @TableField(fill = FieldFill.INSERT)
     protected LocalDateTime createTime;
 
-    @ApiModelProperty(value = "更新时间", hidden = true)
+    @Schema(description = "更新时间", hidden = true)
     @TableField(fill = FieldFill.INSERT_UPDATE)
     protected LocalDateTime updateTime;
 

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -113,9 +114,16 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        /*
+        添加StringConverter
+         */
+        converters.add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
+
+        /*
+        添加JacksonConverter
+         */
         // 处理中文乱码问题
         List<MediaType> supportMediaTypeList = CollUtil.newArrayList(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN);
-
         // 在 convert 中添加配置信息
         MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
         // 添加 jackson 配置信息

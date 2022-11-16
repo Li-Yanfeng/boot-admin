@@ -1,7 +1,6 @@
 package com.boot.admin.model.vo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -14,20 +13,20 @@ import java.util.List;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "发送邮件时，接收参数的类")
+@Schema(description = "发送邮件时，接收参数的类")
 public class EmailVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "收件人，支持多个收件人")
+    @Schema(description = "收件人，支持多个收件人")
     @NotEmpty
     private List<String> tos;
 
-    @ApiModelProperty(value = "主题")
+    @Schema(description = "主题")
     @NotBlank
     private String subject;
 
-    @ApiModelProperty(value = "内容")
+    @Schema(description = "内容")
     @NotBlank
     private String content;
 

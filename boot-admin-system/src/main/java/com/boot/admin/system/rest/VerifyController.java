@@ -7,8 +7,8 @@ import com.boot.admin.service.EmailService;
 import com.boot.admin.system.service.VerifyService;
 import com.boot.admin.util.enums.CodeBiEnum;
 import com.boot.admin.util.enums.CodeEnum;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
@@ -17,7 +17,7 @@ import java.util.Objects;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@Api(tags = "系统：验证码管理")
+@Tag(name = "系统：验证码管理")
 @RestController
 @RequestMapping(value = "/api/codes")
 @ResultWrapper
@@ -31,7 +31,7 @@ public class VerifyController {
         this.emailService = emailService;
     }
 
-    @ApiOperation(value = "重置邮箱，发送验证码")
+    @Operation(summary = "重置邮箱，发送验证码")
     @NoRepeatSubmit
     @PostMapping(value = "/reset/emails")
     public void resetEmail(@RequestParam String email) {
@@ -39,7 +39,7 @@ public class VerifyController {
         emailService.send(emailVO, emailService.getEmailConfig());
     }
 
-    @ApiOperation(value = "重置密码，发送验证码")
+    @Operation(summary = "重置密码，发送验证码")
     @NoRepeatSubmit
     @PostMapping(value = "/reset/passes")
     public void resetPass(@RequestParam String email) {
@@ -47,7 +47,7 @@ public class VerifyController {
         emailService.send(emailVO, emailService.getEmailConfig());
     }
 
-    @ApiOperation(value = "验证码验证")
+    @Operation(summary = "验证码验证")
     @GetMapping(value = "/validated")
     public void validated(@RequestParam String email, @RequestParam String code, @RequestParam Integer codeBi) {
         CodeBiEnum biEnum = CodeBiEnum.find(codeBi);

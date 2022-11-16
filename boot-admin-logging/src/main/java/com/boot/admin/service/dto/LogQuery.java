@@ -2,8 +2,7 @@ package com.boot.admin.service.dto;
 
 import com.baomidou.mybatisplus.core.enums.SqlKeyword;
 import com.boot.admin.annotation.Query;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -13,29 +12,29 @@ import java.util.List;
 /**
  * @author Li Yanfeng
  */
-@ApiModel(description = "日志 数据查询对象")
+@Schema(description = "日志 数据查询对象")
 public class LogQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "日志类型")
+    @Schema(description = "日志类型")
     @Query(type = SqlKeyword.EQ)
     private String logType;
 
-    @ApiModelProperty(value = "创建人")
+    @Schema(description = "创建人")
     @Query(type = SqlKeyword.EQ)
     private Long createBy;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Query(type = SqlKeyword.BETWEEN)
     private List<LocalDateTime> createTime;
 
-    @ApiModelProperty(value = "多字段模糊")
+    @Schema(description = "多字段模糊")
     @Query(q = "createByName,description,address,requestIp,method,params")
     private String q;
 
-    @ApiModelProperty(value = "排序字段")
+    @Schema(description = "排序字段")
     private List<String> sort;
 
 

@@ -2,8 +2,7 @@ package com.boot.admin.system.service.dto;
 
 import com.baomidou.mybatisplus.core.enums.SqlKeyword;
 import com.boot.admin.annotation.Query;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -14,29 +13,29 @@ import java.util.List;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "菜单 数据查询对象")
+@Schema(description = "菜单 数据查询对象")
 public class MenuQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @Query(type = SqlKeyword.EQ)
     private Long menuId;
 
-    @ApiModelProperty(value = "上级菜单ID")
+    @Schema(description = "上级菜单ID")
     @Query(type = SqlKeyword.EQ)
     private Long pid;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Query(type = SqlKeyword.BETWEEN)
     private List<LocalDateTime> createTime;
 
-    @ApiModelProperty(value = "多字段模糊")
+    @Schema(description = "多字段模糊")
     @Query(q = "title,component,permission")
     private String q;
 
-    @ApiModelProperty(value = "排序字段")
+    @Schema(description = "排序字段")
     private List<String> sort;
 
 

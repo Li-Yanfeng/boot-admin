@@ -4,15 +4,15 @@ import com.boot.admin.annotation.NoRepeatSubmit;
 import com.boot.admin.annotation.ValidGroup;
 import com.boot.admin.model.GenConfig;
 import com.boot.admin.service.GenConfigService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Li Yanfeng
  */
-@Api(tags = "系统：代码生成器配置管理")
+@Tag(name = "系统：代码生成器配置管理")
 @RestController
 @RequestMapping(value = "/api/gen_configs")
 public class GenConfigController {
@@ -23,14 +23,14 @@ public class GenConfigController {
         this.genConfigService = genConfigService;
     }
 
-    @ApiOperation(value = "修改代码生成配置")
+    @Operation(summary = "修改代码生成配置")
     @NoRepeatSubmit
     @PutMapping
     public void update(@Validated(value = ValidGroup.Update.class) @RequestBody GenConfig resource) {
         genConfigService.saveGenConfig(resource);
     }
 
-    @ApiOperation(value = "查询代码生成配置")
+    @Operation(summary = "查询代码生成配置")
     @GetMapping(value = "/{tableName}")
     public GenConfig getByTableName(@PathVariable String tableName) {
         return genConfigService.getGenConfigByTableName(tableName);

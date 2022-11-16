@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.core.model.BaseEntity;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,27 +14,27 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "角色")
+@Schema(description = "角色")
 @TableName(value = "sys_role")
 public class Role extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     @NotNull(groups = ValidGroup.Update.class)
     private Long roleId;
 
-    @ApiModelProperty(value = "名称")
+    @Schema(description = "名称")
     private String name;
 
-    @ApiModelProperty(value = "角色级别")
+    @Schema(description = "角色级别")
     private Integer level;
 
-    @ApiModelProperty(value = "描述")
+    @Schema(description = "描述")
     private String description;
 
-    @ApiModelProperty(value = "数据权限")
+    @Schema(description = "数据权限")
     private String dataScope;
 
 

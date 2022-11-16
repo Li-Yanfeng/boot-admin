@@ -1,7 +1,6 @@
 package com.boot.admin.model.vo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -13,36 +12,36 @@ import java.time.LocalDateTime;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "交易详情，按需存入数据库")
+@Schema(description = "交易详情，按需存入数据库")
 public class TradeVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "商品描述")
+    @Schema(description = "商品描述")
     @NotBlank
     private String body;
 
-    @ApiModelProperty(value = "商品名称")
+    @Schema(description = "商品名称")
     @NotBlank
     private String subject;
 
-    @ApiModelProperty(value = "商户订单号，应该由后台生成", hidden = true)
+    @Schema(description = "商户订单号，应该由后台生成", hidden = true)
     private String outTradeNo;
 
-    @ApiModelProperty(value = "第三方订单号", hidden = true)
+    @Schema(description = "第三方订单号", hidden = true)
     private String tradeNo;
 
-    @ApiModelProperty(value = "价格")
+    @Schema(description = "价格")
     @NotBlank
     private String totalAmount;
 
-    @ApiModelProperty(value = "订单状态（已支付，未支付，作废）", hidden = true)
+    @Schema(description = "订单状态（已支付，未支付，作废）", hidden = true)
     private String state;
 
-    @ApiModelProperty(value = "创建时间", hidden = true)
+    @Schema(description = "创建时间", hidden = true)
     private LocalDateTime createTime;
 
-    @ApiModelProperty(value = "作废时间", hidden = true)
+    @Schema(description = "作废时间", hidden = true)
     private LocalDateTime cancelTime;
 
 

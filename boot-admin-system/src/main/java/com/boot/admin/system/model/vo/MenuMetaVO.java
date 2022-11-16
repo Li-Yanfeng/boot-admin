@@ -1,7 +1,6 @@
 package com.boot.admin.system.model.vo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -11,18 +10,18 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "元菜单 视图展示对象")
+@Schema(description = "元菜单 视图展示对象")
 public class MenuMetaVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "菜单标题")
+    @Schema(description = "菜单标题")
     private String title;
 
-    @ApiModelProperty(value = "图标")
+    @Schema(description = "图标")
     private String icon;
 
-    @ApiModelProperty(value = "是否缓存")
+    @Schema(description = "是否缓存")
     private Integer cache;
 
 

@@ -2,8 +2,7 @@ package com.boot.admin.system.service.dto;
 
 import com.boot.admin.core.service.dto.BaseDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -15,27 +14,27 @@ import java.util.Objects;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "部门 数据传输对象")
+@Schema(description = "部门 数据传输对象")
 public class DeptDTO extends BaseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     private Long deptId;
 
-    @ApiModelProperty(value = "上级部门")
+    @Schema(description = "上级部门")
     private Long pid;
 
-    @ApiModelProperty(value = "名称")
+    @Schema(description = "名称")
     private String name;
 
-    @ApiModelProperty(value = "是否启用")
+    @Schema(description = "是否启用")
     private Integer enabled;
 
-    @ApiModelProperty(value = "排序")
+    @Schema(description = "排序")
     private Integer deptSort;
 
-    @ApiModelProperty(value = "子部门")
+    @Schema(description = "子部门")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<DeptDTO> children;
 

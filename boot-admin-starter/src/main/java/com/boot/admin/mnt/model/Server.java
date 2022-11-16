@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.core.model.BaseEntity;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,30 +14,30 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "服务器")
+@Schema(description = "服务器")
 @TableName(value = "mnt_server")
 public class Server extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     @NotNull(groups = ValidGroup.Update.class)
     private Long serverId;
 
-    @ApiModelProperty(value = "名称")
+    @Schema(description = "名称")
     private String name;
 
-    @ApiModelProperty(value = "IP地址")
+    @Schema(description = "IP地址")
     private String ip;
 
-    @ApiModelProperty(value = "端口")
+    @Schema(description = "端口")
     private Integer port;
 
-    @ApiModelProperty(value = "账号")
+    @Schema(description = "账号")
     private String account;
 
-    @ApiModelProperty(value = "密码")
+    @Schema(description = "密码")
     private String password;
 
 

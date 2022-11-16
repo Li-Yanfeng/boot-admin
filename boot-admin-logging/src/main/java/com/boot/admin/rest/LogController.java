@@ -8,8 +8,8 @@ import com.boot.admin.service.dto.LogDTO;
 import com.boot.admin.service.dto.LogQuery;
 import com.boot.admin.service.dto.LogSmallDTO;
 import com.boot.admin.util.SecurityUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Li Yanfeng
  */
-@Api(tags = "系统：日志管理")
+@Tag(name = "系统：日志管理")
 @RestController
 @RequestMapping(value = "/api/logs")
 @ResultWrapper
@@ -31,7 +31,7 @@ public class LogController {
         this.logService = logService;
     }
 
-    @ApiOperation(value = "删除 INFO 日志")
+    @Operation(summary = "删除 INFO 日志")
     @Log(value = "删除 INFO 日志")
     @PreAuthorize(value = "@authorize.check('logs:del')")
     @DeleteMapping(value = "/infos")
@@ -39,7 +39,7 @@ public class LogController {
         logService.lambdaUpdate().eq(com.boot.admin.model.Log::getLogType, LogLevel.INFO.name()).remove();
     }
 
-    @ApiOperation(value = "删除 ERROR 日志")
+    @Operation(summary = "删除 ERROR 日志")
     @Log(value = "删除 ERROR 日志")
     @PreAuthorize(value = "@authorize.check('logs:del')")
     @DeleteMapping(value = "/errors")
@@ -47,7 +47,7 @@ public class LogController {
         logService.lambdaUpdate().eq(com.boot.admin.model.Log::getLogType, LogLevel.ERROR.name()).remove();
     }
 
-    @ApiOperation(value = "查询日志")
+    @Operation(summary = "查询日志")
     @PreAuthorize(value = "@authorize.check('logs:list')")
     @GetMapping
     public Page<LogDTO> list(LogQuery query, Page<com.boot.admin.model.Log> page) {
@@ -55,7 +55,7 @@ public class LogController {
         return logService.listLogs(query, page);
     }
 
-    @ApiOperation(value = "查询用户日志")
+    @Operation(summary = "查询用户日志")
     @GetMapping(value = "/users")
     public Page<LogSmallDTO> listUserLogs(LogQuery query, Page<com.boot.admin.model.Log> page) {
         query.setLogType(LogLevel.INFO.name());
@@ -63,7 +63,7 @@ public class LogController {
         return logService.listLogsByUser(query, page);
     }
 
-    @ApiOperation(value = "查询错误日志")
+    @Operation(summary = "查询错误日志")
     @PreAuthorize(value = "@authorize.check('logs:list')")
     @GetMapping(value = "/errors")
     public Page<LogDTO> listErrorLogs(LogQuery query, Page<com.boot.admin.model.Log> page) {
@@ -71,14 +71,14 @@ public class LogController {
         return logService.listLogs(query, page);
     }
 
-    @ApiOperation(value = "查询错误日志")
+    @Operation(summary = "查询错误日志")
     @PreAuthorize(value = "@authorize.check('logs:list')")
     @GetMapping(value = "/errors/{id}")
     public LogDTO getErrorLogById(@PathVariable Long id) {
         return logService.getLogById(id);
     }
 
-    @ApiOperation(value = "导出日志")
+    @Operation(summary = "导出日志")
     @Log(value = "导出日志")
     @PreAuthorize(value = "@authorize.check('logs:list')")
     @GetMapping(value = "/exports")
@@ -87,7 +87,7 @@ public class LogController {
         logService.exportLog(logService.listLogs(query), response);
     }
 
-    @ApiOperation(value = "导出错误日志")
+    @Operation(summary = "导出错误日志")
     @Log(value = "导出错误日志")
     @PreAuthorize(value = "@authorize.check('logs:list')")
     @GetMapping(value = "/exports/errors")

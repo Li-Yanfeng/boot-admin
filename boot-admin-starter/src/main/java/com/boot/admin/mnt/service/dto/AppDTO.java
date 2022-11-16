@@ -1,8 +1,7 @@
 package com.boot.admin.mnt.service.dto;
 
 import com.boot.admin.core.service.dto.BaseDTO;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -12,33 +11,33 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "应用 数据传输对象")
+@Schema(description = "应用 数据传输对象")
 public class AppDTO extends BaseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     private Long appId;
 
-    @ApiModelProperty(value = "应用名称")
+    @Schema(description = "应用名称")
     private String name;
 
-    @ApiModelProperty(value = "上传目录")
+    @Schema(description = "上传目录")
     private String uploadPath;
 
-    @ApiModelProperty(value = "部署路径")
+    @Schema(description = "部署路径")
     private String deployPath;
 
-    @ApiModelProperty(value = "备份路径")
+    @Schema(description = "备份路径")
     private String backupPath;
 
-    @ApiModelProperty(value = "应用端口")
+    @Schema(description = "应用端口")
     private Integer port;
 
-    @ApiModelProperty(value = "启动脚本")
+    @Schema(description = "启动脚本")
     private String startScript;
 
-    @ApiModelProperty(value = "部署脚本")
+    @Schema(description = "部署脚本")
     private String deployScript;
 
 

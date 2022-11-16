@@ -9,8 +9,8 @@ import com.boot.admin.system.model.DictDetail;
 import com.boot.admin.system.service.DictDetailService;
 import com.boot.admin.system.service.dto.DictDetailDTO;
 import com.boot.admin.system.service.dto.DictDetailQuery;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ import java.util.Set;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@Api(tags = "系统：字典详情管理")
+@Tag(name = "系统：字典详情管理")
 @RestController
 @RequestMapping(value = "/api/dict_details")
 @ResultWrapper
@@ -33,7 +33,7 @@ public class DictDetailController {
         this.dictDetailService = dictDetailService;
     }
 
-    @ApiOperation(value = "新增字典详情")
+    @Operation(summary = "新增字典详情")
     @Log(value = "新增字典详情")
     @PreAuthorize(value = "@authorize.check('dicts:add')")
     @NoRepeatSubmit
@@ -42,7 +42,7 @@ public class DictDetailController {
         dictDetailService.saveDictDetail(resource);
     }
 
-    @ApiOperation(value = "删除字典详情")
+    @Operation(summary = "删除字典详情")
     @Log(value = "删除字典详情")
     @PreAuthorize(value = "@authorize.check('dicts:del')")
     @DeleteMapping
@@ -50,7 +50,7 @@ public class DictDetailController {
         dictDetailService.removeDictDetailByIds(ids);
     }
 
-    @ApiOperation(value = "修改字典详情")
+    @Operation(summary = "修改字典详情")
     @Log(value = "修改字典详情")
     @PreAuthorize(value = "@authorize.check('dicts:edit')")
     @NoRepeatSubmit
@@ -59,7 +59,7 @@ public class DictDetailController {
         dictDetailService.updateDictDetailById(resource);
     }
 
-    @ApiOperation(value = "查询字典详情")
+    @Operation(summary = "查询字典详情")
     @PreAuthorize(value = "@authorize.check('dicts:list')")
     @GetMapping
     public Page<DictDetailDTO> list(DictDetailQuery query, Page<DictDetail> page) {

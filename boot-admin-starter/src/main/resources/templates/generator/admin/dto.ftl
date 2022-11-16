@@ -3,8 +3,7 @@ package ${package}.service.dto;
 <#if extendSuperEntity>
 import com.boot.admin.core.service.dto.BaseDTO;
 </#if>
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -21,7 +20,7 @@ import java.sql.Timestamp;
  * @author ${author}
  * @since ${date}
  */
-@ApiModel(description = "${apiAlias!} 数据传输对象")
+@Schema(description = "${apiAlias!} 数据传输对象")
 <#if extendSuperEntity>
 public class ${className}DTO extends BaseDTO implements Serializable {
 <#else>
@@ -34,7 +33,7 @@ public class ${className}DTO implements Serializable {
     <#list columns as column>
 
         <#if column.remark != ''>
-    @ApiModelProperty(value = "${column.remark}")
+    @Schema(description = "${column.remark}")
         </#if>
     private ${column.columnType} ${column.changeColumnName};
     </#list>

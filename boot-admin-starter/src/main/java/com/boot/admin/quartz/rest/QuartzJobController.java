@@ -10,8 +10,8 @@ import com.boot.admin.quartz.model.QuartzLog;
 import com.boot.admin.quartz.service.QuartzJobService;
 import com.boot.admin.quartz.service.QuartzLogService;
 import com.boot.admin.quartz.service.dto.QuartzJobQuery;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ import java.util.Set;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@Api(tags = "系统：定时任务管理")
+@Tag(name = "系统：定时任务管理")
 @RestController
 @RequestMapping(value = "/api/quartz_jobs")
 @ResultWrapper
@@ -37,7 +37,7 @@ public class QuartzJobController {
         this.quartzLogService = quartzLogService;
     }
 
-    @ApiOperation(value = "新增定时任务")
+    @Operation(summary = "新增定时任务")
     @Log(value = "新增定时任务")
     @PreAuthorize(value = "@authorize.check('timing:add')")
     @NoRepeatSubmit
@@ -46,7 +46,7 @@ public class QuartzJobController {
         quartzJobService.saveQuartzJob(resource);
     }
 
-    @ApiOperation(value = "删除定时任务")
+    @Operation(summary = "删除定时任务")
     @Log(value = "删除定时任务")
     @PreAuthorize(value = "@authorize.check('timing:del')")
     @DeleteMapping
@@ -54,7 +54,7 @@ public class QuartzJobController {
         quartzJobService.removeQuartzJobByIds(ids);
     }
 
-    @ApiOperation(value = "修改定时任务")
+    @Operation(summary = "修改定时任务")
     @Log(value = "修改定时任务")
     @PreAuthorize(value = "@authorize.check('timing:edit')")
     @NoRepeatSubmit
@@ -63,7 +63,7 @@ public class QuartzJobController {
         quartzJobService.updateQuartzJobById(resource);
     }
 
-    @ApiOperation(value = "更改定时任务状态")
+    @Operation(summary = "更改定时任务状态")
     @Log(value = "更改定时任务状态")
     @PreAuthorize(value = "@authorize.check('timing:edit')")
     @NoRepeatSubmit
@@ -72,21 +72,21 @@ public class QuartzJobController {
         quartzJobService.updateQuartzJobByIsPause(quartzJobService.getQuartzJobById(id));
     }
 
-    @ApiOperation(value = "查询定时任务")
+    @Operation(summary = "查询定时任务")
     @PreAuthorize(value = "@authorize.check('timing:list')")
     @GetMapping
     public Page<QuartzJob> listQuartzJobs(QuartzJobQuery query, Page<QuartzJob> page) {
         return quartzJobService.listQuartzJobs(query, page);
     }
 
-    @ApiOperation(value = "查询任务执行日志")
+    @Operation(summary = "查询任务执行日志")
     @PreAuthorize(value = "@authorize.check('timing:list')")
     @GetMapping(value = "/logs")
     public Page<QuartzLog> listQuartzLogs(QuartzJobQuery query, Page<QuartzLog> page) {
         return quartzLogService.listQuartzLogs(query, page);
     }
 
-    @ApiOperation(value = "执行定时任务")
+    @Operation(summary = "执行定时任务")
     @Log(value = "执行定时任务")
     @PreAuthorize(value = "@authorize.check('timing:edit')")
     @NoRepeatSubmit
@@ -95,7 +95,7 @@ public class QuartzJobController {
         quartzJobService.executionJob(quartzJobService.getQuartzJobById(id));
     }
 
-    @ApiOperation(value = "导出任务数据")
+    @Operation(summary = "导出任务数据")
     @Log(value = "导出任务数据")
     @PreAuthorize(value = "@authorize.check('timing:list')")
     @GetMapping(value = "/exports")
@@ -103,7 +103,7 @@ public class QuartzJobController {
         quartzJobService.exportQuartzJob(quartzJobService.listQuartzJobs(query), response);
     }
 
-    @ApiOperation(value = "导出任务日志数据")
+    @Operation(summary = "导出任务日志数据")
     @Log(value = "导出任务日志数据")
     @PreAuthorize(value = "@authorize.check('timing:list')")
     @GetMapping(value = "/logs/exports")

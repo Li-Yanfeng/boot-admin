@@ -9,8 +9,8 @@ import com.boot.admin.mnt.model.Server;
 import com.boot.admin.mnt.service.ServerService;
 import com.boot.admin.mnt.service.dto.ServerDTO;
 import com.boot.admin.mnt.service.dto.ServerQuery;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import java.util.Set;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@Api(tags = "运维：服务器管理")
+@Tag(name = "运维：服务器管理")
 @RestController
 @RequestMapping(value = "/api/servers")
 @ResultWrapper
@@ -34,7 +34,7 @@ public class ServerController {
         this.serverService = serverService;
     }
 
-    @ApiOperation(value = "新增服务器")
+    @Operation(summary = "新增服务器")
     @Log(value = "新增服务器")
     @PreAuthorize(value = "@authorize.check('servers:add')")
     @NoRepeatSubmit
@@ -43,7 +43,7 @@ public class ServerController {
         serverService.saveServer(resource);
     }
 
-    @ApiOperation(value = "删除服务器")
+    @Operation(summary = "删除服务器")
     @Log(value = "删除服务器")
     @PreAuthorize(value = "@authorize.check('servers:del')")
     @DeleteMapping
@@ -51,7 +51,7 @@ public class ServerController {
         serverService.removeServerByIds(ids);
     }
 
-    @ApiOperation(value = "修改服务器")
+    @Operation(summary = "修改服务器")
     @Log(value = "修改服务器")
     @PreAuthorize(value = "@authorize.check('servers:edit')")
     @NoRepeatSubmit
@@ -60,14 +60,14 @@ public class ServerController {
         serverService.updateServerById(resource);
     }
 
-    @ApiOperation(value = "查询服务器")
+    @Operation(summary = "查询服务器")
     @PreAuthorize(value = "@authorize.check('servers:list')")
     @GetMapping
     public Page<ServerDTO> list(ServerQuery query, Page<Server> page) {
         return serverService.listServers(query, page);
     }
 
-    @ApiOperation(value = "测试连接服务器")
+    @Operation(summary = "测试连接服务器")
     @Log(value = "测试连接服务器")
     @PreAuthorize(value = "@authorize.check('servers:add')")
     @NoRepeatSubmit
@@ -76,7 +76,7 @@ public class ServerController {
         return serverService.testConnect(resources);
     }
 
-    @ApiOperation(value = "导出服务器")
+    @Operation(summary = "导出服务器")
     @Log(value = "导出服务器")
     @PreAuthorize(value = "@authorize.check('servers:list')")
     @GetMapping(value = "/exports")

@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,34 +14,34 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "邮件配置")
+@Schema(description = "邮件配置")
 @TableName(value = "tool_email_config")
 public class EmailConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.ASSIGN_ID)
     @NotNull(groups = ValidGroup.Update.class)
     private Long configId;
 
-    @ApiModelProperty(value = "邮件服务器 SMTP 地址")
+    @Schema(description = "邮件服务器 SMTP 地址")
     @NotBlank
     private String host;
 
-    @ApiModelProperty(value = "邮件服务器 SMTP 端口")
+    @Schema(description = "邮件服务器 SMTP 端口")
     @NotBlank
     private String port;
 
-    @ApiModelProperty(value = "邮箱地址")
+    @Schema(description = "邮箱地址")
     @NotBlank
     private String user;
 
-    @ApiModelProperty(value = "授权密码")
+    @Schema(description = "授权密码")
     @NotBlank
     private String pass;
 
-    @ApiModelProperty(value = "发件人昵称（遵循RFC-822标准）")
+    @Schema(description = "发件人昵称（遵循RFC-822标准）")
     @NotBlank
     private String fromUser;
 

@@ -7,8 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.constant.CommonConstant;
 import com.boot.admin.core.model.BaseEntity;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.annotation.RegEx;
 import javax.validation.constraints.NotNull;
@@ -18,7 +17,7 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "定时任务")
+@Schema(description = "定时任务")
 @TableName(value = "sys_quartz_job")
 public class QuartzJob extends BaseEntity implements Serializable {
 
@@ -26,46 +25,46 @@ public class QuartzJob extends BaseEntity implements Serializable {
 
     public static final String JOB_KEY = "JOB_KEY";
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     @NotNull(groups = ValidGroup.Update.class)
     private Long jobId;
 
-    @ApiModelProperty(value = "任务名称")
+    @Schema(description = "任务名称")
     private String jobName;
 
-    @ApiModelProperty(value = "Bean名称")
+    @Schema(description = "Bean名称")
     private String beanName;
 
-    @ApiModelProperty(value = "方法名称")
+    @Schema(description = "方法名称")
     private String methodName;
 
-    @ApiModelProperty(value = "参数")
+    @Schema(description = "参数")
     private String params;
 
-    @ApiModelProperty(value = "cron 表达式")
+    @Schema(description = "cron 表达式")
     private String cronExpression;
 
-    @ApiModelProperty(value = "是否暂停")
+    @Schema(description = "是否暂停")
     @TableField(value = "is_pause")
     private Integer pause = CommonConstant.NO;
 
-    @ApiModelProperty(value = "子任务ID")
+    @Schema(description = "子任务ID")
     private String subTask;
 
-    @ApiModelProperty(value = "负责人")
+    @Schema(description = "负责人")
     private String personInCharge;
 
-    @ApiModelProperty(value = "报警邮箱")
+    @Schema(description = "报警邮箱")
     private String email;
 
-    @ApiModelProperty(value = "任务失败后是否暂停")
+    @Schema(description = "任务失败后是否暂停")
     private Integer pauseAfterFailure;
 
-    @ApiModelProperty(value = "备注")
+    @Schema(description = "备注")
     private String description;
 
-    @ApiModelProperty(value = "用于子任务唯一标识", hidden = true)
+    @Schema(description = "用于子任务唯一标识", hidden = true)
     @TableField(exist = false)
     private String uuid;
 

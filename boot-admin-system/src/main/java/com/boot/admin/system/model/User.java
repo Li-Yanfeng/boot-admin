@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.core.model.BaseEntity;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -17,53 +16,53 @@ import java.time.LocalDateTime;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "用户")
+@Schema(description = "用户")
 @TableName(value = "sys_user")
 public class User extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     @NotNull(groups = ValidGroup.Update.class)
     private Long userId;
 
-    @ApiModelProperty(value = "部门ID")
+    @Schema(description = "部门ID")
     private Long deptId;
 
-    @ApiModelProperty(value = "用户名")
+    @Schema(description = "用户名")
     private String username;
 
-    @ApiModelProperty(value = "昵称")
+    @Schema(description = "昵称")
     private String nickName;
 
-    @ApiModelProperty(value = "性别")
+    @Schema(description = "性别")
     private String gender;
 
-    @ApiModelProperty(value = "手机号码")
+    @Schema(description = "手机号码")
     private String phone;
 
-    @ApiModelProperty(value = "邮箱")
+    @Schema(description = "邮箱")
     private String email;
 
-    @ApiModelProperty(value = "头像名称")
+    @Schema(description = "头像名称")
     private String avatarName;
 
-    @ApiModelProperty(value = "头像真实路径")
+    @Schema(description = "头像真实路径")
     private String avatarPath;
 
-    @ApiModelProperty(value = "密码")
+    @Schema(description = "密码")
     private String password;
 
-    @ApiModelProperty(value = "是否为admin账号")
+    @Schema(description = "是否为admin账号")
     @TableField(value = "is_admin")
     private Integer admin;
 
-    @ApiModelProperty(value = "是否启用")
+    @Schema(description = "是否启用")
     @TableField(value = "is_enabled")
     private Integer enabled;
 
-    @ApiModelProperty(value = "修改密码时间")
+    @Schema(description = "修改密码时间")
     private LocalDateTime pwdResetTime;
 
 

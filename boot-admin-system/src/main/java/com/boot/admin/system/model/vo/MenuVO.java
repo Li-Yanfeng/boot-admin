@@ -2,8 +2,7 @@ package com.boot.admin.system.model.vo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -16,35 +15,35 @@ import java.util.List;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "元菜单 视图展示对象")
+@Schema(description = "元菜单 视图展示对象")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class MenuVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "组件")
+    @Schema(description = "组件")
     private String component;
 
-    @ApiModelProperty(value = "组件名称")
+    @Schema(description = "组件名称")
     private String name;
 
-    @ApiModelProperty(value = "链接地址")
+    @Schema(description = "链接地址")
     private String path;
 
-    @ApiModelProperty(value = "是否隐藏")
+    @Schema(description = "是否隐藏")
     @TableField(value = "is_hidden")
     private Integer hidden;
 
-    @ApiModelProperty(value = "重定向")
+    @Schema(description = "重定向")
     private String redirect;
 
-    @ApiModelProperty(value = "总是显示")
+    @Schema(description = "总是显示")
     private Boolean alwaysShow;
 
-    @ApiModelProperty(value = "元菜单")
+    @Schema(description = "元菜单")
     private MenuMetaVO meta;
 
-    @ApiModelProperty(value = "子节点")
+    @Schema(description = "子节点")
     private List<MenuVO> children;
 
 

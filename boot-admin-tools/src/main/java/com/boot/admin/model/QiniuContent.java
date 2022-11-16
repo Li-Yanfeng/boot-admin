@@ -2,8 +2,7 @@ package com.boot.admin.model;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -13,54 +12,54 @@ import java.time.LocalDateTime;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "七牛云文件")
+@Schema(description = "七牛云文件")
 @TableName(value = "tool_qiniu_content")
 public class QiniuContent implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     @NotNull(groups = ValidGroup.Update.class)
     private Long contentId;
 
-    @ApiModelProperty(value = "Bucket 识别符")
+    @Schema(description = "Bucket 识别符")
     private String bucket;
 
-    @ApiModelProperty(value = "空间类型：私有或公开")
+    @Schema(description = "空间类型：私有或公开")
     private String spaceType;
 
-    @ApiModelProperty(value = "文件名称")
+    @Schema(description = "文件名称")
     private String name;
 
-    @ApiModelProperty(value = "文件后缀")
+    @Schema(description = "文件后缀")
     private String suffix;
 
-    @ApiModelProperty(value = "文件类型")
+    @Schema(description = "文件类型")
     private String type;
 
-    @ApiModelProperty(value = "文件大小")
+    @Schema(description = "文件大小")
     private String size;
 
-    @ApiModelProperty(value = "访问地址")
+    @Schema(description = "访问地址")
     private String url;
 
-    @ApiModelProperty(value = "压缩后访问地址")
+    @Schema(description = "压缩后访问地址")
     private String compressUrl;
 
-    @ApiModelProperty(value = "创建人")
+    @Schema(description = "创建人")
     @TableField(fill = FieldFill.INSERT)
     protected Long createBy;
 
-    @ApiModelProperty(value = "创建人名称")
+    @Schema(description = "创建人名称")
     @TableField(fill = FieldFill.INSERT)
     protected String createByName;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     protected LocalDateTime createTime;
 
-    @ApiModelProperty(value = "是否删除")
+    @Schema(description = "是否删除")
     @TableField(value = "is_deleted")
     @TableLogic
     private Integer deleted;

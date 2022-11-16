@@ -1,7 +1,6 @@
 package com.boot.admin.security.service.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -10,21 +9,21 @@ import javax.validation.constraints.NotBlank;
 /**
  * @author Li Yanfeng
  */
-@ApiModel(description = "认证用户 数据传输对象")
+@Schema(description = "认证用户 数据传输对象")
 public class AuthUserDTO {
 
-    @ApiModelProperty(value = "用户名")
+    @Schema(description = "用户名")
     @NotBlank
     private String username;
 
-    @ApiModelProperty(value = "密码")
+    @Schema(description = "密码")
     @NotBlank
     private String password;
 
-    @ApiModelProperty(value = "验证码")
+    @Schema(description = "验证码")
     private String code;
 
-    @ApiModelProperty(value = "唯一标识")
+    @Schema(description = "唯一标识")
     private String uuid = "";
 
 

@@ -2,8 +2,7 @@ package com.boot.admin.system.service.dto;
 
 import com.baomidou.mybatisplus.core.enums.SqlKeyword;
 import com.boot.admin.annotation.Query;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,27 +11,27 @@ import java.util.List;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "字典详情 数据查询对象")
+@Schema(description = "字典详情 数据查询对象")
 public class DictDetailQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @Query(type = SqlKeyword.EQ)
     private Long detailId;
 
-    @ApiModelProperty(value = "字典id")
+    @Schema(description = "字典id")
     @Query(type = SqlKeyword.EQ)
     private Long dictId;
 
-    @ApiModelProperty(value = "字典名称")
+    @Schema(description = "字典名称")
     private String dictName;
 
-    @ApiModelProperty(value = "字典标签")
+    @Schema(description = "字典标签")
     @Query(type = SqlKeyword.LIKE)
     private String label;
 
-    @ApiModelProperty(value = "排序字段")
+    @Schema(description = "排序字段")
     private List<String> sort;
 
 

@@ -12,8 +12,8 @@ import com.boot.admin.system.service.MenuService;
 import com.boot.admin.system.service.dto.MenuDTO;
 import com.boot.admin.system.service.dto.MenuQuery;
 import com.boot.admin.util.SecurityUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@Api(tags = "系统：菜单管理")
+@Tag(name = "系统：菜单管理")
 @RestController
 @RequestMapping(value = "/api/menus")
 @ResultWrapper
@@ -39,7 +39,7 @@ public class MenuController {
         this.menuService = menuService;
     }
 
-    @ApiOperation(value = "新增菜单")
+    @Operation(summary = "新增菜单")
     @Log(value = "新增菜单")
     @PreAuthorize(value = "@authorize.check('menus:add')")
     @NoRepeatSubmit
@@ -48,7 +48,7 @@ public class MenuController {
         menuService.saveMenu(resource);
     }
 
-    @ApiOperation(value = "删除菜单")
+    @Operation(summary = "删除菜单")
     @Log(value = "删除菜单")
     @PreAuthorize(value = "@authorize.check('menus:del')")
     @DeleteMapping
@@ -62,7 +62,7 @@ public class MenuController {
         menuService.removeMenu(menus);
     }
 
-    @ApiOperation(value = "修改菜单")
+    @Operation(summary = "修改菜单")
     @Log(value = "修改菜单")
     @PreAuthorize(value = "@authorize.check('menus:edit')")
     @NoRepeatSubmit
@@ -71,21 +71,21 @@ public class MenuController {
         menuService.updateMenuById(resource);
     }
 
-    @ApiOperation(value = "查询菜单")
+    @Operation(summary = "查询菜单")
     @PreAuthorize(value = "@authorize.check('menus:list')")
     @GetMapping
     public List<MenuDTO> list(MenuQuery query) {
         return menuService.listMenus(query);
     }
 
-    @ApiOperation(value = "返回全部的菜单")
+    @Operation(summary = "返回全部的菜单")
     @PreAuthorize(value = "@authorize.check('menus:list','roles:list')")
     @GetMapping(value = "/lazies")
     public List<MenuDTO> listAll(MenuQuery query) {
         return menuService.listMenus(query);
     }
 
-    @ApiOperation(value = "获取前端所需菜单")
+    @Operation(summary = "获取前端所需菜单")
     @GetMapping(value = "/builds")
     public List<MenuVO> buildMenus() {
         List<MenuDTO> menus = menuService.listMenusByUserId(SecurityUtils.getCurrentUserId());
@@ -93,7 +93,7 @@ public class MenuController {
         return menuService.buildMenus(menus);
     }
 
-    @ApiOperation(value = "根据菜单ID返回所有子节点ID，包含自身ID")
+    @Operation(summary = "根据菜单ID返回所有子节点ID，包含自身ID")
     @PreAuthorize(value = "@authorize.check('menus:list','roles:list')")
     @GetMapping(value = "/children")
     public Set<Long> child(Long id) {
@@ -104,7 +104,7 @@ public class MenuController {
         return menus.stream().map(MenuDTO::getMenuId).collect(Collectors.toSet());
     }
 
-    @ApiOperation(value = "查询菜单:根据ID获取同级与上级数据")
+    @Operation(summary = "查询菜单:根据ID获取同级与上级数据")
     @PreAuthorize(value = "@authorize.check('menu:list')")
     @GetMapping(value = "/superiors")
     public List<MenuDTO> getSuperior(@RequestBody List<Long> ids) {
@@ -119,7 +119,7 @@ public class MenuController {
         return menuService.listMenus(new MenuQuery(CommonConstant.TOP_ID));
     }
 
-    @ApiOperation(value = "导出菜单")
+    @Operation(summary = "导出菜单")
     @Log(value = "导出菜单")
     @PreAuthorize(value = "@authorize.check('menus:list')")
     @GetMapping(value = "/exports")

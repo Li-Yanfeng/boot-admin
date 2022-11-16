@@ -21,8 +21,8 @@ import com.boot.admin.util.RsaUtils;
 import com.boot.admin.util.SecurityUtils;
 import com.boot.admin.util.StringUtils;
 import com.wf.captcha.base.Captcha;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -42,7 +42,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Li Yanfeng
  */
-@Api(tags = "系统：系统授权接口")
+@Tag(name = "系统：系统授权接口")
 @RestController
 @RequestMapping(value = "/auth")
 @ResultWrapper
@@ -69,7 +69,7 @@ public class AuthorizationController {
     }
 
 
-    @ApiOperation(value = "登录授权")
+    @Operation(summary = "登录授权")
     @Log(value = "用户登录")
     @AnonymousPostMapping(value = "/login")
     public Map<String, Object> login(@Validated @RequestBody AuthUserDTO authUser, HttpServletRequest request) throws Exception {
@@ -109,13 +109,13 @@ public class AuthorizationController {
         return authInfo;
     }
 
-    @ApiOperation(value = "获取用户信息")
+    @Operation(summary = "获取用户信息")
     @GetMapping(value = "/info")
     public UserDetails getUserInfo() {
         return SecurityUtils.getCurrentUser();
     }
 
-    @ApiOperation(value = "获取验证码")
+    @Operation(summary = "获取验证码")
     @AnonymousGetMapping(value = "/code")
     public Map<String, Object> getCode() {
         if (!loginProperties.getLoginCode().getEnabled()) {
@@ -144,7 +144,7 @@ public class AuthorizationController {
         return imgResult;
     }
 
-    @ApiOperation(value = "退出登录")
+    @Operation(summary = "退出登录")
     @AnonymousDeleteMapping(value = "/logout")
     public void logout(HttpServletRequest request) {
         onlineUserService.logout(tokenProvider.getToken(request));

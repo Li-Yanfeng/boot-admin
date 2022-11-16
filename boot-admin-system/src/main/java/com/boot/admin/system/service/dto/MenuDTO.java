@@ -1,8 +1,7 @@
 package com.boot.admin.system.service.dto;
 
 import com.boot.admin.core.service.dto.BaseDTO;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -14,55 +13,55 @@ import java.util.Objects;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "菜单 数据传输对象")
+@Schema(description = "菜单 数据传输对象")
 public class MenuDTO extends BaseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     private Long menuId;
 
-    @ApiModelProperty(value = "上级菜单ID")
+    @Schema(description = "上级菜单ID")
     private Long pid;
 
-    @ApiModelProperty(value = "菜单类型")
+    @Schema(description = "菜单类型")
     private Integer type;
 
-    @ApiModelProperty(value = "菜单标题")
+    @Schema(description = "菜单标题")
     private String title;
 
-    @ApiModelProperty(value = "组件")
+    @Schema(description = "组件")
     private String component;
 
-    @ApiModelProperty(value = "组件名称")
+    @Schema(description = "组件名称")
     private String componentName;
 
-    @ApiModelProperty(value = "图标")
+    @Schema(description = "图标")
     private String icon;
 
-    @ApiModelProperty(value = "权限")
+    @Schema(description = "权限")
     private String permission;
 
-    @ApiModelProperty(value = "是否外链")
+    @Schema(description = "是否外链")
     private Integer iFrame;
 
-    @ApiModelProperty(value = "链接地址")
+    @Schema(description = "链接地址")
     private String path;
 
-    @ApiModelProperty(value = "是否缓存")
+    @Schema(description = "是否缓存")
     private Integer cache;
 
-    @ApiModelProperty(value = "是否隐藏")
+    @Schema(description = "是否隐藏")
     private Integer hidden;
 
-    @ApiModelProperty(value = "排序")
+    @Schema(description = "排序")
     private Integer menuSort;
 
-    @ApiModelProperty(value = "子菜单数目")
+    @Schema(description = "子菜单数目")
     private Integer subCount;
 
 
-    @ApiModelProperty(value = "子节点")
+    @Schema(description = "子节点")
     private List<MenuDTO> children;
 
     public Long getMenuId() {

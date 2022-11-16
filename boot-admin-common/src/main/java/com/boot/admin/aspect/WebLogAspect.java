@@ -7,7 +7,7 @@ import com.boot.admin.util.IpUtils;
 import com.boot.admin.util.RequestHolder;
 import com.boot.admin.util.StringUtils;
 import com.boot.admin.constant.Environment;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -105,7 +105,7 @@ public class WebLogAspect {
     private String methodDescription(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method signatureMethod = signature.getMethod();
-        ApiOperation apiOperation = signatureMethod.getAnnotation(ApiOperation.class);
-        return apiOperation != null ? apiOperation.value() : StringUtils.EMPTY;
+        Tag tag = signatureMethod.getAnnotation(Tag.class);
+        return tag != null ? tag.name() : StringUtils.EMPTY;
     }
 }

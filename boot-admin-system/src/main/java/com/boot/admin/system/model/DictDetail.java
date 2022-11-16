@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.core.model.BaseEntity;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,27 +14,27 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "字典详情")
+@Schema(description = "字典详情")
 @TableName(value = "sys_dict_detail")
 public class DictDetail extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     @NotNull(groups = ValidGroup.Update.class)
     private Long detailId;
 
-    @ApiModelProperty(value = "字典id")
+    @Schema(description = "字典id")
     private Long dictId;
 
-    @ApiModelProperty(value = "字典标签")
+    @Schema(description = "字典标签")
     private String label;
 
-    @ApiModelProperty(value = "字典值")
+    @Schema(description = "字典值")
     private String value;
 
-    @ApiModelProperty(value = "排序")
+    @Schema(description = "排序")
     private Integer dictSort;
 
 

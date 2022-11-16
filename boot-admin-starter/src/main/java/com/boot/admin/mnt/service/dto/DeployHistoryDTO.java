@@ -1,7 +1,6 @@
 package com.boot.admin.mnt.service.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -12,30 +11,30 @@ import java.time.LocalDateTime;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "部署历史 数据传输对象")
+@Schema(description = "部署历史 数据传输对象")
 public class DeployHistoryDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     private Long historyId;
 
-    @ApiModelProperty(value = "部署编号")
+    @Schema(description = "部署编号")
     private Long deployId;
 
-    @ApiModelProperty(value = "服务器IP")
+    @Schema(description = "服务器IP")
     private String ip;
 
-    @ApiModelProperty(value = "应用名称")
+    @Schema(description = "应用名称")
     private String appName;
 
-    @ApiModelProperty(value = "创建人")
+    @Schema(description = "创建人")
     private Long createBy;
 
-    @ApiModelProperty(value = "创建人名称")
+    @Schema(description = "创建人名称")
     private String createByName;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createTime;
 
 

@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -14,54 +13,54 @@ import java.io.Serializable;
 /**
  * @author Li Yanfeng
  */
-@ApiModel(description = "代码生成字段信息存储")
+@Schema(description = "代码生成字段信息存储")
 @TableName(value = "code_column_config")
 public class ColumnConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     @NotNull(groups = ValidGroup.Update.class)
     private Long columnId;
 
-    @ApiModelProperty(value = "表名")
+    @Schema(description = "表名")
     private String tableName;
 
-    @ApiModelProperty(value = "数据库字段名称")
+    @Schema(description = "数据库字段名称")
     private String columnName;
 
-    @ApiModelProperty(value = "数据库字段类型")
+    @Schema(description = "数据库字段类型")
     private String columnType;
 
-    @ApiModelProperty(value = "数据库字段键类型")
+    @Schema(description = "数据库字段键类型")
     private String keyType;
 
-    @ApiModelProperty(value = "字段额外的参数")
+    @Schema(description = "字段额外的参数")
     private String extra;
 
-    @ApiModelProperty(value = "数据库字段描述")
+    @Schema(description = "数据库字段描述")
     private String remark;
 
-    @ApiModelProperty(value = "是否必填")
+    @Schema(description = "是否必填")
     @TableField(value = "is_not_null")
     private Integer notNull;
 
-    @ApiModelProperty(value = "是否在列表显示")
+    @Schema(description = "是否在列表显示")
     @TableField(value = "is_list_show")
     private Integer listShow;
 
-    @ApiModelProperty(value = "是否表单显示")
+    @Schema(description = "是否表单显示")
     @TableField(value = "is_form_show")
     private Integer formShow;
 
-    @ApiModelProperty(value = "表单类型")
+    @Schema(description = "表单类型")
     private String formType;
 
-    @ApiModelProperty(value = "查询类型")
+    @Schema(description = "查询类型")
     private String queryType;
 
-    @ApiModelProperty(value = "字典名称")
+    @Schema(description = "字典名称")
     private String dictName;
 
 

@@ -2,8 +2,7 @@ package com.boot.admin.system.service.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.boot.admin.core.service.dto.BaseDTO;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -16,60 +15,60 @@ import java.util.Objects;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "用户 数据传输对象")
+@Schema(description = "用户 数据传输对象")
 public class UserDTO extends BaseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     private Long userId;
 
-    @ApiModelProperty(value = "部门ID")
+    @Schema(description = "部门ID")
     private Long deptId;
 
-    @ApiModelProperty(value = "用户名")
+    @Schema(description = "用户名")
     private String username;
 
-    @ApiModelProperty(value = "昵称")
+    @Schema(description = "昵称")
     private String nickName;
 
-    @ApiModelProperty(value = "性别")
+    @Schema(description = "性别")
     private String gender;
 
-    @ApiModelProperty(value = "手机号码")
+    @Schema(description = "手机号码")
     private String phone;
 
-    @ApiModelProperty(value = "邮箱")
+    @Schema(description = "邮箱")
     private String email;
 
-    @ApiModelProperty(value = "头像名称")
+    @Schema(description = "头像名称")
     private String avatarName;
 
-    @ApiModelProperty(value = "头像真实路径")
+    @Schema(description = "头像真实路径")
     private String avatarPath;
 
-    @ApiModelProperty(value = "密码")
+    @Schema(description = "密码")
     @JSONField(serialize = false)
     private String password;
 
-    @ApiModelProperty(value = "是否为admin账号")
+    @Schema(description = "是否为admin账号")
     @JSONField(serialize = false)
     private Integer admin;
 
-    @ApiModelProperty(value = "是否启用")
+    @Schema(description = "是否启用")
     private Integer enabled;
 
-    @ApiModelProperty(value = "修改密码时间")
+    @Schema(description = "修改密码时间")
     private LocalDateTime pwdResetTime;
 
 
-    @ApiModelProperty(value = "角色")
+    @Schema(description = "角色")
     private List<RoleSmallDTO> roles;
 
-    @ApiModelProperty(value = "岗位")
+    @Schema(description = "岗位")
     private List<JobSmallDTO> jobs;
 
-    @ApiModelProperty(value = "部门")
+    @Schema(description = "部门")
     private DeptSmallDTO dept;
 
 

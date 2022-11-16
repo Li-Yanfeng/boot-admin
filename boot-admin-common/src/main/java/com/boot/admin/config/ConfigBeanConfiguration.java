@@ -2,7 +2,7 @@ package com.boot.admin.config;
 
 import com.boot.admin.config.bean.FileProperties;
 import com.boot.admin.config.bean.QiniuProperties;
-import com.boot.admin.config.bean.SwaggerProperties;
+import com.boot.admin.config.bean.SpringDocProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,9 +27,9 @@ public class ConfigBeanConfiguration {
         return new QiniuProperties();
     }
 
-    @ConfigurationProperties(prefix = "swagger")
+    @ConfigurationProperties(prefix = "spring-doc")
     @Bean
-    public SwaggerProperties swaggerProperties() {
-        return new SwaggerProperties();
+    public SpringDocProperties springdocProperties() {
+        return new SpringDocProperties();
     }
 }

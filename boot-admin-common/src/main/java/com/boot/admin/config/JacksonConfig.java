@@ -102,8 +102,8 @@ public class JacksonConfig {
 //                    propertyWriter.assignNullSerializer(new NullStringJsonSerializer());
 //                } else if (isNumberType(propertyWriter)) {
 //                    propertyWriter.assignNullSerializer(new NullNumberJsonSerializer());
-//                } else if (isBooleanType(propertyWriter)) {
-//                    propertyWriter.assignNullSerializer(new NullBooleanJsonSerializer());
+                } else if (isBooleanType(propertyWriter)) {
+                    propertyWriter.assignNullSerializer(new NullBooleanJsonSerializer());
                 }
             });
             return beanProperties;

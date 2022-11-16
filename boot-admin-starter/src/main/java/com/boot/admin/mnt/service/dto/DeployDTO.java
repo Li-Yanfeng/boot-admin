@@ -3,8 +3,7 @@ package com.boot.admin.mnt.service.dto;
 import cn.hutool.core.collection.CollectionUtil;
 import com.boot.admin.core.service.dto.BaseDTO;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -18,29 +17,29 @@ import java.util.stream.Collectors;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "部署 数据传输对象")
+@Schema(description = "部署 数据传输对象")
 public class DeployDTO extends BaseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @NotNull(groups = ValidGroup.Update.class)
     private Long deployId;
 
-    @ApiModelProperty(value = "应用编号")
+    @Schema(description = "应用编号")
     private Long appId;
 
 
-    @ApiModelProperty(value = "应用管理")
+    @Schema(description = "应用管理")
     private AppDTO app;
 
-    @ApiModelProperty(value = "服务器")
+    @Schema(description = "服务器")
     private List<ServerDTO> deploys;
 
-    @ApiModelProperty(value = "服务器名称")
+    @Schema(description = "服务器名称")
     private String servers;
 
-    @ApiModelProperty(value = "服务状态")
+    @Schema(description = "服务状态")
     private String status;
 
     public String getServers() {

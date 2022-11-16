@@ -13,8 +13,8 @@ import com.boot.admin.system.service.dto.RoleDTO;
 import com.boot.admin.system.service.dto.RoleQuery;
 import com.boot.admin.system.service.dto.RoleSmallDTO;
 import com.boot.admin.util.SecurityUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@Api(tags = "系统：角色管理")
+@Tag(name = "系统：角色管理")
 @RestController
 @RequestMapping(value = "/api/roles")
 @ResultWrapper
@@ -41,7 +41,7 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-    @ApiOperation(value = "新增角色")
+    @Operation(summary = "新增角色")
     @Log(value = "新增角色")
     @PreAuthorize(value = "@authorize.check('roles:add')")
     @NoRepeatSubmit
@@ -51,7 +51,7 @@ public class RoleController {
         roleService.saveRole(resource);
     }
 
-    @ApiOperation(value = "删除角色")
+    @Operation(summary = "删除角色")
     @Log(value = "删除角色")
     @PreAuthorize(value = "@authorize.check('roles:del')")
     @DeleteMapping
@@ -65,7 +65,7 @@ public class RoleController {
         roleService.removeRoleByIds(ids);
     }
 
-    @ApiOperation(value = "修改角色")
+    @Operation(summary = "修改角色")
     @Log(value = "修改角色")
     @PreAuthorize(value = "@authorize.check('roles:edit')")
     @NoRepeatSubmit
@@ -75,7 +75,7 @@ public class RoleController {
         roleService.updateRoleById(resource);
     }
 
-    @ApiOperation(value = "修改角色菜单")
+    @Operation(summary = "修改角色菜单")
     @Log(value = "修改角色菜单")
     @PreAuthorize(value = "@authorize.check('roles:edit')")
     @NoRepeatSubmit
@@ -86,34 +86,34 @@ public class RoleController {
         roleService.updateMenu(resource, role);
     }
 
-    @ApiOperation(value = "查询角色")
+    @Operation(summary = "查询角色")
     @PreAuthorize(value = "@authorize.check('roles:list')")
     @GetMapping
     public Page<RoleDTO> list(RoleQuery query, Page<Role> page) {
         return roleService.listRoles(query, page);
     }
 
-    @ApiOperation(value = "返回全部的角色")
+    @Operation(summary = "返回全部的角色")
     @PreAuthorize(value = "@authorize.check('roles:list','users:add','users:edit')")
     @GetMapping(value = "/lists")
     public List<RoleDTO> listAll(RoleQuery query) {
         return roleService.listRoles(query);
     }
 
-    @ApiOperation(value = "获取单个角色")
+    @Operation(summary = "获取单个角色")
     @PreAuthorize(value = "@authorize.check('roles:list')")
     @GetMapping(value = "/{id}")
     public RoleDTO info(@PathVariable Long id) {
         return roleService.getRoleById(id);
     }
 
-    @ApiOperation(value = "获取用户级别")
+    @Operation(summary = "获取用户级别")
     @GetMapping(value = "/levels")
     public Dict getLevel() {
         return Dict.create().set("level", getRoleLevelByCurrentUser(null));
     }
 
-    @ApiOperation(value = "导出角色")
+    @Operation(summary = "导出角色")
     @Log(value = "导出角色")
     @PreAuthorize(value = "@authorize.check('roles:list')")
     @GetMapping(value = "/exports")

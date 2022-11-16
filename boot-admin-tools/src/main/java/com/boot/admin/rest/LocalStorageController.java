@@ -11,8 +11,8 @@ import com.boot.admin.model.LocalStorage;
 import com.boot.admin.service.LocalStorageService;
 import com.boot.admin.service.dto.LocalStorageQuery;
 import com.boot.admin.util.FileUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ import java.util.Set;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@Api(tags = "工具：本地存储管理")
+@Tag(name = "工具：本地存储管理")
 @RestController
 @RequestMapping(value = "/api/local_storages")
 @ResultWrapper
@@ -37,14 +37,14 @@ public class LocalStorageController {
         this.localStorageService = localStorageService;
     }
 
-    @ApiOperation(value = "上传文件")
+    @Operation(summary = "上传文件")
     @NoRepeatSubmit
     @PostMapping
     public LocalStorage uploadFile(@RequestParam("file") MultipartFile file) {
         return localStorageService.uploadLocalStorage(file);
     }
 
-    @ApiOperation(value = "上传图片")
+    @Operation(summary = "上传图片")
     @NoRepeatSubmit
     @PostMapping(value = "/pictures")
     public LocalStorage uploadPicture(@RequestParam("file") MultipartFile file) {
@@ -56,14 +56,14 @@ public class LocalStorageController {
         return localStorageService.uploadLocalStorage(file);
     }
 
-    @ApiOperation(value = "删除文件")
+    @Operation(summary = "删除文件")
     @Log(value = "删除文件")
     @DeleteMapping
     public void delete(@RequestBody Set<Long> ids) {
         localStorageService.removeLocalStorageByIds(ids);
     }
 
-    @ApiOperation(value = "修改文件")
+    @Operation(summary = "修改文件")
     @Log(value = "修改文件")
     @PreAuthorize(value = "@authorize.check('storages:edit')")
     @NoRepeatSubmit
@@ -72,14 +72,14 @@ public class LocalStorageController {
         localStorageService.updateLocalStorageById(resource);
     }
 
-    @ApiOperation(value = "查询文件")
+    @Operation(summary = "查询文件")
     @PreAuthorize(value = "@authorize.check('storages:list')")
     @GetMapping
     public Page<LocalStorage> list(LocalStorageQuery query, Page<LocalStorage> page) {
         return localStorageService.listLocalStorages(query, page);
     }
 
-    @ApiOperation(value = "导出文件")
+    @Operation(summary = "导出文件")
     @Log(value = "导出文件")
     @PreAuthorize(value = "@authorize.check('storages:list')")
     @GetMapping(value = "/exports")

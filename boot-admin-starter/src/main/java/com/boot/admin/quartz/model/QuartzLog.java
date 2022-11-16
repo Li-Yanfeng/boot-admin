@@ -2,8 +2,7 @@ package com.boot.admin.quartz.model;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -13,43 +12,43 @@ import java.time.LocalDateTime;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "定时任务日志")
+@Schema(description = "定时任务日志")
 @TableName(value = "sys_quartz_log")
 public class QuartzLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     @NotNull(groups = ValidGroup.Update.class)
     private Long logId;
 
-    @ApiModelProperty(value = "任务名称")
+    @Schema(description = "任务名称")
     private String jobName;
 
-    @ApiModelProperty(value = "Bean名称")
+    @Schema(description = "Bean名称")
     private String beanName;
 
-    @ApiModelProperty(value = "方法名称")
+    @Schema(description = "方法名称")
     private String methodName;
 
-    @ApiModelProperty(value = "参数")
+    @Schema(description = "参数")
     private String params;
 
-    @ApiModelProperty(value = "cron表达式")
+    @Schema(description = "cron表达式")
     private String cronExpression;
 
-    @ApiModelProperty(value = "是否成功")
+    @Schema(description = "是否成功")
     @TableField(value = "is_success")
     private Integer success;
 
-    @ApiModelProperty(value = "异常详情")
+    @Schema(description = "异常详情")
     private String exceptionDetail;
 
-    @ApiModelProperty(value = "执行耗时")
+    @Schema(description = "执行耗时")
     private Long time;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 

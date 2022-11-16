@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.core.model.BaseEntity;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,36 +14,36 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "应用")
+@Schema(description = "应用")
 @TableName(value = "mnt_app")
 public class App extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     @NotNull(groups = ValidGroup.Update.class)
     private Long appId;
 
-    @ApiModelProperty(value = "应用名称")
+    @Schema(description = "应用名称")
     private String name;
 
-    @ApiModelProperty(value = "上传目录")
+    @Schema(description = "上传目录")
     private String uploadPath;
 
-    @ApiModelProperty(value = "部署路径")
+    @Schema(description = "部署路径")
     private String deployPath;
 
-    @ApiModelProperty(value = "备份路径")
+    @Schema(description = "备份路径")
     private String backupPath;
 
-    @ApiModelProperty(value = "应用端口")
+    @Schema(description = "应用端口")
     private Integer port;
 
-    @ApiModelProperty(value = "启动脚本")
+    @Schema(description = "启动脚本")
     private String startScript;
 
-    @ApiModelProperty(value = "部署脚本")
+    @Schema(description = "部署脚本")
     private String deployScript;
 
 

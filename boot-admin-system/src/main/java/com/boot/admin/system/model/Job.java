@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.core.model.BaseEntity;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -16,25 +15,25 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "岗位")
+@Schema(description = "岗位")
 @TableName(value = "sys_job")
 public class Job extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     @NotNull(groups = ValidGroup.Update.class)
     private Long jobId;
 
-    @ApiModelProperty(value = "岗位名称")
+    @Schema(description = "岗位名称")
     private String name;
 
-    @ApiModelProperty(value = "是否启用")
+    @Schema(description = "是否启用")
     @TableField(value = "is_enabled")
     private Integer enabled;
 
-    @ApiModelProperty(value = "排序号")
+    @Schema(description = "排序号")
     private Integer jobSort;
 
 

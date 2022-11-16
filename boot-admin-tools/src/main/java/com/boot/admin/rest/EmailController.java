@@ -7,8 +7,8 @@ import com.boot.admin.exception.BadRequestException;
 import com.boot.admin.model.EmailConfig;
 import com.boot.admin.model.vo.EmailVO;
 import com.boot.admin.service.EmailService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@Api(tags = "工具：邮件管理")
+@Tag(name = "工具：邮件管理")
 @RestController
 @RequestMapping(value = "/api/email_configs")
 @ResultWrapper
@@ -28,7 +28,7 @@ public class EmailController {
         this.emailService = emailService;
     }
 
-    @ApiOperation(value = "修改邮件配置")
+    @Operation(summary = "修改邮件配置")
     @Log(value = "修改邮件配置")
     @NoRepeatSubmit
     @PutMapping
@@ -36,13 +36,13 @@ public class EmailController {
         emailService.updateEmailConfig(resource, emailService.getEmailConfig());
     }
 
-    @ApiOperation(value = "获取邮件配置")
+    @Operation(summary = "获取邮件配置")
     @GetMapping
     public EmailConfig config() {
         return emailService.getEmailConfig();
     }
 
-    @ApiOperation(value = "发送邮件")
+    @Operation(summary = "发送邮件")
     @Log(value = "发送邮件")
     @NoRepeatSubmit
     @PostMapping

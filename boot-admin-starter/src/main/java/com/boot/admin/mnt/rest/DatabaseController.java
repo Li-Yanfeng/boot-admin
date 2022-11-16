@@ -12,8 +12,8 @@ import com.boot.admin.mnt.service.dto.DatabaseDTO;
 import com.boot.admin.mnt.service.dto.DatabaseQuery;
 import com.boot.admin.mnt.util.SqlUtils;
 import com.boot.admin.util.FileUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,7 @@ import java.util.Set;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@Api(tags = "运维：数据库管理")
+@Tag(name = "运维：数据库管理")
 @RestController
 @RequestMapping(value = "/api/databases")
 @ResultWrapper
@@ -42,7 +42,7 @@ public class DatabaseController {
         this.databaseService = databaseService;
     }
 
-    @ApiOperation(value = "新增数据库")
+    @Operation(summary = "新增数据库")
     @Log(value = "新增数据库")
     @PreAuthorize(value = "@authorize.check('databases:add')")
     @NoRepeatSubmit
@@ -51,7 +51,7 @@ public class DatabaseController {
         databaseService.saveDatabase(resource);
     }
 
-    @ApiOperation(value = "删除数据库")
+    @Operation(summary = "删除数据库")
     @Log(value = "删除数据库")
     @PreAuthorize(value = "@authorize.check('databases:del')")
     @DeleteMapping
@@ -59,7 +59,7 @@ public class DatabaseController {
         databaseService.removeDatabaseByIds(ids);
     }
 
-    @ApiOperation(value = "修改数据库")
+    @Operation(summary = "修改数据库")
     @Log(value = "修改数据库")
     @PreAuthorize(value = "@authorize.check('databases:edit')")
     @NoRepeatSubmit
@@ -68,14 +68,14 @@ public class DatabaseController {
         databaseService.updateDatabaseById(resource);
     }
 
-    @ApiOperation(value = "查询数据库")
+    @Operation(summary = "查询数据库")
     @PreAuthorize(value = "@authorize.check('databases:list')")
     @GetMapping
     public Page<DatabaseDTO> list(DatabaseQuery query, Page<Database> page) {
         return databaseService.listDatabases(query, page);
     }
 
-    @ApiOperation(value = "测试数据库链接")
+    @Operation(summary = "测试数据库链接")
     @Log(value = "测试数据库链接")
     @PreAuthorize(value = "@authorize.check('database:testConnect')")
     @NoRepeatSubmit
@@ -84,7 +84,7 @@ public class DatabaseController {
         return databaseService.testConnection(resources);
     }
 
-    @ApiOperation(value = "执行 SQL 脚本")
+    @Operation(summary = "执行 SQL 脚本")
     @Log(value = "执行 SQL 脚本")
     @PreAuthorize(value = "@authorize.check('database:add')")
     @NoRepeatSubmit
@@ -103,7 +103,7 @@ public class DatabaseController {
         }
     }
 
-    @ApiOperation(value = "导出数据库")
+    @Operation(summary = "导出数据库")
     @Log(value = "导出数据库")
     @PreAuthorize(value = "@authorize.check('databases:list')")
     @GetMapping(value = "/exports")

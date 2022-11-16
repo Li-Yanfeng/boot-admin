@@ -2,8 +2,7 @@ package com.boot.admin.system.service.dto;
 
 import com.baomidou.mybatisplus.core.enums.SqlKeyword;
 import com.boot.admin.annotation.Query;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -14,33 +13,33 @@ import java.util.List;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "用户 数据查询对象")
+@Schema(description = "用户 数据查询对象")
 public class UserQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @Query(type = SqlKeyword.EQ)
     private Long userId;
 
-    @ApiModelProperty(value = "部门ID")
+    @Schema(description = "部门ID")
     @Query(type = SqlKeyword.EQ)
     private Long deptId;
 
-    @ApiModelProperty(value = "部门ID")
+    @Schema(description = "部门ID")
     @Query(propName = "deptId", type = SqlKeyword.IN)
     private List<Long> deptIds;
 
-    @ApiModelProperty(value = "是否启用")
+    @Schema(description = "是否启用")
     @Query(type = SqlKeyword.EQ)
     private Integer enabled;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Query(type = SqlKeyword.BETWEEN)
     private List<LocalDateTime> createTime;
 
-    @ApiModelProperty(value = "多字段模糊")
+    @Schema(description = "多字段模糊")
     @Query(q = "email,username,nickName")
     private String q;
 

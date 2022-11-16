@@ -8,8 +8,8 @@ import com.boot.admin.model.TableInfo;
 import com.boot.admin.service.ColumnConfigService;
 import com.boot.admin.service.GenConfigService;
 import com.boot.admin.service.TableInfoService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Li Yanfeng
  */
-@Api(tags = "系统：代码生成管理")
+@Tag(name = "系统：代码生成管理")
 @RestController
 @RequestMapping(value = "/api/generators")
 @ResultWrapper
@@ -40,7 +40,7 @@ public class GeneratorController {
         this.genConfigService = genConfigService;
     }
 
-    @ApiOperation("同步字段数据")
+    @Operation(summary = "同步字段数据")
     @PostMapping(value = "/syncs")
     public void save(@RequestBody List<String> tables) {
         for (String table : tables) {
@@ -49,31 +49,31 @@ public class GeneratorController {
         }
     }
 
-    @ApiOperation(value = "保存字段数据")
+    @Operation(summary = "保存字段数据")
     @PutMapping
     public void update(@RequestBody List<ColumnConfig> columnConfigs) {
         columnConfigService.saveColumnConfig(columnConfigs);
     }
 
-    @ApiOperation(value = "翻页查询表数据信息")
+    @Operation(summary = "翻页查询表数据信息")
     @GetMapping(value = "/tables")
     public Page<TableInfo> listTables(String tableName, Page<TableInfo> page) {
         return tableInfoService.listTableInfos(tableName, page);
     }
 
-    @ApiOperation(value = "查询表数据信息")
+    @Operation(summary = "查询表数据信息")
     @GetMapping(value = "/tables/lists")
     public List<TableInfo> listTables() {
         return tableInfoService.listTableInfos();
     }
 
-    @ApiOperation(value = "查询字段数据")
+    @Operation(summary = "查询字段数据")
     @GetMapping(value = "/columns")
     public Page<ColumnConfig> listColumns(String tableName, Page<ColumnConfig> page) {
         return columnConfigService.listColumnConfigs(tableName, page);
     }
 
-    @ApiOperation("生成代码")
+    @Operation(summary = "生成代码")
     @PostMapping(value = "/{tableName}/{type}")
     public Object generator(@PathVariable String tableName, @PathVariable Integer type, HttpServletRequest request,
                             HttpServletResponse response) {

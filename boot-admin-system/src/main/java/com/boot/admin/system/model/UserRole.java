@@ -2,8 +2,7 @@ package com.boot.admin.system.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
@@ -11,17 +10,17 @@ import java.io.Serializable;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "用户角色关联")
+@Schema(description = "用户角色关联")
 @TableName(value = "sys_user_role")
 public class UserRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "用户ID")
+    @Schema(description = "用户ID")
     @TableField
     private Long userId;
 
-    @ApiModelProperty(value = "角色ID")
+    @Schema(description = "角色ID")
     @TableField
     private Long roleId;
 

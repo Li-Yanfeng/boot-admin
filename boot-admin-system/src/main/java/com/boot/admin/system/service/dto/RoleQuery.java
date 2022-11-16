@@ -2,8 +2,7 @@ package com.boot.admin.system.service.dto;
 
 import com.baomidou.mybatisplus.core.enums.SqlKeyword;
 import com.boot.admin.annotation.Query;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -14,25 +13,25 @@ import java.util.List;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "角色 数据查询对象")
+@Schema(description = "角色 数据查询对象")
 public class RoleQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @Query(type = SqlKeyword.EQ)
     private Long roleId;
 
-    @ApiModelProperty(value = "名称")
+    @Schema(description = "名称")
     @Query(type = SqlKeyword.LIKE)
     private String name;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Query(type = SqlKeyword.BETWEEN)
     private List<LocalDateTime> createTime;
 
-    @ApiModelProperty(value = "多字段模糊")
+    @Schema(description = "多字段模糊")
     @Query(q = "name,description")
     private String q;
 

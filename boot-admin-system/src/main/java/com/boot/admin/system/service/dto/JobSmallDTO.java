@@ -1,8 +1,7 @@
 package com.boot.admin.system.service.dto;
 
 import com.boot.admin.core.service.dto.BaseDTO;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -13,15 +12,15 @@ import java.util.Objects;
  * @author Li Yanfeng
  * @since 2021-06-01
  */
-@ApiModel(description = "岗位 数据传输对象")
+@Schema(description = "岗位 数据传输对象")
 public class JobSmallDTO extends BaseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     private Long jobId;
 
-    @ApiModelProperty(value = "岗位名称")
+    @Schema(description = "岗位名称")
     private String name;
 
 

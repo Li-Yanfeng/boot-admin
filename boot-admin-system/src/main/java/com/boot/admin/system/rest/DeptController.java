@@ -10,8 +10,8 @@ import com.boot.admin.system.model.Dept;
 import com.boot.admin.system.service.DeptService;
 import com.boot.admin.system.service.dto.DeptDTO;
 import com.boot.admin.system.service.dto.DeptQuery;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@Api(tags = "系统：部门管理")
+@Tag(name = "系统：部门管理")
 @RestController
 @RequestMapping(value = "/api/depts")
 @ResultWrapper
@@ -37,7 +37,7 @@ public class DeptController {
         this.deptService = deptService;
     }
 
-    @ApiOperation(value = "新增部门")
+    @Operation(summary = "新增部门")
     @Log(value = "新增部门")
     @PreAuthorize(value = "@authorize.check('depts:add')")
     @NoRepeatSubmit
@@ -46,7 +46,7 @@ public class DeptController {
         deptService.saveDept(resource);
     }
 
-    @ApiOperation(value = "删除部门")
+    @Operation(summary = "删除部门")
     @Log(value = "删除部门")
     @PreAuthorize(value = "@authorize.check('depts:del')")
     @DeleteMapping
@@ -61,7 +61,7 @@ public class DeptController {
         deptService.removeDept(depts);
     }
 
-    @ApiOperation(value = "修改部门")
+    @Operation(summary = "修改部门")
     @Log(value = "修改部门")
     @PreAuthorize(value = "@authorize.check('depts:edit')")
     @NoRepeatSubmit
@@ -70,14 +70,14 @@ public class DeptController {
         deptService.updateDeptById(resource);
     }
 
-    @ApiOperation(value = "查询部门")
+    @Operation(summary = "查询部门")
     @PreAuthorize(value = "@authorize.check('users:list','depts:list')")
     @GetMapping
     public List<Tree<Long>> list(DeptQuery query) {
         return deptService.buildTree(deptService.listDepts(query));
     }
 
-    @ApiOperation(value = "查询部门:根据ID获取同级与上级数据")
+    @Operation(summary = "查询部门:根据ID获取同级与上级数据")
     @PreAuthorize(value = "@authorize.check('users:list','depts:list')")
     @GetMapping(value = "/superiors")
     public List<Tree<Long>> getSuperior(@RequestBody List<Long> ids) {
@@ -89,7 +89,7 @@ public class DeptController {
         return deptService.buildTree(depts);
     }
 
-    @ApiOperation(value = "导出部门")
+    @Operation(summary = "导出部门")
     @Log(value = "导出部门")
     @PreAuthorize(value = "@authorize.check('depts:list')")
     @GetMapping(value = "/exports")

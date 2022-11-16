@@ -22,8 +22,8 @@ import com.boot.admin.util.RsaUtils;
 import com.boot.admin.util.SecurityUtils;
 import com.boot.admin.util.StringUtils;
 import com.boot.admin.util.enums.CodeEnum;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.CollectionUtils;
@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@Api(tags = "系统：用户管理")
+@Tag(name = "系统：用户管理")
 @RestController
 @RequestMapping(value = "/api/users")
 @ResultWrapper
@@ -65,7 +65,7 @@ public class UserController {
     }
 
 
-    @ApiOperation(value = "新增用户")
+    @Operation(summary = "新增用户")
     @Log(value = "新增用户")
     @PreAuthorize(value = "@authorize.check('users:add')")
     @NoRepeatSubmit
@@ -80,7 +80,7 @@ public class UserController {
         userService.saveUser(resource);
     }
 
-    @ApiOperation(value = "删除用户")
+    @Operation(summary = "删除用户")
     @Log(value = "删除用户")
     @PreAuthorize(value = "@authorize.check('users:del')")
     @DeleteMapping
@@ -97,7 +97,7 @@ public class UserController {
         userService.removeUserByIds(ids);
     }
 
-    @ApiOperation(value = "修改用户")
+    @Operation(summary = "修改用户")
     @Log(value = "修改用户")
     @PreAuthorize(value = "@authorize.check('users:edit')")
     @NoRepeatSubmit
@@ -107,7 +107,7 @@ public class UserController {
         userService.updateUserById(resource);
     }
 
-    @ApiOperation(value = "修改密码")
+    @Operation(summary = "修改密码")
     @NoRepeatSubmit
     @PutMapping(value = "/pass")
     public Result updatePass(@RequestBody UserPassVO passVO) throws Exception {
@@ -124,7 +124,7 @@ public class UserController {
         return Result.success();
     }
 
-    @ApiOperation(value = "修改邮箱")
+    @Operation(summary = "修改邮箱")
     @Log(value = "修改邮箱")
     @NoRepeatSubmit
     @PutMapping(value = "/email/{code}")
@@ -138,7 +138,7 @@ public class UserController {
         userService.updateEmail(userDTO.getUsername(), user.getEmail());
     }
 
-    @ApiOperation(value = "修改用户：个人中心")
+    @Operation(summary = "修改用户：个人中心")
     @Log(value = "修改用户：个人中心")
     @NoRepeatSubmit
     @PutMapping(value = "/center")
@@ -149,14 +149,14 @@ public class UserController {
         userService.updateCenter(resources);
     }
 
-    @ApiOperation(value = "修改头像")
+    @Operation(summary = "修改头像")
     @NoRepeatSubmit
     @PutMapping(value = "/avatar")
     public void updateAvatar(@RequestParam MultipartFile avatar) {
         userService.updateAvatar(avatar);
     }
 
-    @ApiOperation(value = "查询用户")
+    @Operation(summary = "查询用户")
     @PreAuthorize(value = "@authorize.check('users:list')")
     @GetMapping
     public Page<UserDTO> list(UserQuery query, Page<User> page) {
@@ -178,7 +178,7 @@ public class UserController {
         return userService.listUsers(query, page);
     }
 
-    @ApiOperation(value = "导出用户")
+    @Operation(summary = "导出用户")
     @Log(value = "导出用户")
     @PreAuthorize(value = "@authorize.check('users:list')")
     @GetMapping(value = "/exports")

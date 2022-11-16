@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.boot.admin.core.model.BaseEntity;
 import com.boot.admin.annotation.ValidGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -17,57 +16,57 @@ import java.util.Objects;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "菜单")
+@Schema(description = "菜单")
 @TableName(value = "sys_menu")
 public class Menu extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     @NotNull(groups = ValidGroup.Update.class)
     private Long menuId;
 
-    @ApiModelProperty(value = "上级菜单ID")
+    @Schema(description = "上级菜单ID")
     private Long pid;
 
-    @ApiModelProperty(value = "菜单类型")
+    @Schema(description = "菜单类型")
     private Integer type;
 
-    @ApiModelProperty(value = "菜单标题")
+    @Schema(description = "菜单标题")
     private String title;
 
-    @ApiModelProperty(value = "组件")
+    @Schema(description = "组件")
     private String component;
 
-    @ApiModelProperty(value = "组件名称")
+    @Schema(description = "组件名称")
     private String componentName;
 
-    @ApiModelProperty(value = "图标")
+    @Schema(description = "图标")
     private String icon;
 
-    @ApiModelProperty(value = "权限")
+    @Schema(description = "权限")
     private String permission;
 
-    @ApiModelProperty(value = "是否外链")
+    @Schema(description = "是否外链")
     @TableField(value = "is_i_frame")
     private Integer iFrame;
 
-    @ApiModelProperty(value = "链接地址")
+    @Schema(description = "链接地址")
     private String path;
 
-    @ApiModelProperty(value = "是否缓存")
+    @Schema(description = "是否缓存")
     @TableField(value = "is_cache")
     private Integer cache;
 
-    @ApiModelProperty(value = "是否隐藏")
+    @Schema(description = "是否隐藏")
     @TableField(value = "is_hidden")
     private Integer hidden;
 
-    @ApiModelProperty(value = "排序")
+    @Schema(description = "排序")
     private Integer menuSort;
 
-    @ApiModelProperty(value = "子菜单数目")
+    @Schema(description = "子菜单数目")
     private Integer subCount;
 
 

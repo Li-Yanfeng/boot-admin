@@ -2,8 +2,7 @@ package com.boot.admin.quartz.service.dto;
 
 import com.baomidou.mybatisplus.core.enums.SqlKeyword;
 import com.boot.admin.annotation.Query;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -13,20 +12,20 @@ import java.util.List;
  * @author Li Yanfeng
  * @date 2021-06-01
  */
-@ApiModel(description = "定时任务 数据查询对象")
+@Schema(description = "定时任务 数据查询对象")
 public class QuartzJobQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "任务名称")
+    @Schema(description = "任务名称")
     @Query(type = SqlKeyword.LIKE)
     private String jobName;
 
-    @ApiModelProperty(value = "是否成功")
+    @Schema(description = "是否成功")
     @Query(type = SqlKeyword.EQ)
     private Integer success;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @Query(type = SqlKeyword.BETWEEN)
     private List<Timestamp> createTime;
 
