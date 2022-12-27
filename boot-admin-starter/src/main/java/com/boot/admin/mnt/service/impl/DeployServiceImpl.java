@@ -26,7 +26,10 @@ import com.boot.admin.mnt.util.ScpClientUtils;
 import com.boot.admin.mnt.websocket.MsgType;
 import com.boot.admin.mnt.websocket.SocketMsg;
 import com.boot.admin.mnt.websocket.WebSocketServer;
-import com.boot.admin.util.*;
+import com.boot.admin.util.Assert;
+import com.boot.admin.util.ConvertUtils;
+import com.boot.admin.util.FileUtils;
+import com.boot.admin.util.QueryHelp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -118,8 +121,8 @@ public class DeployServiceImpl extends ServiceImpl<DeployMapper, Deploy> impleme
             // 更新数据
             List<Long> oldServerIds = deployServerService.listServerIdsByDeployId(deployId);
             List<Long> newServerIds = servers.stream().map(ServerDTO::getServerId).collect(Collectors.toList());
-            List<Long> delServerIds = ComparatorUtils.findDataNotIncludedInSourceData(oldServerIds, newServerIds);
-            List<Long> addServerIds = ComparatorUtils.findDataNotIncludedInSourceData(newServerIds, oldServerIds);
+            Collection<Long> delServerIds = CollUtil.subtract(oldServerIds, newServerIds);
+            Collection<Long> addServerIds = CollUtil.subtract(newServerIds, oldServerIds);
             if (CollUtil.isNotEmpty(delServerIds)) {
                 deployServerService.removeDeployServerByDeployIdEqAndServerIdsIn(deployId, delServerIds);
             }

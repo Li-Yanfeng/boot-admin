@@ -27,7 +27,7 @@ import java.util.Set;
  */
 @Tag(name = "工具：本地存储管理")
 @RestController
-@RequestMapping(value = "/api/local_storages")
+@RequestMapping(value = "/local_storages")
 @ResultWrapper
 public class LocalStorageController {
 

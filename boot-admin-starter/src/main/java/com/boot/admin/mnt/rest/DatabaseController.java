@@ -30,7 +30,7 @@ import java.util.Set;
  */
 @Tag(name = "运维：数据库管理")
 @RestController
-@RequestMapping(value = "/api/databases")
+@RequestMapping(value = "/databases")
 @ResultWrapper
 public class DatabaseController {
 

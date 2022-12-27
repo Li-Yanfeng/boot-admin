@@ -24,7 +24,7 @@ import java.util.Set;
  */
 @Tag(name = "运维：服务器管理")
 @RestController
-@RequestMapping(value = "/api/servers")
+@RequestMapping(value = "/servers")
 @ResultWrapper
 public class ServerController {
 

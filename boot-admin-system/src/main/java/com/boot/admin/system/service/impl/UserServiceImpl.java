@@ -165,8 +165,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (CollUtil.isNotEmpty(roles)) {
             List<Long> oldRoleIds = userRoleService.listRoleIdsByUserId(userId);
             List<Long> newRoleIds = roles.stream().map(RoleSmallDTO::getRoleId).collect(Collectors.toList());
-            List<Long> delRoleIds = ComparatorUtils.findDataNotIncludedInSourceData(oldRoleIds, newRoleIds);
-            List<Long> addRoleIds = ComparatorUtils.findDataNotIncludedInSourceData(newRoleIds, oldRoleIds);
+            Collection<Long> delRoleIds = CollUtil.subtract(oldRoleIds, newRoleIds);
+            Collection<Long> addRoleIds = CollUtil.subtract(newRoleIds, oldRoleIds);
             if (CollUtil.isNotEmpty(delRoleIds)) {
                 userRoleService.removeUserRoleByUserIdEqAndRoleIdsIn(userId, delRoleIds);
             }
@@ -183,8 +183,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (CollUtil.isNotEmpty(jobs)) {
             List<Long> oldJobIds = userJobService.listJobIdsByUserId(userId);
             List<Long> newJobIds = jobs.stream().map(JobSmallDTO::getJobId).collect(Collectors.toList());
-            List<Long> delJobIds = ComparatorUtils.findDataNotIncludedInSourceData(oldJobIds, newJobIds);
-            List<Long> addJobIds = ComparatorUtils.findDataNotIncludedInSourceData(newJobIds, oldJobIds);
+            Collection<Long> delJobIds = CollUtil.subtract(oldJobIds, newJobIds);
+            Collection<Long> addJobIds = CollUtil.subtract(newJobIds, oldJobIds);
             if (CollUtil.isNotEmpty(delJobIds)) {
                 userJobService.removeUserJobByUserIdEqAndJobIdsIn(userId, delJobIds);
             }

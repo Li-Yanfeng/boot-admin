@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Tag(name = "系统：代码生成器配置管理")
 @RestController
-@RequestMapping(value = "/api/gen_configs")
+@RequestMapping(value = "/gen_configs")
 public class GenConfigController {
 
     private final GenConfigService genConfigService;

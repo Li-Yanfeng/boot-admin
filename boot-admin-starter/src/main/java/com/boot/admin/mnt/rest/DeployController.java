@@ -32,7 +32,7 @@ import java.util.Set;
  */
 @Tag(name = "运维：部署管理")
 @RestController
-@RequestMapping(value = "/api/deploys")
+@RequestMapping(value = "/deploys")
 @ResultWrapper
 public class DeployController {
 

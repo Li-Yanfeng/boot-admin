@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Tag(name = "系统：代码生成管理")
 @RestController
-@RequestMapping(value = "/api/generators")
+@RequestMapping(value = "/generators")
 @ResultWrapper
 public class GeneratorController {
 

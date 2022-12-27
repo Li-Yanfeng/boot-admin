@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  */
 @Tag(name = "系统：菜单管理")
 @RestController
-@RequestMapping(value = "/api/menus")
+@RequestMapping(value = "/menus")
 @ResultWrapper
 public class MenuController {
 

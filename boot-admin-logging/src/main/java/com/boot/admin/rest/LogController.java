@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Tag(name = "系统：日志管理")
 @RestController
-@RequestMapping(value = "/api/logs")
+@RequestMapping(value = "/logs")
 @ResultWrapper
 public class LogController {
 

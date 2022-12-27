@@ -118,8 +118,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             // 更新数据
             List<Long> oldDeptIds = roleDeptService.listDeptIdsByRoleId(roleId);
             List<Long> newDeptIds = depts.stream().map(DeptDTO::getDeptId).collect(Collectors.toList());
-            List<Long> delDeptIds = ComparatorUtils.findDataNotIncludedInSourceData(oldDeptIds, newDeptIds);
-            List<Long> addDeptIds = ComparatorUtils.findDataNotIncludedInSourceData(newDeptIds, oldDeptIds);
+            Collection<Long> delDeptIds = CollUtil.intersection(oldDeptIds, newDeptIds);
+            Collection<Long> addDeptIds = CollUtil.intersection(newDeptIds, oldDeptIds);
             if (CollUtil.isNotEmpty(delDeptIds)) {
                 roleDeptService.removeRoleDeptByRoleIdEqAndDeptIdsIn(roleId, delDeptIds);
             }
@@ -149,8 +149,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         // 更新数据
         List<Long> oldMenuIds = roleMenuService.listMenuIdsByRoleId(roleId);
         List<Long> newMenuIds = newResource.getMenus().stream().map(MenuDTO::getMenuId).collect(Collectors.toList());
-        List<Long> delMenuIds = ComparatorUtils.findDataNotIncludedInSourceData(oldMenuIds, newMenuIds);
-        List<Long> addMenuIds = ComparatorUtils.findDataNotIncludedInSourceData(newMenuIds, oldMenuIds);
+        Collection<Long> delMenuIds = CollUtil.intersection(oldMenuIds, newMenuIds);
+        Collection<Long> addMenuIds = CollUtil.intersection(newMenuIds, oldMenuIds);
         if (CollUtil.isNotEmpty(delMenuIds)) {
             roleMenuService.removeRoleMenuByRoleIdEqAndMenuIdsIn(roleId, delMenuIds);
         }

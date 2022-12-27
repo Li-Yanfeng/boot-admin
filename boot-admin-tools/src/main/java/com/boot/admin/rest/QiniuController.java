@@ -29,7 +29,7 @@ import java.util.Set;
  */
 @Tag(name = "工具：七牛云存储管理")
 @RestController
-@RequestMapping(value = "/api/qiniu")
+@RequestMapping(value = "/qiniu")
 @ResultWrapper
 public class QiniuController {
 

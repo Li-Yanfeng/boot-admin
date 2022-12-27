@@ -25,7 +25,7 @@ import java.util.Set;
  */
 @Tag(name = "系统：定时任务管理")
 @RestController
-@RequestMapping(value = "/api/quartz_jobs")
+@RequestMapping(value = "/quartz_jobs")
 @ResultWrapper
 public class QuartzJobController {
 

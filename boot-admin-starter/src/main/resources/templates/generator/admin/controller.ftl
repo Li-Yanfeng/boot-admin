@@ -24,7 +24,7 @@ import java.util.Set;
  */
 @Tag(name = "${apiAlias!}管理")
 @RestController
-@RequestMapping(value = "/api/${changeClassName}s")
+@RequestMapping(value = "/${changeClassName}s")
 @ResultWrapper
 public class ${className}Controller {
 
