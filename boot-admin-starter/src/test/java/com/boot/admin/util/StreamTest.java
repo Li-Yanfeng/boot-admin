@@ -61,12 +61,6 @@ public class StreamTest {
         // 3. 利用集合构建(不支持Map集合)
         List<String> list = Arrays.asList(strArray);
         Stream<String> stream3 = list.stream();
-
-        IntStream intStream1 = IntStream.of(new int[]{1, 2, 3});
-        //[1,3)
-        IntStream intStream2 = IntStream.range(1, 3);
-        //[1,3]
-        IntStream intStream3 = IntStream.rangeClosed(1, 3);
     }
 
     /**
@@ -168,7 +162,7 @@ public class StreamTest {
         flag = list.stream().map(String::toUpperCase).anyMatch(item -> item.startsWith("H"));
         System.out.println("有元素已 H 开头：" + flag);
         //     没有一个匹配的就返回true 否则返回false
-        flag = list.stream().noneMatch(item -> item.startsWith("H"));
+        flag = list.stream().map(String::toUpperCase).noneMatch(item -> item.startsWith("H"));
         System.out.println("没有元素 H 开头：" + flag);
         System.out.println("----------------------------------------------------------------------------------");
 
@@ -212,9 +206,9 @@ public class StreamTest {
         System.out.println(list.stream().collect(Collectors.joining("-", "[", "]")));
         System.out.println("----------------------------------------------------------------------------------");
 
-        // 找出的单词，转小写，去掉空字符,去除重复单词并排序
+        // 单词转小写，去掉空字符,去除重复单词并排序
         List<String> list1 = Arrays.asList("Java", "hello", "world", "java", "tom", "C", "javascript");
-        list1.stream().filter(StrUtil::isNotBlank).map(String::toLowerCase).distinct().sorted((o1, o2) -> o1.length() - o2.length()).forEach(System.out::println);
+        list1.stream().map(String::toLowerCase).filter(StrUtil::isNotBlank).distinct().sorted((o1, o2) -> o1.length() - o2.length()).forEach(System.out::println);
         System.out.println("----------------------------------------------------------------------------------");
 
         // Stream.generate 通过Supplier接口，可以自己来控制Stream的生成。这种情形通常用于随机数、常量的 Stream，或者需要前后元素间维持着某种状态信息的 Stream。
